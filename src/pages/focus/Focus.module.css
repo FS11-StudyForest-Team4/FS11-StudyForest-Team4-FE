@@ -1,0 +1,85 @@
+.timerWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 546px;
+  padding: 40px 24px;
+  gap: 10px;
+
+  border-radius: 20px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+
+  color: var(--black-black_414141, #414141);
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 800;
+  line-weight: normal;
+
+  .timerTitle {
+    margin: 0 auto;
+    text-align: right;
+    font-size: 24px;
+    line-weight: normal;
+  }
+
+  .timer {
+    margin: 0 auto;
+    margin-top: 100px;
+    text-align: center;
+    font-size: 150px;
+  }
+
+  .timeOver {
+    color: var(--gray-gray_818181, #818181);
+  }
+
+  .timeWarning {
+    color: var(--red-red_F50E0E, #f50e0e);
+  }
+
+  .timerButtonWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .timerButtonPlaceholder {
+    width: 80px;
+  }
+
+  .timerStartButton {
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+
+    border: 0px;
+    flex-shrink: 0;
+    background-color: #99c08e;
+    width: 333px;
+    height: 60px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    gap: 16px;
+  }
+
+  .timerStartButton:disabled {
+    background-color: var(--gray-gray_818181, #818181);
+  }
+
+  .timerPauseButton {
+    .pauseIcon {
+      width: 64px;
+      height: 64px;
+    }
+  }
+  .timerResetButton {
+    .resetIcon {
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
