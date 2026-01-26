@@ -6,7 +6,7 @@ import Habit from './pages/habit/Habit';
 function App() {
   return (
     <Layout>
-      <Main />
+      <Habit />
     </Layout>
   );
 }
