@@ -38,7 +38,7 @@ const Focus = () => {
     if (!isOver) return;
 
     console.log('세션이 완료되었습니다!');
-    toast('🎉 50포인트를 획득했습니다!');
+    toast('🎉 50포인트를 획득했습니다!', { className: styles.toastCompleted });
   }, [isOver]);
 
   const handleStart = () => {
@@ -58,7 +58,7 @@ const Focus = () => {
     // pause 버튼
     //setIsPaused((prev) => !prev); 누르면 일시정지 <-> 재개
     setIsPaused(true);
-    toast('🚨 집중이 중단되었습니다.');
+    toast('🚨 집중이 중단되었습니다.', { className: styles.toastPaused });
   };
 
   const handleReset = () => {
@@ -155,7 +155,13 @@ const Focus = () => {
           <div className={styles.timerButtonPlaceholder} />
         )}
       </div>
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={4000}
+        hideProgressBar={true}
+        closeOnClick={false}
+        closeButton={false}
+      />
     </div>
   );
 };

@@ -76,10 +76,32 @@
       height: 64px;
     }
   }
+
   .timerResetButton {
     .resetIcon {
       width: 64px;
       height: 64px;
     }
+  }
+
+  .toastCompleted,
+  .toastPaused {
+    position: bottom-center;
+
+    display: inline-flex;
+    padding: 14px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    background: var(--green-green_E1EDDE, #e1edde);
+    color: var(--green-green_text_578246, #578246);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .toastPaused {
+    background: var(--pink-pink_FDE0E9, #fde0e9);
+    color: var(--red-red_F50E0E, #f50e0e);
   }
 }
