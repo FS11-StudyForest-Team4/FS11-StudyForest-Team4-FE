@@ -1,17 +1,14 @@
-import { Routes, Route, Link } from 'react-router';
-import '@/assets/styles/reset.css';
-import Layout from './layout/Layout';
-import Home from '@/pages/home/Home';
-import Habit from './pages/habit/Habit';
-import Study from './pages/study/Study';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./layout/Layout";
+import Home from "./pages/home/Home"; // 폴더명 'home' 확인
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/habit" element={<Habit />} />
-        <Route path="/study" element={<Study />} />
+        {/* 나중에 여기에 스터디 만들기 페이지 추가 */}
       </Routes>
     </Layout>
   );

@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router';
+import { BrowserRouter } from 'react-router-dom'; // '-dom'을 꼭 붙여주세요!
 import '@/assets/styles/global.css';
 import App from './App.jsx';
 
