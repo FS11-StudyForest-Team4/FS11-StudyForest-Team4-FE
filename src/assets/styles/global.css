@@ -1,12 +1,32 @@
+:root {
+  /* Primary color */
+  --primary-100: #3692ff;
+  --primary-200: #1967d6;
+  --primary-300: #1251aa;
+  
+  /* Point Color (버튼 색상) */
+  --point-green: #99C08E; 
+  --point-green-hover: #88ae7d;
+
+  /* Gray scale */
+  --secondary-100: #f9fafb;
+  --secondary-200: #f3f4f6;
+  --secondary-300: #e5e7eb;
+
+  /* Background */
+  --bg-beige: #F6F4EF;
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
-  background: #f6f4ef;
+  background: var(--bg-beige);
   font-family: pretendard;
 }
 
 
-.mainHeader {
+
+.header {
   width: 100%;
   height: 100px;       
   background-color: #ffffff;  
@@ -35,10 +55,10 @@
 }
 
 
-.btnCreate {
+.btnStudyCreate {
   width: 252px;
   height: 58px;
-  background-color: #99C08E; 
+  background-color: #99C08E;
   color: #ffffff;
   border-radius: 16px;
   cursor: pointer;
@@ -53,14 +73,14 @@
   transition: all 0.1s ease-in-out;
 }
 
-.btnCreate:active {
+.btnStudyCreate:active {
   transform: translateY(2px);      
   box-shadow: none;                   
   text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.3); 
 }
 
-.btnCreate:hover {
-  background-color: #88ae7d;         
+.btnStudyCreate:hover {
+  background-color: var(--point-green-hover);       
   transform: translateY(-1px);      
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

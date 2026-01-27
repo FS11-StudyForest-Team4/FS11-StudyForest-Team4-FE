@@ -10,7 +10,7 @@ const Header = () => {
     location.pathname === "/" || location.pathname.startsWith("/study");
 
   return (
-    <header className="mainHeader">
+    <header className="header">
       <div className="headerContainer">
         <div className="logo">
           <Link to="/">
@@ -18,7 +18,7 @@ const Header = () => {
           </Link>
         </div>
         {shouldShowCreateButton && (
-          <Link to="/study/create" className="btnCreate">
+          <Link to="/study/create" className="btnStudyCreate">
             스터디 만들기
           </Link>
         )}
