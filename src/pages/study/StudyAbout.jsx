@@ -94,14 +94,6 @@ const StudyAbout = () => {
 
       <section className={styles['habit-list']}>
         <HabitHistorySection/>
-        <h2>습관 기록표</h2>
-        <ul>
-          {HABIT_LIST.map((habitItem, index) => (
-            <li key={index}>
-              <h3>{habitItem.name}</h3>
-            </li>
-          ))}
-        </ul>
       </section>
     </div>
   );

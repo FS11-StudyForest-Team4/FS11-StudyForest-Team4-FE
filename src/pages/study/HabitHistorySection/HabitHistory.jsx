@@ -1,3 +1,11 @@
+import styles from './HabitHistory.module.css';
+
+// 이번주 날짜 확인 및 요청 util 만들어서 설정하기 
+// return  { startDate, endDate } // 월요일부터 일요일로 설정
+// 줄마다 다른 image 넣기 로직 구현
+
+
+
 function HabitHistoryTable() {
 
   const habits = [
@@ -18,7 +26,7 @@ function HabitHistoryTable() {
  const days = ['월','화','수','목','금','토','일']
 
   const historyWithWeek = history
-    .filter((h) => !h.isDeleted)
+    .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
     .reduce((acc, cur) => {
       const dayIndex = new Date(cur.createdAt).getDay();
       const day = days[(dayIndex +6 ) % 7]
@@ -33,7 +41,7 @@ function HabitHistoryTable() {
     }, {});
 
   return (
-    <>
+    <div>
       <h2>습관기록표</h2>
       <table>
         <thead>
@@ -55,6 +63,10 @@ function HabitHistoryTable() {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
+// O에서 줄마다 색이 다르게 나타내야 함 
+//<img src={`/img`}
+
+export default HabitHistoryTable
