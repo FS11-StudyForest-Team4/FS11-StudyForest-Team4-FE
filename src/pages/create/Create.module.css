@@ -1,0 +1,19 @@
+.createPageTitle {
+  color: #414141;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.container {
+  max-width: 696px;
+  display: flex;
+  margin: 0 auto 107px;
+  padding: 24px 24px 40px 24px;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 20px;
+  background: #97ad7d; /*원래 FFF인데 아직 전체 바탕색이 없어서 일단 구분하려고 넣었슴다*/
+}

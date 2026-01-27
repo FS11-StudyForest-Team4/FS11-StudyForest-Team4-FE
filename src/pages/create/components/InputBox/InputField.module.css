@@ -1,0 +1,64 @@
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+
+  label {
+    display: block;
+    color: var(--black-black_414141, #414141);
+    font-family: Pretendard;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .inputWrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 15px 20px;
+    height: 48px;
+    border-radius: 15px;
+    border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+    background: #fff;
+    cursor: text;
+    input {
+      outline: none;
+      border: none;
+      flex: 1; /*아이콘 뒤로 밀려고 늘렸*/
+    }
+    input::placeholder {
+      color: var(--gray-gray_818181, #818181);
+      font-family: Pretendard;
+      font-size: 16px;
+      /*엥 왜 피그마대로 했는데 글씨 상단이 잘릴까요? 제가 뭔가 실수를 했나봅니다. 일단 시안대로 적었습니다.*/
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+  .inputWrapper:focus-within {
+    border: 1px solid #c41013;
+  }
+  .descriptionWrapper {
+    height: 98px;
+  }
+}
+
+/*비밀번호 보이게 하는 버튼*/
+.buttonShowPassword {
+  width: 24px;
+  height: 24px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+textarea {
+  all: unset;
+  width: 100%;
+}
