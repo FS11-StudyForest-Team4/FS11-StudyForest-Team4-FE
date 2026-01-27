@@ -33,11 +33,11 @@
 }
 
 
-.btn-signup {
+.btn-create {
   width: 252px;
   height: 58px;
   background-color: #99C08E; 
-  color: white !important;
+  color: #ffffff;
   border: none;
   border-radius: 16px;
   cursor: pointer;
@@ -52,13 +52,13 @@
   transition: all 0.1s ease-in-out;
 }
 
-.btn-signup:active {
+.btn-create:active {
   transform: translateY(2px);      
   box-shadow: none;                   
   text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.3); 
 }
 
-.btn-signup:hover {
+.btn-create:hover {
   background-color: #88ae7d;         
   transform: translateY(-1px);      
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
