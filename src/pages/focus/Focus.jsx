@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './Focus.module.css';
 import pause_ic from './pause_ic.png';
 import reset_ic from './reset_ic.png';
@@ -32,6 +34,13 @@ const Focus = () => {
     return () => clearInterval(time);
   }, [isRunning, isPaused]); // isRunning, isPaused 상태 바뀔때 동작
 
+  useEffect(() => {
+    if (!isOver) return;
+
+    console.log('세션이 완료되었습니다!');
+    toast('🎉 50포인트를 획득했습니다!');
+  }, [isOver]);
+
   const handleStart = () => {
     // start 버튼
     setIsRunning(true);
@@ -47,7 +56,9 @@ const Focus = () => {
 
   const handlePause = () => {
     // pause 버튼
-    setIsPaused((prev) => !prev);
+    //setIsPaused((prev) => !prev); 누르면 일시정지 <-> 재개
+    setIsPaused(true);
+    toast('🚨 집중이 중단되었습니다.');
   };
 
   const handleReset = () => {
@@ -68,13 +79,15 @@ const Focus = () => {
 
       <div className={styles.timerButtonWrapper}>
         {isRunning && !isOver ? (
-          <button
-            type="button"
-            className={styles.timerPauseButton}
-            onClick={handlePause}
-          >
-            <img className={styles.pauseIcon} src={pause_ic} />
-          </button>
+          <>
+            <button
+              type="button"
+              className={styles.timerPauseButton}
+              onClick={handlePause}
+            >
+              <img className={styles.pauseIcon} src={pause_ic} />
+            </button>
+          </>
         ) : (
           <div className={styles.timerButtonPlaceholder} />
         )}
@@ -142,6 +155,7 @@ const Focus = () => {
           <div className={styles.timerButtonPlaceholder} />
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };
