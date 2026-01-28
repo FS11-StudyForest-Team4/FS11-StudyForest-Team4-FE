@@ -1,5 +1,5 @@
 /* 전체 배경 설정 */
-.habit-page {
+.habitPage {
   background-color: #f6f4ef;
   min-height: 100vh;
   display: flex;
@@ -16,7 +16,7 @@
   justify-content: center;
   border-bottom: 1px solid #eeeeee;
 }
-.gnb-inner {
+.gnbInner {
   width: 1248px;
   display: flex;
   justify-content: space-between;
@@ -25,7 +25,7 @@
 
 /* main wrapper */
 /* frame 2609450 */
-.main-wrapper {
+.mainWrapper {
   width: 1248px;
   background-color: #ffffff;
   border-radius: 20px;
@@ -35,7 +35,7 @@
 }
 
 /* frame 2609481 */
-.habit-header-container {
+.habitHeaderContainer {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -43,14 +43,14 @@
 }
 
 /* frame 2609451 */
-.header-top-row h1 {
+.headerTopRow h1 {
   font-size: 32px;
   font-weight: 800;
   color: #414141;
 }
 
 /* 시간박스 frame 2609455 */
-.time-box {
+.timeBox {
   width: 184px;
   height: 64px;
   display: flex;
@@ -61,20 +61,63 @@
   border-radius: 12px;
 }
 
-.time-label {
+.timeLabel {
   font-size: 12px;
   color: #888888;
   margin: 0;
 }
 
-.time-display {
+.timeDisplay {
   font-size: 16px;
   font-weight: 700;
   color: #414141;
 }
 
+/* gnb적용하면 정리할것
+.logo .gnbRight */
+.logo {
+  font-weight: bold;
+  color: #414141;
+}
+
+.gnbRight {
+  display: flex;
+  gap: 10px;
+}
+
+.gnbBtn {
+  font-family: Pretendard;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.nickname {
+  font-family: Pretendard;
+  font-weight: 800;
+  font-style: ExtraBold;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.editLink {
+  font-family: Pretendard;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+}
 /* 습관카드 frame 2609478 */
-.habit-list-card {
+.habitListCard {
   width: 1168px;
   padding: 40px 24px;
   border: 1px solid #eeeeee;
@@ -82,7 +125,7 @@
 }
 
 /* 습관 리스트 헤더 group 33609 */
-.list-header {
+.listHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -90,7 +133,7 @@
 }
 
 /* 습관 리스트 frame 2609498 */
-.habit-list {
+.habitList {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -99,7 +142,7 @@
 }
 
 /* 개별 습관 버튼 chip */
-.habit-item {
+.habitItem {
   width: 400px;
   height: 54px;
   padding: 0 20px;
@@ -112,27 +155,27 @@
   cursor: pointer;
 }
 
-.habit-item.completed {
+.habitItem.completed {
   background-color: #99c08e;
   color: #818181;
 }
 
 /* 태블릿 (iPad mini 등) */
 @media (max-width: 768px) {
-  .habit-list-card {
+  .habitListCard {
     padding: 30px;
   }
 }
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .habit-header h1 {
+  .habitHeader h1 {
     font-size: 20px;
   }
-  .habit-list-card {
+  .habitListCard {
     padding: 20px;
   }
-  .habit-item {
+  .habitItem {
     padding: 12px;
     font-size: 13px;
   }
