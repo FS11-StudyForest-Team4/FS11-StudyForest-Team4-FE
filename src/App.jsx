@@ -2,7 +2,7 @@ import { Routes, Route, Link } from 'react-router';
 import '@/assets/styles/reset.css';
 import Layout from './layout/Layout';
 import Home from '@/pages/home/Home';
-import Habit from './pages/habit/Habit';
+import Habit from './pages/habit/habit';
 import Study from './pages/study/Study';
 import Focus from './pages/focus/Focus';
 
