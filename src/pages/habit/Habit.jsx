@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Habit.css';
 
+
+const 0NE_MINUTE_MS = 60*1000;
+
 function Habit() {
   //현재 시간을 저장하는 state
   const [now, setNow] = useState(new Date());
@@ -9,7 +12,7 @@ function Habit() {
   useEffect(() => {
     const clock = setInterval(() => {
       setNow(new Date());
-    }, 1000);
+    }, 0NE_MINUTE_MS); //1000(1초)에서 60000(1분)으로 변경, 매직넘버 대신 상수 사용
 
     return () => clearInterval(clock);
   }, []);
