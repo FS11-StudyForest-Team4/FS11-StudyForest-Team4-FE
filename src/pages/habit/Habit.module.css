@@ -1,5 +1,5 @@
 /* 전체 배경 설정 */
-.habitPage {
+.habit-page {
   background-color: #f6f4ef;
   min-height: 100vh;
   display: flex;
@@ -16,7 +16,7 @@
   justify-content: center;
   border-bottom: 1px solid #eeeeee;
 }
-.gnbInner {
+.gnb-inner {
   width: 1248px;
   display: flex;
   justify-content: space-between;
@@ -25,7 +25,7 @@
 
 /* main wrapper */
 /* frame 2609450 */
-.mainWrapper {
+.main-wrapper {
   width: 1248px;
   background-color: #ffffff;
   border-radius: 20px;
@@ -35,7 +35,7 @@
 }
 
 /* frame 2609481 */
-.habitHeaderContainer {
+.habit-header-container {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -43,14 +43,14 @@
 }
 
 /* frame 2609451 */
-.headerTopRow h1 {
+.header-top-row h1 {
   font-size: 32px;
   font-weight: 800;
   color: #414141;
 }
 
 /* 시간박스 frame 2609455 */
-.timeBox {
+.time-box {
   width: 184px;
   height: 64px;
   display: flex;
@@ -61,13 +61,13 @@
   border-radius: 12px;
 }
 
-.timeLabel {
+.time-label {
   font-size: 12px;
   color: #888888;
   margin: 0;
 }
 
-.timeDisplay {
+.time-display {
   font-size: 16px;
   font-weight: 700;
   color: #414141;
@@ -80,12 +80,12 @@
   color: #414141;
 }
 
-.gnbRight {
+.gnb-right {
   display: flex;
   gap: 10px;
 }
 
-.gnbBtn {
+.gnb-btn {
   font-family: Pretendard;
   font-weight: 500;
   font-style: Medium;
@@ -106,7 +106,7 @@
   vertical-align: middle;
 }
 
-.editLink {
+.edit-link {
   font-family: Pretendard;
   font-weight: 500;
   font-style: Medium;
@@ -117,7 +117,7 @@
   vertical-align: middle;
 }
 /* 습관카드 frame 2609478 */
-.habitListCard {
+.habit-list-card {
   width: 1168px;
   padding: 40px 24px;
   border: 1px solid #eeeeee;
@@ -125,7 +125,7 @@
 }
 
 /* 습관 리스트 헤더 group 33609 */
-.listHeader {
+.list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -133,7 +133,7 @@
 }
 
 /* 습관 리스트 frame 2609498 */
-.habitList {
+.habit-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -142,7 +142,7 @@
 }
 
 /* 개별 습관 버튼 chip */
-.habitItem {
+.habit-item {
   width: 400px;
   height: 54px;
   padding: 0 20px;
@@ -155,27 +155,27 @@
   cursor: pointer;
 }
 
-.habitItem.completed {
+.habit-item.completed {
   background-color: #99c08e;
   color: #818181;
 }
 
 /* 태블릿 (iPad mini 등) */
 @media (max-width: 768px) {
-  .habitListCard {
+  .habit-list-card {
     padding: 30px;
   }
 }
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .habitHeader h1 {
+  .habit-header-container h1 {
     font-size: 20px;
   }
-  .habitListCard {
+  .habit-list-card {
     padding: 20px;
   }
-  .habitItem {
+  .habit-item {
     padding: 12px;
     font-size: 13px;
   }

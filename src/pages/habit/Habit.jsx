@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Habit.module.css';
+import styles from './habit.module.css';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -35,54 +35,54 @@ function Habit() {
   ]);
 
   return (
-    <div className={styles.habitPage}>
+    <div className={styles['habit-page']}>
       {' '}
       {/* css modules 사용*/}
       {/* 글로벌배너영역 */}
       {/* 레이어 GNB */}
       <nav className={styles.gnb}>
-        <div className={styles.gnbInner}>
+        <div className={styles['gnb-inner']}>
           <div className={styles.logo}>공부의 숲</div>
-          <div className={styles.gnbRight}>
-            <button className={styles.gnbBtn}>오늘의 집중</button>
-            <button className={styles.gnbBtn}>홈</button>
+          <div className={styles['gnb-right']}>
+            <button className={styles['gnb-btn']}>오늘의 집중</button>
+            <button className={styles['gnb-btn']}>홈</button>
           </div>
         </div>
       </nav>
       {/* 메인 컨텐츠 박스 */}
       {/* frame 2609450 */}
-      <div className={styles.mainWrapper}>
+      <div className={styles['main-wrapper']}>
         {/* frame 2609481 */}
-        <header className={styles.habitHeaderContainer}>
+        <header className={styles['habit-header-container']}>
           {/* frame 2609451 */}
-          <div className={styles.headerTopRow}>
+          <div className={styles['header-top-row']}>
             <h1>
               <span className={styles.nickname}>연우</span>의 개발공장
             </h1>
           </div>
 
           {/* frame 2609455 */}
-          <div className={styles.timeBox}>
-            <p className={styles.timeLabel}>현재 시간</p>
-            <div className={styles.timeDisplay}>{timeString}</div>
+          <div className={styles['time-box']}>
+            <p className={styles['time-label']}>현재 시간</p>
+            <div className={styles['time-display']}>{timeString}</div>
           </div>
         </header>
 
         {/* frame 2609478 */}
-        <main className={styles.habitListCard}>
+        <main className={styles['habit-list-card']}>
           {/* group33608 */}
-          <div className={styles.listHeader}>
+          <div className={styles['list-header']}>
             <h2>오늘의 습관</h2>
-            <button className={styles.editLink}>목록 수정</button>
+            <button className={styles['edit-link']}>목록 수정</button>
           </div>
 
           {/* frame 2609498 */}
-          <div className={styles.habitList}>
+          <div className={styles['habit-list']}>
             {habits.map((habit) => (
               <button
                 key={habit.id}
                 className={clsx(
-                  styles.habitItem,
+                  styles['habit-item'],
                   habit.completed && styles.completed,
                 )}
               >
