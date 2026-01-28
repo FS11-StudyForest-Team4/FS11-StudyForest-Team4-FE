@@ -4,7 +4,7 @@ import Layout from './layout/Layout';
 import Home from '@/pages/home/Home';
 import Habit from './pages/habit/Habit';
 import Study from './pages/study/Study';
-import StudyAbout from './pages/study/StudyAbout';
+import StudyAbout from './pages/studyAbout/StudyAbout';
 
 function App() {
   return (
