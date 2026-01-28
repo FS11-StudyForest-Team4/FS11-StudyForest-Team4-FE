@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Habit.css';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
 
-
-const 0NE_MINUTE_MS = 60*1000;
+const ONE_MINUTE_MS = 60 * 1000;
 
 function Habit() {
   //현재 시간을 저장하는 state
@@ -12,23 +14,13 @@ function Habit() {
   useEffect(() => {
     const clock = setInterval(() => {
       setNow(new Date());
-    }, 0NE_MINUTE_MS); //1000(1초)에서 60000(1분)으로 변경, 매직넘버 대신 상수 사용
+    }, ONE_MINUTE_MS); //1000(1초)에서 60000(1분)으로 변경, 매직넘버 대신 상수 사용
 
     return () => clearInterval(clock);
   }, []);
 
   //시계모양
-  const timeString = now
-    .toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    })
-    .replace(/\. /g, '-')
-    .replace(/\./g, '');
+  const timeString = dayjs(now).format('YYYY-MM-DD A hh:mm'); //dayjs 사용
 
   // 나중에 습관 목록을 새로 만들기
   const [habits, setHabits] = useState([
