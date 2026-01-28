@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './home.css';
 
+//실제 BE API 가 들어오면  배열에 데이터가 담길 예정
 const Home = () => {
   const [studyList] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
