@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './Focus.module.css';
-import pause_ic from './pause_ic.png';
-import play_ic from './play_ic.png';
-import reset_ic from './reset_ic.png';
-import stop_ic from './stop_ic.png';
-import timer_ic from './timer_ic.png';
+import pause_ic from '#assets/images/focus_img/pause_ic.png';
+import play_ic from '#assets/images/focus_img/play_ic.png';
+import reset_ic from '#assets/images/focus_img/reset_ic.png';
+import stop_ic from '#assets/images/focus_img/stop_ic.png';
+import timer_ic from '#assets/images/focus_img/timer_ic.png';
 
 const START_TIME = 20; // 테스트를 위하여 20초로 설정했습니다. 이후 25*60으로 바꾸면 25분으로 설정됩니다.
 
