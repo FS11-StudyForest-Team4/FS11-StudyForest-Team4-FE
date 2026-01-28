@@ -9,10 +9,14 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "imports": {
+    "#assets/*": "./src/assets/*"
+  },
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router": "^7.13.0"
+    "react-router": "^7.13.0",
+    "react-toastify": "^11.0.5"
   },
   "engines": {
     "node": ">=22.0.0"
