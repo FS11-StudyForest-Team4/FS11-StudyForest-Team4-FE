@@ -14,14 +14,14 @@ function Habitlog() {
 
   const habitlog = [
     // 받아올 데이터 (데이터 받을때 한 주꺼만 받기 )
-    { habitId: 1, createdAt: '2026-01-27'},
-    { habitId: 2, createdAt: '2026-01-27'},
-    { habitId: 4, createdAt: '2026-01-27'},
+    { habitId: 1, createdAt: '2026-01-27' },
+    { habitId: 2, createdAt: '2026-01-27' },
+    { habitId: 4, createdAt: '2026-01-27' },
   ];
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
 
-  const historyWithWeek = history
+  const historyWithWeek = habitlog
     .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
     .reduce((acc, cur) => {
       const dayIndex = new Date(cur.createdAt).getDay();
