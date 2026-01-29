@@ -1,11 +1,13 @@
+@import url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/EF_jejudoldam.css');
+
 :root {
   /* Primary color */
   --primary-100: #3692ff;
   --primary-200: #1967d6;
   --primary-300: #1251aa;
-  
+
   /* Point Color (버튼 색상) */
-  --point-green: #99C08E; 
+  --point-green: #99c08e;
   --point-green-hover: #88ae7d;
 
   /* Gray scale */
@@ -14,7 +16,7 @@
   --secondary-300: #e5e7eb;
 
   /* Background */
-  --bg-beige: #F6F4EF;
+  --bg-beige: #f6f4ef;
 }
 
 #root {
@@ -24,45 +26,41 @@
   font-family: pretendard;
 }
 
-
-
 .header {
   width: 100%;
-  height: 100px;       
-  background-color: #ffffff;  
+  height: 100px;
+  background-color: #ffffff;
   display: flex;
-  justify-content: center;    
-  position: sticky;           
+  justify-content: center;
+  position: sticky;
   top: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-
-.headerContainer {
+.header-container {
   width: 100%;
-  max-width: 1200px;         
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
-  align-items: center;        
-  padding: 0 40px;           
+  align-items: center;
+  padding: 0 40px;
 }
 
-
 .logo img {
-  height: 60px;              
+  height: 60px;
   object-fit: contain;
   display: block;
 }
 
-
-.btnStudyCreate {
+.btn-study-create {
   width: 252px;
   height: 58px;
-  background-color: #99C08E;
+  background-color: #99c08e;
   color: #ffffff;
   border-radius: 16px;
   cursor: pointer;
-  font-family: 'EF_jejudoldam', sans-serif;
+  font-family: 'EF_jejudoldam' !important;
   font-size: 18px;
   font-weight: 400;
   text-decoration: none;
@@ -73,14 +71,14 @@
   transition: all 0.1s ease-in-out;
 }
 
-.btnStudyCreate:active {
-  transform: translateY(2px);      
-  box-shadow: none;                   
-  text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.3); 
+.btn-study-create:active {
+  transform: translateY(2px);
+  box-shadow: none;
+  text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.3);
 }
 
-.btnStudyCreate:hover {
-  background-color: var(--point-green-hover);       
-  transform: translateY(-1px);      
+.btn-study-create:hover {
+  background-color: var(--point-green-hover);
+  transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

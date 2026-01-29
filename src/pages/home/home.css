@@ -1,0 +1,152 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+* {
+  font-family: 'Pretendard', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  background-color: #f6f4ef;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.main-content {
+  width: 1240px;
+  padding: 40px 20px;
+}
+
+.study-section {
+  margin-bottom: 48px;
+}
+
+.empty-status-box {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.recent-view-box {
+  width: 1200px;
+  height: 382px;
+}
+
+.study-browse-box {
+  width: 1200px;
+  height: 822px;
+}
+
+.section-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #414141;
+}
+
+.filter-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.search-bar-container {
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  border-radius: 20px;
+  width: 280px;
+  overflow: hidden;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  font-size: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23CCCCCC' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 16px center;
+}
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.sort-dropdown {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  width: 180px;
+  padding: 9px 20px;
+  font-size: 16px;
+  color: #818181;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23999999' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 180px;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.dropdown-item {
+  padding: 14px 18px;
+  font-size: 16px;
+  color: #414141;
+  text-align: center;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f2f2f2;
+  color: #000;
+}
+
+.dropdown-item.selected {
+  font-weight: 600;
+  color: #000;
+  background-color: #fdfdfd;
+}
+
+.empty-display {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.empty-message {
+  color: #818181;
+  font-size: 16px;
+}
