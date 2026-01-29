@@ -147,9 +147,6 @@
   justify-content: center;
 }
 
-/* gnb적용하면 정리할것
-.logo .gnbRight */
-
 .nickname {
   font-weight: 800;
   font-style: ExtraBold;
@@ -231,7 +228,7 @@
   cursor: pointer;
 }
 
-.habitItem.completed {
+.completed {
   background-color: #99c08e;
   color: #ffffff;
 }
