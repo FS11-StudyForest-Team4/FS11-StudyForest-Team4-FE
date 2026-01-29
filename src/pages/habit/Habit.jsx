@@ -10,6 +10,8 @@ const ONE_MINUTE_MS = 60 * 1000;
 function Habit() {
   //현재 시간을 저장하는 state
   const [now, setNow] = useState(new Date());
+  //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   //시계
   useEffect(() => {
@@ -85,7 +87,13 @@ function Habit() {
           {/* group33608 */}
           <div className={styles.listHeader}>
             <h2>오늘의 습관</h2>
-            <button className={styles.editLink}>목록 수정</button>
+            {/* 클릭하면 모달을 여는 이벤트 추가 */}
+            <button
+              className={styles.editLink}
+              onClick={() => setIsEditModalOpen(true)}
+            >
+              목록 수정
+            </button>
           </div>
 
           {/* frame 2609498 */}
@@ -106,6 +114,55 @@ function Habit() {
           </div>
         </main>
       </div>
+      {/* 모달 레이아웃 추가 */}
+      {isEditModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h3>습관 목록</h3>
+            </div>
+
+            <ul className={styles.editList}>
+              {habits.map((habit) => (
+                <li key={habit.id} className={styles.editItemWrapper}>
+                  <div className={styles.editItem}>
+                    <span>{habit.name}</span>
+                  </div>
+                  <button className={styles.deleteBtn}>
+                    <img
+                      src="src/assets/images/delete Icon.png
+"
+                      alt="delete Icon"
+                      className={styles.deleteIcon}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            {/* 습관 추가 섹션구현(+) */}
+            <div className={styles.addHabitSection}>
+              <input type="text" placeholder="" className={styles.addInput} />
+              <button className={styles.addBtn}>+</button>
+            </div>
+
+            <div className={styles.modalFooter}>
+              <button
+                className={styles.closeBtn}
+                onClick={() => setIsEditModalOpen(false)}
+              >
+                취소
+              </button>
+              <button
+                className={styles.submitBtn}
+                onClick={() => setIsEditModalOpen(false)}
+              >
+                수정 완료
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

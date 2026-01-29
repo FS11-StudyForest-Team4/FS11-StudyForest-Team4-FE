@@ -233,6 +233,201 @@
   color: #ffffff;
 }
 
+/* 모달스타일 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경 어둡게 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 최상단으로 올리기 */
+}
+
+.modalContent {
+  width: 648px;
+  height: 870px;
+  max-height: 80vh;
+  opacity: 1;
+  top: 99px;
+  left: 636px;
+  border-radius: 20px;
+  gap: 10px;
+  border-width: 1px;
+  padding-top: 40px;
+  padding-right: 24px;
+  padding-bottom: 40px;
+  padding-left: 24px;
+  background-color: white;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 35px;
+}
+.modalHeader h3 {
+  font-weight: 800;
+  font-style: ExtraBold;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+}
+.deleteIcon {
+  width: 45px;
+  height: 50px;
+  opacity: 1;
+  top: 3px;
+  left: 508px;
+  border-radius: 20px;
+  padding: 12px;
+  gap: 10px;
+  cursor: pointer;
+}
+.editList {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #818181;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: underline;
+  text-decoration-style: solid;
+}
+
+.editItemWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.editItem {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eeeeee;
+  padding: 12px 20px;
+  border-radius: 12px;
+  height: 54px;
+}
+.modalFooter {
+  display: flex;
+
+  gap: 12px;
+  margin-top: 30px;
+}
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #ff8080;
+  cursor: pointer;
+  background-color: #fde0e9;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addHabitSection {
+  margin-top: 20px;
+  border: 1px solid #000000; /* 피그마의 진한 테두리 반영 */
+  border-radius: 16px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.addInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background: transparent;
+}
+
+.addBtn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #414141;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 푸터 버튼 가로 정렬 */
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #dddddd;
+  font-family: EF_jejudoldam;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  width: 288px;
+  height: 58px;
+  opacity: 1;
+  border-radius: 16px;
+  padding: 10px;
+  gap: 10px;
+}
+.submitBtn {
+  background-color: #99c08e;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: EF_jejudoldam;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  width: 288px;
+  height: 58px;
+  opacity: 1;
+  border-radius: 16px;
+  padding: 10px;
+  gap: 10px;
+}
+
 /* 태블릿 (iPad mini 등) */
 @media (max-width: 768px) {
   .habitListCard {
