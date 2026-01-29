@@ -42,23 +42,32 @@ function Habit() {
       {/* 레이어 GNB */}
       <nav className={styles.gnb}>
         <div className={styles['gnb-inner']}>
-          <div className={styles.logo}>공부의 숲</div>
-          <div className={styles['gnb-right']}>
-            <button className={styles['gnb-btn']}>오늘의 집중</button>
-            <button className={styles['gnb-btn']}>홈</button>
-          </div>
+          <div className={styles['gnb-right']}></div>
         </div>
       </nav>
       {/* 메인 컨텐츠 박스 */}
       {/* frame 2609450 */}
       <div className={styles['main-wrapper']}>
-        {/* frame 2609481 */}
+        {/* frame 26094508 */}
         <header className={styles['habit-header-container']}>
-          {/* frame 2609451 */}
-          <div className={styles['header-top-row']}>
-            <h1>
-              <span className={styles.nickname}>연우</span>의 개발공장
-            </h1>
+          {/* Frame 2609479 */}
+          <div className={styles['header-top']}>
+            {/* frame 2609451 */}
+            <div className={styles['header-top-row']}>
+              <h1>
+                <span className={styles.nickname}>연우</span>의 개발공장
+              </h1>
+              {/* Frame 2609450 */}
+              <div>
+                <button className={styles['header-top-btn']}>
+                  <div className={styles['header-top-btn-today']}>
+                    오늘의 집중
+                  </div>
+                </button>
+                {/* Frame 2609447 */}
+                <button className={styles['header-top-btn-today']}>홈</button>
+              </div>
+            </div>
           </div>
 
           {/* frame 2609455 */}
