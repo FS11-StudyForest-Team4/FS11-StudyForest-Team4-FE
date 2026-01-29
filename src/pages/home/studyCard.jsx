@@ -1,43 +1,23 @@
-/* src/pages/home/StudyCard.jsx */
 import React from 'react';
+import styles from './studyCard.module.css';
 
-const StudyCard = ({ study, onClick }) => {
-  if (!study) return null;
+const StudyCard = ({ study, onClick, background }) => {
+  const bgColor = background || study?.background || '#D9D9D9';
+
   return (
     <div
+      className={styles.cardContainer}
       onClick={onClick}
-      style={{
-        background: '#ffffff',
-        padding: '24px',
-        borderRadius: '15px',
-        border: '1px solid #e9e9e9',
-        cursor: 'pointer',
-      }}
+      style={{ backgroundColor: bgColor }}
     >
-      <div
-        className={study.background}
-        style={{
-          height: '100px',
-          borderRadius: '10px',
-          marginBottom: '16px',
-          background: '#f5f5f5',
-        }}
-      ></div>
-      <h4 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '8px' }}>
-        {study.title}
-      </h4>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          color: '#818181',
-          fontSize: '14px',
-        }}
-      >
-        <span>{study.nickName}</span>
-        <span style={{ color: '#3692ff', fontWeight: '600' }}>
-          {study.totalPoint?.toLocaleString()} P
-        </span>
+      <div className={styles.textOverlay}>
+        <h4 className={styles.studyTitle}>{study?.title || '제목 없음'}</h4>
+        <div className={styles.studyInfo}>
+          <span className={styles.pointText}>{study?.totalPoint || 0}p</span>
+          <span className={styles.participantText}>
+            {study?.maxParticipants || 0}명
+          </span>
+        </div>
       </div>
     </div>
   );
