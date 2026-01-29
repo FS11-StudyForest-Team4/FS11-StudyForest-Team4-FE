@@ -38,17 +38,11 @@ function Habit() {
     <div className={styles.habitPage}>
       {' '}
       {/* css modules 사용*/}
-      {/* 글로벌배너영역 */}
-      {/* 레이어 GNB */}
-      <nav className={styles.gnb}>
-        <div className={styles.gnbInner}></div>
-      </nav>
       {/* 메인 컨텐츠 박스 */}
       {/* frame 2609450 */}
       <div className={styles.mainWrapper}>
         {/* frame 26094508 */}
-        <header className={styles.habitHeaderContainer}>
-          {/* Frame 2609479 */}
+        <header className={styles.habitTopSection}>
           <div className={styles.headerTop}>
             {/* frame 2609451 */}
             <div className={styles.headerTopRow}>

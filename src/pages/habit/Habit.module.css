@@ -7,21 +7,6 @@
   background-color: #f6f4ef;
 }
 
-/*  GNB */
-.gnb {
-  width: 100%;
-  height: 64px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-}
-.gnbInner {
-  width: 1248px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 /* main wrapper */
 /* frame 2609450 */
 .mainWrapper {
@@ -37,7 +22,7 @@
 }
 
 /* frame 2609508 */
-.habitHeaderContainer {
+.habitTopSection {
   opacity: 1;
   gap: 24px;
   margin: 10px;
