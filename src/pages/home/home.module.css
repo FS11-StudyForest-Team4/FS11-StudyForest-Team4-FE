@@ -1,29 +1,24 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
-* {
-  font-family: 'Pretendard', sans-serif;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.home-container {
+.homeContainer {
   background-color: #f6f4ef;
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  font-family: 'Pretendard', sans-serif;
 }
 
-.main-content {
-  width: 1240px;
+.mainContent {
+  width: 100%;
+  max-width: 1240px;
   padding: 40px 20px;
 }
 
-.study-section {
+.studySection {
   margin-bottom: 48px;
 }
 
-.empty-status-box {
+.emptyStatusBox {
   background-color: #ffffff;
   border-radius: 20px;
   padding: 40px;
@@ -32,38 +27,40 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.recent-view-box {
-  width: 1200px;
-  height: 382px;
+.recentViewBox {
+  min-height: 382px;
+}
+.studyBrowseBox {
+  min-height: 822px;
 }
 
-.study-browse-box {
-  width: 1200px;
-  height: 822px;
-}
-
-.section-header-row {
+.sectionHeaderRow {
   display: flex;
   flex-direction: column;
   gap: 24px;
   margin-bottom: 24px;
-  width: 100%;
 }
 
-.section-title {
+.sectionTitle {
   font-size: 24px;
   font-weight: 800;
   color: #414141;
 }
 
-.filter-controls {
+.studyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.filterControls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 }
 
-.search-bar-container {
+.searchBarContainer {
   background: #ffffff;
   border: 1px solid #e9e9e9;
   border-radius: 20px;
@@ -71,7 +68,7 @@
   overflow: hidden;
 }
 
-.search-input {
+.searchInput {
   border: none;
   outline: none;
   width: 100%;
@@ -82,16 +79,15 @@
   background-position: 16px center;
 }
 
-.dropdown-wrapper {
+.dropdownWrapper {
   position: relative;
 }
-
-.sort-dropdown {
+.sortDropdown {
   background: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 12px;
   width: 180px;
-  padding: 9px 20px;
+  padding: 9px 40px 9px 20px;
   font-size: 16px;
   color: #818181;
   cursor: pointer;
@@ -100,9 +96,9 @@
   background-position: right 14px center;
 }
 
-.dropdown-menu {
+.dropdownMenu {
   position: absolute;
-  top: 100%;
+  top: 48px;
   right: 0;
   width: 180px;
   background: #ffffff;
@@ -110,43 +106,27 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   list-style: none;
-  overflow: hidden;
+  z-index: 100;
   padding: 4px 0;
 }
 
-.dropdown-item {
+.dropdownItem {
   padding: 14px 18px;
-  font-size: 16px;
-  color: #414141;
   text-align: center;
-  border-bottom: 1px solid #f1f1f1;
   cursor: pointer;
 }
-
-.dropdown-item:last-child {
-  border-bottom: none;
+.selectedItem {
+  font-weight: 700;
+  color: #111111;
 }
 
-.dropdown-item:hover {
-  background-color: #f2f2f2;
-  color: #000;
-}
-
-.dropdown-item.selected {
-  font-weight: 600;
-  color: #000;
-  background-color: #fdfdfd;
-}
-
-.empty-display {
+.emptyDisplay {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
 }
-
-.empty-message {
-  color: #818181;
+.emptyMessage {
+  color: #414141;
   font-size: 16px;
 }

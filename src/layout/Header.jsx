@@ -11,14 +11,14 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="header-container">
+      <div className="headerContainer">
         <div className="logo">
           <Link to="/">
             <img src={logo} alt="공부의 숲 로고" />
           </Link>
         </div>
         {shouldShowCreateButton && (
-          <Link to="/study/create" className="btn-study-create">
+          <Link to="/study/create" className="btnStudyCreate">
             스터디 만들기
           </Link>
         )}
