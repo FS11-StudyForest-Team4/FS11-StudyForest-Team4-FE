@@ -7,23 +7,23 @@
   padding: 0;
 }
 
-.homeContainer {
+.home-container {
   background-color: #f6f4ef;
   min-height: 100vh;
   display: flex;
   justify-content: center;
 }
 
-.mainContent {
+.main-content {
   width: 1240px;
   padding: 40px 20px;
 }
 
-.studySection {
+.study-section {
   margin-bottom: 48px;
 }
 
-.emptyStatusBox {
+.empty-status-box {
   background-color: #ffffff;
   border-radius: 20px;
   padding: 40px;
@@ -32,17 +32,17 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.emptyStatusBox.fixed-small {
+.recent-view-box {
   width: 1200px;
   height: 382px;
 }
 
-.emptyStatusBox.fixed-large {
+.study-browse-box {
   width: 1200px;
   height: 822px;
 }
 
-.sectionHeaderRow {
+.section-header-row {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -50,20 +50,20 @@
   width: 100%;
 }
 
-.sectionTitle {
+.section-title {
   font-size: 24px;
   font-weight: 800;
   color: #414141;
 }
 
-.filterControls {
+.filter-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
-.searchBarContainer {
+.search-bar-container {
   background: #ffffff;
   border: 1px solid #e9e9e9;
   border-radius: 20px;
@@ -71,7 +71,7 @@
   overflow: hidden;
 }
 
-.searchInput {
+.search-input {
   border: none;
   outline: none;
   width: 100%;
@@ -82,11 +82,11 @@
   background-position: 16px center;
 }
 
-.dropdownWrapper {
+.dropdown-wrapper {
   position: relative;
 }
 
-.sortDropdown {
+.sort-dropdown {
   background: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 12px;
@@ -100,7 +100,7 @@
   background-position: right 14px center;
 }
 
-.dropdownMenu {
+.dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
@@ -110,12 +110,11 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   list-style: none;
-  z-index: 100;
   overflow: hidden;
   padding: 4px 0;
 }
 
-.dropdownItem {
+.dropdown-item {
   padding: 14px 18px;
   font-size: 16px;
   color: #414141;
@@ -124,22 +123,22 @@
   cursor: pointer;
 }
 
-.dropdownItem:last-child {
+.dropdown-item:last-child {
   border-bottom: none;
 }
 
-.dropdownItem:hover {
+.dropdown-item:hover {
   background-color: #f2f2f2;
   color: #000;
 }
 
-.dropdownItem.selected {
+.dropdown-item.selected {
   font-weight: 600;
   color: #000;
   background-color: #fdfdfd;
 }
 
-.emptyDisplay {
+.empty-display {
   flex: 1;
   display: flex;
   align-items: center;
@@ -147,7 +146,7 @@
   width: 100%;
 }
 
-.emptyMessage {
+.empty-message {
   color: #818181;
-  font-size: px;
+  font-size: 16px;
 }

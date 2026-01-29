@@ -1,0 +1,32 @@
+export const MOCK_STUDY_LIST = [
+  {
+    id: '01HRPZ',
+    title: '리액트 마스터 스터디',
+    description: '매일 3시간씩 리액트 공식 문서를 읽고 정리합니다.',
+    nickName: '공부왕하늘',
+    background: 'LEAF',
+    totalPoint: 1500,
+    createdAt: '2024-01-20T10:00:00Z',
+    updatedAt: '2024-01-20T10:00:00Z',
+  },
+  {
+    id: '01HRQA',
+    title: '아침 기상 인증 모임',
+    description: '아침 7시 기상 후 해빗 로그를 남기는 모임입니다.',
+    nickName: '얼리버드',
+    background: 'STUDY',
+    totalPoint: 850,
+    createdAt: '2024-01-22T07:30:00Z',
+    updatedAt: '2024-01-22T08:00:00Z',
+  },
+  {
+    id: '01HRQB',
+    title: '디자인 시스템 스터디',
+    description: '피그마를 활용해 나만의 디자인 시스템을 구축합니다.',
+    nickName: '디자인꿈나무',
+    background: 'DESIGN',
+    totalPoint: 2300,
+    createdAt: '2024-01-25T15:00:00Z',
+    updatedAt: '2024-01-26T09:00:00Z',
+  },
+];
