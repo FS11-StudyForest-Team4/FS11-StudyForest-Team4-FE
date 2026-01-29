@@ -58,14 +58,25 @@ function Habit() {
                 <span className={styles.nickname}>연우</span>의 개발공장
               </h1>
               {/* Frame 2609450 */}
-              <div>
-                <button className={styles['header-top-btn']}>
-                  <div className={styles['header-top-btn-today']}>
-                    오늘의 집중
-                  </div>
+              <div className={styles['btn-group']}>
+                {/* Frame 2609447 */}
+                <button className={styles['header-top-btn-today']}>
+                  오늘의 집중
+                  <img
+                    src="src\assets\images\arrow Vector.png"
+                    alt=""
+                    className={styles['icon-arrow']}
+                  />
                 </button>
                 {/* Frame 2609447 */}
-                <button className={styles['header-top-btn-today']}>홈</button>
+                <button className={styles['header-top-btn-home']}>
+                  홈{' '}
+                  <img
+                    src="src\assets\images\arrow Vector.png"
+                    alt=""
+                    className={styles['icon-arrow']}
+                  />
+                </button>
               </div>
             </div>
           </div>

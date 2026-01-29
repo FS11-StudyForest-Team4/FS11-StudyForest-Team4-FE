@@ -1,10 +1,10 @@
 /* 전체 배경 설정 */
 .habit-page {
-  background-color: #f6f4ef;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #f6f4ef;
 }
 
 /*  GNB */
@@ -14,7 +14,6 @@
   background-color: #ffffff;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #eeeeee;
 }
 .gnb-inner {
   width: 1248px;
@@ -26,27 +25,26 @@
 /* main wrapper */
 /* frame 2609450 */
 .main-wrapper {
-  width: 1248;
-  height: 863;
+  width: 1248px;
+  height: 100%;
   opacity: 1;
   top: 139px;
   left: 360px;
   border-radius: 20px;
   padding: 40px;
   gap: 10px;
+  background-color: #ffffff;
 }
 
 /* frame 2609508 */
 .habit-header-container {
-  width: 1168;
-  height: 783;
   opacity: 1;
   gap: 24px;
+  margin: 10px;
 }
 /* Frame 2609479 */
 .header-top {
-  width: 1168;
-  height: 128;
+  height: 48px;
   opacity: 1;
   gap: 16px;
   display: flex;
@@ -57,43 +55,74 @@
 /* frame 2609451 */
 .header-top-row h1 {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: 800;
   font-style: ExtraBold;
   font-size: 32px;
   line-height: 100%;
   letter-spacing: 0%;
   vertical-align: middle;
-  width: 1168;
-  height: 48;
   opacity: 1;
+  width: auto;
+  height: auto;
 }
-/* Frame 2609450 */
-.header-top-btn {
+
+/* frame 2609451 */
+.header-top-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: 242;
-  height: 48;
-  opacity: 1;
-  left: 926px;
+  width: 1168px;
+  height: 48px;
+}
+
+/* Frame 2609450 */
+.btn-group {
+  display: flex;
+  align-items: center;
   gap: 16px;
 }
+
 /* Frame 2609447 */
 .header-top-btn-today {
-  width: 104;
-  height: 24;
+  width: 144px;
+  height: 48px;
   opacity: 1;
-  top: 12px;
-  left: 24px;
-  gap: 4px;
   font-weight: 500;
   font-style: Medium;
   font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
   text-align: center;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #818181;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #dddddd;
+  gap: 14px;
+}
+
+.header-top-btn-home {
+  width: 82px;
+  height: 48px;
+  opacity: 1;
+  background-color: #ffffff;
+  color: #818181;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: 1px solid #dddddd;
+  gap: 14px;
+}
+.icon-arrow {
+  width: 5;
+  height: 11;
 }
 
 /* 시간박스 frame 2609455 */
@@ -103,40 +132,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px 16px;
   background-color: rgba(0, 0, 0, 0.03);
   border-radius: 12px;
+  background-color: #ffffff;
+  margin: 20px 0px;
 }
 
 .time-label {
-  font-size: 12px;
   color: #888888;
-  margin: 0;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
 }
 
 .time-display {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: #414141;
+  width: 200px;
+  border-radius: 20px;
+  border: 1px solid #dddddd;
+  margin-top: 20px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* gnb적용하면 정리할것
 .logo .gnbRight */
-
-.gnb-right {
-  display: flex;
-  gap: 10px;
-}
-
-.gnb-btn {
-  font-weight: 500;
-  font-style: Medium;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-}
 
 .nickname {
   font-weight: 800;
@@ -147,35 +174,58 @@
   vertical-align: middle;
 }
 
+/* 습관카드 frame 2609478 */
+.habit-list-card {
+  width: 1168px;
+  padding: 40px 24px;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 습관 리스트 헤더 group 33609 */
+.list-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  justify-content: center;
+  position: relative;
+  width: 400px;
+}
+
+.list-header h2 {
+  font-weight: 800;
+  font-style: ExtraBold;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: center;
+  margin: 0;
+  width: 120px;
+}
+
 .edit-link {
   font-weight: 500;
   font-style: Medium;
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-}
-/* 습관카드 frame 2609478 */
-.habit-list-card {
-  width: 1168px;
-  padding: 40px 24px;
-  border: 1px solid #eeeeee;
-  border-radius: 20px;
-}
-
-/* 습관 리스트 헤더 group 33609 */
-.list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+  color: #818181;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  border: none;
 }
 
 /* 습관 리스트 frame 2609498 */
 .habit-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
   width: 400px;
   height: 498px;
@@ -187,17 +237,18 @@
   height: 54px;
   padding: 0 20px;
   border-radius: 20px;
-  border: 1px solid #dddddd;
+  border: 1px solid #ffffff;
   background-color: #eeeeee;
   text-align: center;
   font-size: 15px;
+  color: #818181;
 
   cursor: pointer;
 }
 
 .habit-item.completed {
   background-color: #99c08e;
-  color: #818181;
+  color: #ffffff;
 }
 
 /* 태블릿 (iPad mini 등) */
