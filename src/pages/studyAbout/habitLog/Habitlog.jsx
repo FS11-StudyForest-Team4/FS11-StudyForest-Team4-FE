@@ -21,7 +21,7 @@ function Habitlog() {
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
 
-  const historyWithWeek = history
+  const historyWithWeek = habitlog
     .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
     .reduce((acc, cur) => {
       const dayIndex = new Date(cur.createdAt).getDay();

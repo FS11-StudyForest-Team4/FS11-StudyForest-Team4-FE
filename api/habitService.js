@@ -1,5 +1,3 @@
-import Study from '@/pages/study/Study';
-
 const API_BASE_URL = 'http://localhost:5001/api';
 
 // GET 습관 목록조회
@@ -44,7 +42,7 @@ export async function patchHabit(habitId, habitData) {
 }
 
 // DELETE 습관 삭제
-export async function patchHabit(habitId) {
+export async function deleteHabit(habitId) {
   const response = await fetch(`${API_BASE_URL}/habits/${habitId}`, {
     method: 'PATCH',
   });
@@ -53,8 +51,6 @@ export async function patchHabit(habitId) {
   }
   return response.json();
 }
-
-
 
 //fetch로 API 연동하기
 // export async function fetchProducts(params = {}) {
@@ -72,3 +68,13 @@ export async function patchHabit(habitId) {
 //     throw error;
 //   }
 // }
+
+
+(async () => {
+  try {
+    const habits = await fetchHabits('01KG42H3405J23N71Z3YAGEP66'); // 실제 studyId 넣기
+    console.log(habits);
+  } catch (error) {
+    console.error('API 호출 실패:', error);
+  }
+})();
