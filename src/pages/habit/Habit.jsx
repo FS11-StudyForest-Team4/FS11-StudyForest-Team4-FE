@@ -35,46 +35,44 @@ function Habit() {
   ]);
 
   return (
-    <div className={styles['habit-page']}>
+    <div className={styles.habitPage}>
       {' '}
       {/* css modules 사용*/}
       {/* 글로벌배너영역 */}
       {/* 레이어 GNB */}
       <nav className={styles.gnb}>
-        <div className={styles['gnb-inner']}>
-          <div className={styles['gnb-right']}></div>
-        </div>
+        <div className={styles.gnbInner}></div>
       </nav>
       {/* 메인 컨텐츠 박스 */}
       {/* frame 2609450 */}
-      <div className={styles['main-wrapper']}>
+      <div className={styles.mainWrapper}>
         {/* frame 26094508 */}
-        <header className={styles['habit-header-container']}>
+        <header className={styles.habitHeaderContainer}>
           {/* Frame 2609479 */}
-          <div className={styles['header-top']}>
+          <div className={styles.headerTop}>
             {/* frame 2609451 */}
-            <div className={styles['header-top-row']}>
+            <div className={styles.headerTopRow}>
               <h1>
                 <span className={styles.nickname}>연우</span>의 개발공장
               </h1>
               {/* Frame 2609450 */}
-              <div className={styles['btn-group']}>
+              <div className={styles.btnGroup}>
                 {/* Frame 2609447 */}
-                <button className={styles['header-top-btn-today']}>
+                <button className={styles.headerTopBtnToday}>
                   오늘의 집중
                   <img
-                    src="src\assets\images\arrow Vector.png"
+                    src="src/assets/images/arrow Vector.png"
                     alt=""
-                    className={styles['icon-arrow']}
+                    className={styles.iconArrow}
                   />
                 </button>
                 {/* Frame 2609447 */}
-                <button className={styles['header-top-btn-home']}>
+                <button className={styles.headerTopBtnHome}>
                   홈{' '}
                   <img
-                    src="src\assets\images\arrow Vector.png"
+                    src="src/assets/images/arrow Vector.png"
                     alt=""
-                    className={styles['icon-arrow']}
+                    className={styles.iconArrow}
                   />
                 </button>
               </div>
@@ -82,27 +80,27 @@ function Habit() {
           </div>
 
           {/* frame 2609455 */}
-          <div className={styles['time-box']}>
-            <p className={styles['time-label']}>현재 시간</p>
-            <div className={styles['time-display']}>{timeString}</div>
+          <div className={styles.timeBox}>
+            <p className={styles.timeLabel}>현재 시간</p>
+            <div className={styles.timeDisplay}>{timeString}</div>
           </div>
         </header>
 
         {/* frame 2609478 */}
-        <main className={styles['habit-list-card']}>
+        <main className={styles.habitListCard}>
           {/* group33608 */}
-          <div className={styles['list-header']}>
+          <div className={styles.listHeader}>
             <h2>오늘의 습관</h2>
-            <button className={styles['edit-link']}>목록 수정</button>
+            <button className={styles.editLink}>목록 수정</button>
           </div>
 
           {/* frame 2609498 */}
-          <div className={styles['habit-list']}>
+          <div className={styles.habitList}>
             {habits.map((habit) => (
               <button
                 key={habit.id}
                 className={clsx(
-                  styles['habit-item'],
+                  styles.habitItem,
                   habit.completed && styles.completed,
                 )}
               >
