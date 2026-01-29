@@ -1,28 +1,16 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
-
-* {
-  font-family: 'Pretendard', sans-serif;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 .homeContainer {
   background-color: #f6f4ef;
   min-height: 100vh;
   display: flex;
   justify-content: center;
 }
-
 .mainContent {
   width: 1240px;
   padding: 40px 20px;
 }
-
 .studySection {
   margin-bottom: 48px;
 }
-
 .emptyStatusBox {
   background-color: #ffffff;
   border-radius: 20px;
@@ -36,10 +24,9 @@
   width: 1200px;
   height: 382px;
 }
-
 .studyBrowseBox {
   width: 1200px;
-  height: 822px;
+  min-height: 822px;
 }
 
 .sectionHeaderRow {
@@ -47,9 +34,7 @@
   flex-direction: column;
   gap: 24px;
   margin-bottom: 24px;
-  width: 100%;
 }
-
 .sectionTitle {
   font-size: 24px;
   font-weight: 800;
@@ -60,9 +45,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 }
-
 .searchBarContainer {
   background: #ffffff;
   border: 1px solid #e9e9e9;
@@ -85,7 +68,6 @@
 .dropdownWrapper {
   position: relative;
 }
-
 .sortDropdown {
   background: #ffffff;
   border: 1px solid #dddddd;
@@ -95,14 +77,10 @@
   font-size: 16px;
   color: #818181;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23999999' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
 }
-
 .dropdownMenu {
   position: absolute;
-  top: 0;
+  top: 110%;
   right: 0;
   width: 180px;
   background: #ffffff;
@@ -112,9 +90,7 @@
   list-style: none;
   z-index: 10;
   overflow: hidden;
-  padding: 4px 0;
 }
-
 .dropdownItem {
   padding: 14px 18px;
   font-size: 16px;
@@ -123,31 +99,45 @@
   border-bottom: 1px solid #f1f1f1;
   cursor: pointer;
 }
-
-.dropdownItem:last-child {
-  border-bottom: none;
-}
-
-.dropdownItem:hover {
-  background-color: #f2f2f2;
-  color: #000;
-}
-
-.dropdownItem.selected {
-  font-weight: 600;
-  color: #000;
+.selected {
+  font-weight: 700;
   background-color: #fdfdfd;
 }
 
+.studyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
 .emptyDisplay {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
 }
-
 .emptyMessage {
   color: #818181;
   font-size: 16px;
+}
+
+.sortDropdown {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  width: 180px;
+  padding: 9px 40px 9px 20px;
+  font-size: 16px;
+  color: #818181;
+  cursor: pointer;
+  position: relative;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23818181' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 15px) center;
+  appearance: none;
+}
+
+.sortDropdown.active {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23818181' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 15l-6-6-6 6'/%3E%3C/svg%3E");
 }
