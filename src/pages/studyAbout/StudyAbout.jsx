@@ -8,7 +8,7 @@ import Habitlog from './habitLog/Habitlog';
 
 const StudyAbout = () => {
   return (
-    <div className={styles['studyAbout-wrap']}>
+    <div className={styles.studyAboutWrap}>
       <StudyInfo />
       <Habitlog />
     </div>

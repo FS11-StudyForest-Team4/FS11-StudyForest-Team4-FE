@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
-import styles from './StudyInfo.module.css';
+import styles from './studyInfo.module.css';
+import { EmojiService } from '@/api/api';
 
 {
   /* TO DO LIST 
@@ -14,52 +15,103 @@ import styles from './StudyInfo.module.css';
 }
 
 const StudyInfo = () => {
-  const EMOJI_LIST = [
-    //예시
-    { id: 0, name: '😃', count: 32 },
-    { id: 1, name: '☺️', count: 3 },
-    { id: 2, name: '🔥', count: 12 },
-  ];
+  const [emojiList, setEmojiList] = useState([]);
+  const [moreEmoji, setMoreEmoji] = useState(false);
+  const [emojiTab, setEmojiTab] = useState(false);
 
-  const [emojiMore, setEmojiMore] = useState(false);
+  const onEmojiClick = (emojiName) => {
+    createEmoji(emojiName);
+  };
 
-  const onEmojiClick = (e) => {
-    const { emoji, unified } = e;
-    console.log('emoji:', emoji, unified);
-    // 보내는 api
+  const getEmojiList = async () => {
+    try {
+      const res = await EmojiService.getEmojiList(
+        '01KG4143RBBN6DG5CFSNNNSXQ8', //studyId
+      );
+      setEmojiList(res);
+    } catch (err) {
+      console.log('err:', err);
+    }
+  };
+
+  useEffect(() => {
+    getEmojiList();
+  }, []);
+
+  const createEmoji = async (emojiName) => {
+    try {
+      const res = await EmojiService.createEmoji(
+        '01KG4143RBBN6DG5CFSNNNSXQ8', //studyId
+        { name: emojiName },
+      );
+      if (res.status == 201) getEmojiList();
+    } catch (err) {
+      console.log('err:', err);
+    }
   };
 
   return (
     <section>
-      <article className={styles['study-nav']}>
-        <div className={styles['emoji-box']}>
-          <ul className={styles['emoji-list']}>
-            {EMOJI_LIST &&
-              EMOJI_LIST.map((emojiItem, index) => (
-                <li id={emojiItem.id} key={index}>
+      <article className={styles.studyNav}>
+        <div className={styles.emojiBox}>
+          <ul className={styles.emojiList}>
+            {emojiList &&
+              emojiList.slice(0, 3).map((emojiItem) => (
+                <li
+                  id={emojiItem.id}
+                  key={emojiItem.id}
+                  onClick={() => onEmojiClick(emojiItem.name)}
+                >
                   <span>{emojiItem.name}</span>
                   <span>{emojiItem.count}</span>
                 </li>
               ))}
           </ul>
+          {emojiList.length > 3 && (
+            <>
+              <button
+                onClick={() => setMoreEmoji(!moreEmoji)}
+                className={styles.moreEmojiBtn}
+              >
+                <i /> {emojiList.length - 3}...
+              </button>
+              {moreEmoji && (
+                <ul className={styles.emojiList + ' ' + styles.moreEmoji}>
+                  {emojiList &&
+                    emojiList.map((emojiItem) => (
+                      <li
+                        id={emojiItem.id}
+                        key={emojiItem.id}
+                        onClick={() => onEmojiClick(emojiItem.name)}
+                      >
+                        <span>{emojiItem.name}</span>
+                        <span>{emojiItem.count}</span>
+                      </li>
+                    ))}
+                </ul>
+              )}
+            </>
+          )}
           <button
-            className={styles['emoji-btn']}
-            onClick={() => setEmojiMore(!emojiMore)}
+            className={styles.emojiBtn}
+            onClick={() => setEmojiTab(!emojiTab)}
           >
-            <i className={styles['i_emoji']} /> 추가
+            <i className={styles.iEmoji} /> 추가
           </button>
-          {emojiMore && <EmojiPicker onEmojiClick={(e) => onEmojiClick(e)} />}
+          {emojiTab && (
+            <EmojiPicker onEmojiClick={(e) => onEmojiClick(e.emoji)} />
+          )}
         </div>
-        <ul className={styles['btn-list']}>
+        <ul className={styles.btnList}>
           <li>공유하기</li>
           <li>수정하기</li>
           <li>스터디 삭제하기</li>
         </ul>
       </article>
-      <article className={styles['study-content']}>
-        <div className={styles['study-top']}>
+      <article className={styles.studyContent}>
+        <div className={styles.studyTop}>
           <h1>연우의 개발공장 데이터 넣기</h1>
-          <div className={styles['more-btn']}>
+          <div className={styles.moreBtn}>
             <button>
               오늘의 습관 <i />
             </button>
@@ -68,13 +120,13 @@ const StudyInfo = () => {
             </button>
           </div>
         </div>
-        <div className={styles['study-info']}>
+        <div className={styles.studyInfo}>
           <h4>소개</h4>
           <p>[데이터 넣기] 다들 오늘 하루도 화이팅 ;) 현재까지</p>
         </div>
-        <div className={styles['study-point']}>
+        <div className={styles.studyPoint}>
           <h4>현재 획득한 포인트</h4>
-          <p className={styles['point']}>
+          <p className={styles.point}>
             <i /> <span>310P[데이터 넣기] 획득</span>
           </p>
         </div>
