@@ -1,16 +1,38 @@
+import { useEffect, useState } from 'react';
 import styles from './Habitlog.module.css';
+import { getHabitList } from '@/api/habitService';
 
 // 이번주 날짜 확인 및 요청 util 만들어서 설정하기
 // return  { startDate, endDate } // 월요일부터 일요일로 설정
 // 줄마다 다른 image 넣기 로직 구현
 
-function Habitlog() {
-  const habits = [
-    //GET study/habits에서 데이터 받기
-    { id: 1, name: '미라클모닝' },
-    { id: 2, name: '아침먹기' },
-    { id: 3, name: '스트레칭' },
-  ];
+
+
+function Habitlog() { 
+  const [habits, setHabits] = useState([]);
+
+  const studyId = '01KG42H3405J23N71Z3YAGEP66'
+  useEffect(() => { 
+    const fetchHabits = async () => {
+      try {
+        const data = await getHabitList(studyId);
+        console.log('습관 목록:', data); // 콘솔 확인용
+        setHabits(data || []);
+      } catch (err) {
+        console.error('API 호출 실패:', err);
+      } 
+    };
+
+    fetchHabits();
+  }, [studyId]);
+
+
+  // const habits = [
+  //   //GET study/habits에서 데이터 받기
+  //   { id: 1, name: '미라클모닝' },
+  //   { id: 2, name: '아침먹기' },
+  //   { id: 3, name: '스트레칭' },
+  // ];
 
   const habitlog = [
     // 받아올 데이터 (데이터 받을때 한 주꺼만 받기 )
@@ -35,9 +57,14 @@ function Habitlog() {
       acc[habitId][day] = true;
       return acc;
     }, {});
+     
 
+     
   return (
     <section className={styles['habit-list']}>
+     
+
+
       <h2>습관기록표</h2>
       <table>
         <thead>
