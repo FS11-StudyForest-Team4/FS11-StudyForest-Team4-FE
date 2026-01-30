@@ -8,7 +8,7 @@ export const instance = axios.create({
 export const getEmojiList = (studyId) => {
   return instance
     .get(`/${studyId}`)
-    .then((res) => res.data)
+    .then((res) => res)
     .catch((error) => {
       console.log('getEmojiList Error:', error.response?.data || error.message);
     });

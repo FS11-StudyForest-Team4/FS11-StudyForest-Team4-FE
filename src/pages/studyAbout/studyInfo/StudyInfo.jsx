@@ -28,14 +28,18 @@ const StudyInfo = () => {
       const res = await EmojiService.getEmojiList(
         '01KG4143RBBN6DG5CFSNNNSXQ8', //studyId
       );
-      setEmojiList(res);
+      setEmojiList(res.data);
     } catch (err) {
       console.log('err:', err);
     }
   };
 
   useEffect(() => {
-    getEmojiList();
+    const fetchEmojiList = async () => {
+      await getEmojiList();
+    };
+
+    fetchEmojiList();
   }, []);
 
   const createEmoji = async (emojiName) => {
