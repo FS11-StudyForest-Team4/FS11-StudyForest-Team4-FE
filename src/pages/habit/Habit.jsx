@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './habit.module.css';
 import arrow_Vector from '../../assets/images/arrow_Vector.png';
 import delete_Icon from '../../assets/images/delete_Icon.png';
+import {
+  updateHabit,
+  createHabit,
+  deleteHabit,
+} from '../../api/habit/habitService';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -38,6 +43,32 @@ function Habit() {
     { id: 7, name: '물 2L 먹기', completed: false },
   ]);
 
+  // 수정 완료 로직(하림님 updateHabit 활용)
+  const handleSubmit = async () => {
+    try {
+      const updatePromises = habits.map((habit) =>
+        updateHabit(habit.id, { name: habit.name }),
+      );
+      await Promise.all(updatePromises);
+      alert('습관이 성공적으로 수정되었습니다!');
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error('수정 중 오류 발생:', error);
+    }
+  };
+
+  // 2. 삭제 로직 (하림님의 deleteHabit 활용)
+  const handleDelete = async (habitId) => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      try {
+        await deleteHabit(habitId); // 서버 삭제
+        setHabits(habits.filter((h) => h.id !== habitId)); // UI 반영
+      } catch (error) {
+        console.error('삭제 중 오류 발생:', error);
+      }
+    }
+  };
+
   return (
     <div className={styles.habitPage}>
       {' '}
@@ -58,11 +89,7 @@ function Habit() {
                 {/* Frame 2609447 */}
                 <button className={styles.headerTopBtnToday}>
                   오늘의 집중
-                  <img
-                    src="src/assets/images/arrow Vector.png"
-                    alt=""
-                    className={styles.iconArrow}
-                  />
+                  <img src={arrow_Vector} alt="" className={styles.iconArrow} />
                 </button>
                 {/* Frame 2609447 */}
                 <button className={styles.headerTopBtnHome}>
@@ -129,7 +156,10 @@ function Habit() {
                   <div className={styles.editCase}>
                     <span>{habit.name}</span>
                   </div>
-                  <button className={styles.deleteBtn}>
+                  <button
+                    className={styles.deleteBtn}
+                    onClick={() => handleDelete(habit.id)}
+                  >
                     <img
                       src={delete_Icon}
                       alt="delete"
@@ -151,10 +181,7 @@ function Habit() {
               >
                 취소
               </button>
-              <button
-                className={styles.submitBtn}
-                onClick={() => setIsEditModalOpen(false)}
-              >
+              <button className={styles.submitBtn} onClick={handleSubmit}>
                 수정 완료
               </button>
             </div>
