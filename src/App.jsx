@@ -3,18 +3,18 @@ import '@/assets/styles/reset.css';
 import Layout from './layout/Layout';
 import Home from '@/pages/home/Home';
 import Habit from './pages/habit/habit';
-import Study from './pages/study/Study';
 import StudyAbout from './pages/studyAbout/StudyAbout';
 import Focus from './pages/focus/Focus';
+import StudyCreate from '@/pages/studyCreate/StudyCreate';
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/study/create" element={<StudyCreate />} />
+        <Route path="/study/about" element={<StudyAbout />} />
         <Route path="/habit" element={<Habit />} />
-        <Route path="/study" element={<Study />} />
-        <Route path="/studyAbout" element={<StudyAbout />} />
         <Route path="/focus" element={<Focus />} />
       </Routes>
     </Layout>
