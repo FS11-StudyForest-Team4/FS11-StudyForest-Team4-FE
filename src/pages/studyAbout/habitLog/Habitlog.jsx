@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Habitlog.module.css';
 import { getHabitList } from '@/api/habitService';
+// import { getStartOfweek } from '@/utils/getStartOfWeek';
 
 // 이번주 날짜 확인 및 요청 util 만들어서 설정하기
 // return  { startDate, endDate } // 월요일부터 일요일로 설정
@@ -42,6 +43,9 @@ function Habitlog() {
   ];
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
+ 
+  // const startOfWeek = getStartOfweek();
+  // await getHabitlogs(studyId, startOfWeek)
 
   const historyWithWeek = habitlog
     .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
