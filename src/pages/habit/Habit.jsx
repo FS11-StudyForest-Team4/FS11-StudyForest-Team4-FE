@@ -121,31 +121,28 @@ function Habit() {
             <div className={styles.modalHeader}>
               <h3>습관 목록</h3>
             </div>
-
-            <ul className={styles.editList}>
-              {habits.map((habit) => (
-                <li key={habit.id} className={styles.editItemWrapper}>
-                  <div className={styles.editItem}>
-                    <span>{habit.name}</span>
-                  </div>
-                  <button className={styles.deleteBtn}>
-                    <img
-                      src="src/assets/images/delete Icon.png
+              <ul className={styles.editList}>
+                {habits.map((habit) => (
+                  <li key={habit.id} className={styles.editCaseWrapper}>
+                    <div className={styles.editCase}>
+                      <span>{habit.name}</span>
+                    </div>
+                    <button className={styles.deleteBtn}>
+                      <img
+                        src="src/assets/images/delete Icon.png
 "
-                      alt="delete Icon"
-                      className={styles.deleteIcon}
-                    />
-                  </button>
-                </li>
-              ))}
-            </ul>
+                        alt="delete Icon"
+                        className={styles.deleteIcon}
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
 
-            {/* 습관 추가 섹션구현(+) */}
-            <div className={styles.addHabitSection}>
-              <input type="text" placeholder="" className={styles.addInput} />
-              <button className={styles.addBtn}>+</button>
-            </div>
-
+              {/* 습관 추가 섹션구현(+) */}
+              <div className={styles.addHabitSection}>
+                <button className={styles.addBtn}>+</button>
+              </div>
             <div className={styles.modalFooter}>
               <button
                 className={styles.closeBtn}
