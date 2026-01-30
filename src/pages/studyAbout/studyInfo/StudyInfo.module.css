@@ -1,0 +1,228 @@
+.studyNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & .emojiBox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    & aside {
+      position: absolute;
+      top: 50px;
+      left: 0;
+    }
+  }
+
+  & .emojiList {
+    display: flex;
+    padding: 6px 8px;
+    align-items: center;
+    gap: 5px;
+    & li {
+      height: 31px;
+      display: flex;
+      padding: 6px 8px;
+      align-items: center;
+      gap: 5px;
+      border-radius: 50px;
+      background: rgba(0, 0, 0, 0.5);
+      &:hover {
+        cursor: pointer;
+      }
+      & span:first-child {
+        font-size: 11px;
+      }
+      & span:last-child {
+        color: #fff;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+
+  & .moreEmoji {
+    max-width: 242px;
+    border-radius: 15px;
+    border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+    position: absolute;
+    top: 45px;
+    left: 0;
+    padding: 12px;
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  & .moreEmojiBtn {
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    padding: 6px 8px;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    color: #fff;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0 8px 0 0;
+    & i {
+      width: 16px;
+      height: 16px;
+      background: url(@/assets/images/ic_plus.svg) no-repeat;
+      background-size: 100% auto;
+    }
+  }
+
+  & .emojiBtn {
+    height: 31px;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+    display: flex;
+    padding: 6px 8px;
+    align-items: flex-start;
+    gap: 5px;
+    color: var(--black-black_414141, #414141);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    & .iEmoji {
+      width: 18px;
+      height: 18px;
+      background: url(@/assets/images/ic_smile.svg) no-repeat;
+      background-size: 100% auto;
+    }
+  }
+
+  & .btnList {
+    display: flex;
+    & li {
+      color: var(--green-green_text_578246, #578246);
+      text-align: center;
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      &:after {
+        content: '|';
+        margin: 0 16px;
+      }
+      &:last-child {
+        color: var(--gray-gray_818181, #818181);
+        &:after {
+          content: '';
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.studyContent {
+  & .studyTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 29px 0 21px 0;
+    & h1 {
+      color: #414141;
+      font-family: Pretendard;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+    }
+    & .moreBtn {
+      display: flex;
+      gap: 16px;
+      & button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px 12px 24px;
+        border-radius: 15px;
+        border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+        background: #fff;
+        color: var(--gray-gray_818181, #818181);
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+      & i {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        background: url(@/assets/images/ic_arrow_right.svg) no-repeat;
+        background-size: 100% auto;
+      }
+    }
+  }
+  & .studyInfo,
+  & .studyPoint {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    & h4 {
+      color: var(--gray-gray_818181, #818181);
+      font-family: Pretendard;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+  & .studyInfo {
+    margin: 0 0 24px 0;
+    & p {
+      color: var(--black-black_414141, #414141);
+      font-family: Pretendard;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 26px; /* 144.444% */
+    }
+  }
+  & .studyPoint {
+    & .point {
+      display: flex;
+      padding: 8px 12px;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 8px;
+      border-radius: 50px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.3);
+      & i {
+        width: 16.328px;
+        height: 18.548px;
+        flex-shrink: 0;
+        display: inline-block;
+        background: url(@/assets/images/Group.svg) no-repeat;
+        background-size: 100% auto;
+      }
+      & span {
+        color: var(--black-black_414141, #414141);
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+    }
+  }
+}
