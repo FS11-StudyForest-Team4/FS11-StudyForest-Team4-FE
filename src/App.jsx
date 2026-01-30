@@ -4,6 +4,7 @@ import Layout from './layout/Layout';
 import Home from '@/pages/home/Home';
 import Habit from './pages/habit/Habit';
 import Study from './pages/study/Study';
+import { Create } from './pages/create';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/habit" element={<Habit />} />
         <Route path="/study" element={<Study />} />
+        <Route path="/create" element={<Create />} />
       </Routes>
     </Layout>
   );

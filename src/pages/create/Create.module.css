@@ -1,3 +1,5 @@
+/* background: var(--bg-bg_F6F4EF, #f6f4ef); */
+
 .createPageTitle {
   color: #414141;
   font-family: Pretendard;
@@ -15,5 +17,19 @@
   flex-direction: column;
   gap: 24px;
   border-radius: 20px;
-  background: #97ad7d; /*원래 FFF인데 아직 전체 바탕색이 없어서 일단 구분하려고 넣었슴다*/
+  background: #ffffff;
+}
+
+.submitButton {
+  border-radius: 16px;
+  background: #99c08e;
+  width: 100%;
+  height: 58px;
+  color: #fff;
+  text-align: center;
+  font-family: EF_jejudoldam;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
