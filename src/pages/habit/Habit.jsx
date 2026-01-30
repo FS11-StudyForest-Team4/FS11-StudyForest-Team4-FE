@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './habit.module.css';
+import arrow_Vector from '../../assets/images/arrow_Vector.png';
+import delete_Icon from '../../assets/images/delete_Icon.png';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -66,8 +68,8 @@ function Habit() {
                 <button className={styles.headerTopBtnHome}>
                   홈{' '}
                   <img
-                    src="src/assets/images/arrow Vector.png"
-                    alt=""
+                    src={arrow_Vector}
+                    alt="arrow"
                     className={styles.iconArrow}
                   />
                 </button>
@@ -121,28 +123,27 @@ function Habit() {
             <div className={styles.modalHeader}>
               <h3>습관 목록</h3>
             </div>
-              <ul className={styles.editList}>
-                {habits.map((habit) => (
-                  <li key={habit.id} className={styles.editCaseWrapper}>
-                    <div className={styles.editCase}>
-                      <span>{habit.name}</span>
-                    </div>
-                    <button className={styles.deleteBtn}>
-                      <img
-                        src="src/assets/images/delete Icon.png
-"
-                        alt="delete Icon"
-                        className={styles.deleteIcon}
-                      />
-                    </button>
-                  </li>
-                ))}
-              </ul>
+            <ul className={styles.editList}>
+              {habits.map((habit) => (
+                <li key={habit.id} className={styles.editCaseWrapper}>
+                  <div className={styles.editCase}>
+                    <span>{habit.name}</span>
+                  </div>
+                  <button className={styles.deleteBtn}>
+                    <img
+                      src={delete_Icon}
+                      alt="delete"
+                      className={styles.deleteIcon}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
 
-              {/* 습관 추가 섹션구현(+) */}
-              <div className={styles.addHabitSection}>
-                <button className={styles.addBtn}>+</button>
-              </div>
+            {/* 습관 추가 섹션구현(+) */}
+            <div className={styles.addHabitSection}>
+              <button className={styles.addBtn}>+</button>
+            </div>
             <div className={styles.modalFooter}>
               <button
                 className={styles.closeBtn}
