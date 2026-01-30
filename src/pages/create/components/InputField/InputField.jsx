@@ -4,12 +4,21 @@ import visible from '/src/assets/images/icons/visibilityOn.svg';
 import invisible from '/src/assets/images/icons/visibilityOff.svg';
 import clsx from 'clsx';
 
-export function InputField({ type = 'text', inputTitle, placeholderText }) {
-  const [showPassword, setShowPassword] = useState();
-  //소개 입력창이 인풋보다 커서 클릭 데려오기 위해 추가함
+export function InputField({
+  type,
+  inputTitle,
+  placeholderText,
+  children,
+  errorMessage,
+  value,
+  onChange,
+}) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  //소개 입력창이 인풋보다 커서 클릭 데려오기 위해 추가함+배경선택
   const inputClick = useRef(null);
   const inputWrapperClick = () => {
-    inputClick.current.focus();
+    inputClick.current?.focus();
   };
 
   return (
@@ -20,18 +29,29 @@ export function InputField({ type = 'text', inputTitle, placeholderText }) {
         className={clsx(
           style.inputWrapper,
           inputTitle === '소개' && style.descriptionWrapper,
+          inputTitle === '배경을 선택해주세요' && style.tileWrapper,
         )}
         onClick={inputWrapperClick}
       >
-        {inputTitle === '소개' ? (
-          <textarea placeholder={placeholderText}></textarea>
+        {inputTitle === '배경을 선택해주세요' ? (
+          children
+        ) : inputTitle === '소개' ? (
+          <textarea
+            ref={inputClick}
+            placeholder={placeholderText}
+            value={value}
+            onChange={onChange}
+          ></textarea>
         ) : (
           <input
             ref={inputClick}
-            type={type === 'password' ? 'password' : 'text'}
+            type={showPassword ? 'text' : type}
             placeholder={placeholderText}
+            value={value}
+            onChange={onChange}
           />
         )}
+
         {type === 'password' && (
           <button
             type="button"
@@ -45,7 +65,11 @@ export function InputField({ type = 'text', inputTitle, placeholderText }) {
           </button>
         )}
       </div>
-      {/* 헉 포커스 테두리 적용하다 보니까 밑에 필수입력 안내문도 있네요.. 이건 좀 더 찾아보고 올게요... (〃´ᴗ`〃)ゝ*/}
+      <div className={style.errorContainer}>
+        {errorMessage && (
+          <span className={style.errorMessage}>{errorMessage}</span>
+        )}
+      </div>
     </div>
   );
 }
