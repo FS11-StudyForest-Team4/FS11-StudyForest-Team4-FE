@@ -1,13 +1,13 @@
-import React from "react";
-import { useLocation, Link } from "react-router"; 
-import logo from "@/assets/images/img_logo.svg"; 
+import '@/assets/styles/global.css';
+import React from 'react';
+import { useLocation, Link } from 'react-router';
+import logo from '@/assets/images/img_logo.svg';
 
 const Header = () => {
   const location = useLocation();
 
-
-  const shouldShowCreateButton = 
-    location.pathname === "/" || location.pathname.startsWith("/study");
+  const shouldShowCreateButton =
+    location.pathname === '/' || location.pathname.startsWith('/study');
 
   return (
     <header className="header">

@@ -1,9 +1,9 @@
-.study-nav {
+.studyNav {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  & .emoji-box {
+  & .emojiBox {
     display: flex;
     align-items: center;
     position: relative;
@@ -14,12 +14,13 @@
     }
   }
 
-  & .emoji-list {
+  & .emojiList {
     display: flex;
     padding: 6px 8px;
     align-items: center;
     gap: 5px;
     & li {
+      height: 31px;
       display: flex;
       padding: 6px 8px;
       align-items: center;
@@ -43,7 +44,44 @@
     }
   }
 
-  & .emoji-btn {
+  & .moreEmoji {
+    max-width: 242px;
+    border-radius: 15px;
+    border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+    position: absolute;
+    top: 45px;
+    left: 0;
+    padding: 12px;
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  & .moreEmojiBtn {
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    padding: 6px 8px;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    color: #fff;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0 8px 0 0;
+    & i {
+      width: 16px;
+      height: 16px;
+      background: url(@/assets/images/ic_plus.svg) no-repeat;
+      background-size: 100% auto;
+    }
+  }
+
+  & .emojiBtn {
     height: 31px;
     border-radius: 50px;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -58,7 +96,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    & .i_emoji {
+    & .iEmoji {
       width: 18px;
       height: 18px;
       background: url(@/assets/images/ic_smile.svg) no-repeat;
@@ -66,7 +104,7 @@
     }
   }
 
-  & .btn-list {
+  & .btnList {
     display: flex;
     & li {
       color: var(--green-green_text_578246, #578246);
@@ -91,8 +129,8 @@
   }
 }
 
-.study-content {
-  & .study-top {
+.studyContent {
+  & .studyTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -105,7 +143,7 @@
       font-weight: 800;
       line-height: normal;
     }
-    & .more-btn {
+    & .moreBtn {
       display: flex;
       gap: 16px;
       & button {
@@ -133,8 +171,8 @@
       }
     }
   }
-  & .study-info,
-  & .study-point {
+  & .studyInfo,
+  & .studyPoint {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -148,7 +186,7 @@
       line-height: normal;
     }
   }
-  & .study-info {
+  & .studyInfo {
     margin: 0 0 24px 0;
     & p {
       color: var(--black-black_414141, #414141);
@@ -159,7 +197,7 @@
       line-height: 26px; /* 144.444% */
     }
   }
-  & .study-point {
+  & .studyPoint {
     & .point {
       display: flex;
       padding: 8px 12px;
