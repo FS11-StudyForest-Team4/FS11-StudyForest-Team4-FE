@@ -1,0 +1,21 @@
+.tile {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--tile-bg);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  margin: 8px 4px;
+}
+
+.footprint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  transform: translate(-50%, -50%);
+}
