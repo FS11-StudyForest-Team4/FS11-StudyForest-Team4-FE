@@ -1,3 +1,27 @@
+import { useEffect, useState } from 'react';
+import styles from './Habitlog.module.css';
+import { getHabitList } from '@/api/habitService';
+import { getHabitlogs } from '@/api/habitlogService';
+import { getStartOfweek } from '@/utils/getStartOfweek';
+import stickerEmpty from '@/assets/icons/stickers/sticker_empty.svg';
+import stiker01 from '@/assets/icons/stickers/sticker_light_green_01.svg';
+import stiker02 from '@/assets/icons/stickers/sticker_light_green_02.svg';
+import stiker03 from '@/assets/icons/stickers/sticker_light_green_03.svg';
+import stiker04 from '@/assets/icons/stickers/sticker_light_mint_04.svg';
+import stiker05 from '@/assets/icons/stickers/sticker_light_mint_05.svg';
+import stiker06 from '@/assets/icons/stickers/sticker_green_06.svg';
+import stiker07 from '@/assets/icons/stickers/sticker_blue_07.svg';
+import stiker08 from '@/assets/icons/stickers/sticker_blue_08.svg';
+import stiker09 from '@/assets/icons/stickers/sticker_blue_09.svg';
+import stiker10 from '@/assets/icons/stickers/sticker_purple_10.svg';
+import stiker11 from '@/assets/icons/stickers/sticker_purple_11.svg';
+import stiker12 from '@/assets/icons/stickers/sticker_purple_12.svg';
+import stiker13 from '@/assets/icons/stickers/sticker_yellow_13.svg';
+import stiker14 from '@/assets/icons/stickers/sticker_yellow_14.svg';
+import stiker15 from '@/assets/icons/stickers/sticker_yellow_15.svg';
+import stiker16 from '@/assets/icons/stickers/sticker_pink_16.svg';
+import stiker17 from '@/assets/icons/stickers/sticker_pink_17.svg';
+import stiker18 from '@/assets/icons/stickers/sticker_pink_18.svg';
 import styles from './Habitlog.module.css';
 
 // 이번주 날짜 확인 및 요청 util 만들어서 설정하기
@@ -5,18 +29,48 @@ import styles from './Habitlog.module.css';
 // 줄마다 다른 image 넣기 로직 구현
 
 function Habitlog() {
-  const habits = [
-    //GET study/habits에서 데이터 받기
-    { id: 1, name: '미라클모닝' },
-    { id: 2, name: '아침먹기' },
-    { id: 3, name: '스트레칭' },
-  ];
+  const studyId = '01KG6V43DV6F8YGRN8AZ6J7XVQ';
 
-  const habitlog = [
-    // 받아올 데이터 (데이터 받을때 한 주꺼만 받기 )
-    { habitId: 1, createdAt: '2026-01-27' },
-    { habitId: 2, createdAt: '2026-01-27' },
-    { habitId: 4, createdAt: '2026-01-27' },
+  const [habits, setHabits] = useState([]);
+  const [habitlogs, setHabitlogs] = useState([]);
+  const startOfWeek = getStartOfweek();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [habiList, habitlogList] = await Promise.all([
+          getHabitList(studyId),
+          getHabitlogs(studyId, startOfWeek),
+        ]);
+        setHabits(habiList);
+        setHabitlogs(habitlogList);
+      } catch (error) {
+        console.error('fetchData Error:', error);
+      }
+    };
+    fetchData();
+  }, [studyId, startOfWeek]);
+
+  const days = ['월', '화', '수', '목', '금', '토', '일'];
+  const rowStickers = [
+    stiker01,
+    stiker02,
+    stiker03,
+    stiker04,
+    stiker05,
+    stiker06,
+    stiker07,
+    stiker08,
+    stiker09,
+    stiker10,
+    stiker11,
+    stiker12,
+    stiker13,
+    stiker14,
+    stiker15,
+    stiker16,
+    stiker17,
+    stiker18,
   ];
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
@@ -49,12 +103,20 @@ function Habitlog() {
           </tr>
         </thead>
         <tbody>
-          {habits.map((habit) => (
+          {habits.map((habit, rowIndex) => (
             <tr key={habit.id}>
               <td>{habit.name}</td>
               {days.map((day) => (
                 <td key={day}>
-                  {historyWithWeek[habit.id]?.[day] ? 'O' : 'X'}
+                  {habitlogsWithWeek[habit.id]?.[day] ? (
+                    <img
+                      src={rowStickers[rowIndex]}
+                      alt="습관완료"
+                      width={36}
+                    />
+                  ) : (
+                    <img src={stickerEmpty} alt="습관미완료" width={36} />
+                  )}
                 </td>
               ))}
             </tr>
