@@ -4,7 +4,7 @@
 import React from 'react';
 import styles from './StudyAbout.module.css';
 import StudyInfo from './studyInfo/StudyInfo';
-import Habitlog from './habitLog/Habitlog';
+import Habitlog from './habitLog/Habitlogs';
 
 const StudyAbout = () => {
   return (

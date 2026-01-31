@@ -3,26 +3,27 @@ import styles from './Habitlog.module.css';
 import { getHabitList } from '@/api/habitService';
 import { getHabitlogs } from '@/api/habitlogService';
 import { getStartOfweek } from '@/utils/getStartOfweek';
-import stickerEmpty from '@/assets/icons/stickers/sticker_empty.svg';
-import stiker01 from '@/assets/icons/stickers/sticker_light_green_01.svg';
-import stiker02 from '@/assets/icons/stickers/sticker_light_green_02.svg';
-import stiker03 from '@/assets/icons/stickers/sticker_light_green_03.svg';
-import stiker04 from '@/assets/icons/stickers/sticker_light_mint_04.svg';
-import stiker05 from '@/assets/icons/stickers/sticker_light_mint_05.svg';
-import stiker06 from '@/assets/icons/stickers/sticker_green_06.svg';
-import stiker07 from '@/assets/icons/stickers/sticker_blue_07.svg';
-import stiker08 from '@/assets/icons/stickers/sticker_blue_08.svg';
-import stiker09 from '@/assets/icons/stickers/sticker_blue_09.svg';
-import stiker10 from '@/assets/icons/stickers/sticker_purple_10.svg';
-import stiker11 from '@/assets/icons/stickers/sticker_purple_11.svg';
-import stiker12 from '@/assets/icons/stickers/sticker_purple_12.svg';
-import stiker13 from '@/assets/icons/stickers/sticker_yellow_13.svg';
-import stiker14 from '@/assets/icons/stickers/sticker_yellow_14.svg';
-import stiker15 from '@/assets/icons/stickers/sticker_yellow_15.svg';
-import stiker16 from '@/assets/icons/stickers/sticker_pink_16.svg';
-import stiker17 from '@/assets/icons/stickers/sticker_pink_17.svg';
-import stiker18 from '@/assets/icons/stickers/sticker_pink_18.svg';
-import styles from './Habitlog.module.css';
+import {
+  stickerEmpty,
+  sticker01,
+  sticker02,
+  sticker03,
+  sticker04,
+  sticker05,
+  sticker06,
+  sticker07,
+  sticker08,
+  sticker09,
+  sticker10,
+  sticker11,
+  sticker12,
+  sticker13,
+  sticker14,
+  sticker15,
+  sticker16,
+  sticker17,
+  sticker18,
+} from '@/assets/icons/stickers/index';
 
 // 이번주 날짜 확인 및 요청 util 만들어서 설정하기
 // return  { startDate, endDate } // 월요일부터 일요일로 설정
@@ -53,29 +54,27 @@ function Habitlog() {
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
   const rowStickers = [
-    stiker01,
-    stiker02,
-    stiker03,
-    stiker04,
-    stiker05,
-    stiker06,
-    stiker07,
-    stiker08,
-    stiker09,
-    stiker10,
-    stiker11,
-    stiker12,
-    stiker13,
-    stiker14,
-    stiker15,
-    stiker16,
-    stiker17,
-    stiker18,
+    sticker01,
+    sticker02,
+    sticker03,
+    sticker04,
+    sticker05,
+    sticker06,
+    sticker07,
+    sticker08,
+    sticker09,
+    sticker10,
+    sticker11,
+    sticker12,
+    sticker13,
+    sticker14,
+    sticker15,
+    sticker16,
+    sticker17,
+    sticker18,
   ];
 
-  const days = ['월', '화', '수', '목', '금', '토', '일'];
-
-  const historyWithWeek = habitlog
+  const habitlogsWithWeek = habitlogs
     .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
     .reduce((acc, cur) => {
       const dayIndex = new Date(cur.createdAt).getDay();
