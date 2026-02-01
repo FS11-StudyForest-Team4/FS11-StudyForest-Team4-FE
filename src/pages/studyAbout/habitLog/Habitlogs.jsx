@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import styles from './Habitlog.module.css';
+import { Fragment, useEffect, useState } from 'react';
+
+import styles from './Habitlogs.module.css';
 import { getHabitList } from '@/api/habitService';
 import { getHabitlogs } from '@/api/habitlogService';
 import { getStartOfweek } from '@/utils/getStartOfweek';
@@ -25,16 +26,12 @@ import {
   sticker18,
 } from '@/assets/icons/stickers/index';
 
-// 이번주 날짜 확인 및 요청 util 만들어서 설정하기
-// return  { startDate, endDate } // 월요일부터 일요일로 설정
-// 줄마다 다른 image 넣기 로직 구현
-
 function Habitlog() {
   const studyId = '01KG6V43DV6F8YGRN8AZ6J7XVQ';
 
-  const [habits, setHabits] = useState([]);
-  const [habitlogs, setHabitlogs] = useState([]);
-  const startOfWeek = getStartOfweek();
+  const [habits, setHabits] = useState([]); // 습관목록
+  const [habitlogs, setHabitlogs] = useState([]); // 습관기록
+  const startOfWeek = getStartOfweek(); // 오늘날짜로 이번주 첫날
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,58 +71,48 @@ function Habitlog() {
     sticker18,
   ];
 
-  const habitlogsWithWeek = habitlogs
-    .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
-    .reduce((acc, cur) => {
-      const dayIndex = new Date(cur.createdAt).getDay();
-      const day = days[(dayIndex + 6) % 7];
-      const habitId = cur.habitId;
+  const habitlogsWithWeek = habitlogs.reduce((acc, cur) => {
+    const dayIndex = new Date(cur.createdAt).getDay(); // 요일 구하기
+    const day = days[(dayIndex + 6) % 7]; // 월요일 시작
+    const habitId = cur.habitId;
 
-      if (!acc[habitId]) {
-        acc[habitId] = {};
-      }
+    // habitId가 acc에 없으면 생성
+    if (!acc[habitId]) {
+      acc[habitId] = {};
+    }
 
-      acc[habitId][day] = true;
-      return acc;
-    }, {});
+    acc[habitId][day] = true;
+    return acc;
+  }, {});
 
   return (
-    <section className={styles['habit-list']}>
+    <section className={styles.habitList}>
       <h2>습관기록표</h2>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
+      <div className={styles.habitlogGrid}>
+        <div></div>
+        {days.map((day) => (
+          <div key={day} className={styles.dayHeader}>
+            {day}
+          </div>
+        ))}
+        {habits.map((habit, rowIndex) => (
+          //하나로 묶고 그리드 깨짐방지 key 중요
+          <Fragment key={habit.id}>
+            <div className={styles.habitName}>{habit.name}</div>
             {days.map((day) => (
-              <th key={day}>{day}</th>
+              <div key={day} className={styles.habitlogCell}>
+                {habitlogsWithWeek[habit.id]?.[day] ? (
+                  <img src={rowStickers[rowIndex]} alt="습관완료" width={36} />
+                ) : (
+                  <img src={stickerEmpty} alt="습관미완료" width={36} />
+                )}
+              </div>
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {habits.map((habit, rowIndex) => (
-            <tr key={habit.id}>
-              <td>{habit.name}</td>
-              {days.map((day) => (
-                <td key={day}>
-                  {habitlogsWithWeek[habit.id]?.[day] ? (
-                    <img
-                      src={rowStickers[rowIndex]}
-                      alt="습관완료"
-                      width={36}
-                    />
-                  ) : (
-                    <img src={stickerEmpty} alt="습관미완료" width={36} />
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          </Fragment>
+        ))}
+      </div>
     </section>
   );
 }
-// O에서 줄마다 색이 다르게 나타내야 함
-//<img src={`/img`}
 
 export default Habitlog;

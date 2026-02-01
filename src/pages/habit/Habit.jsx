@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './habit.module.css';
+import styles from './Habit.module.css';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
