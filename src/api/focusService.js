@@ -1,6 +1,6 @@
 import client from '@/lib/client';
 
-// GET - studyId에 맞는 집중 불러오기
+// GET - studyId에 맞는 집중 불러오기 -> studyId, totalPoint 리턴합니다
 export const getFocus = async (studyId) => {
   try {
     const res = await client.get(`/focus/${studyId}`);
