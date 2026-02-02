@@ -16,10 +16,10 @@ const BACKGROUND_OPTIONS = [
   { id: 'TILE', type: 'image', value: tile },
 ];
 
-function BackgroundOption({ value, onChange }) {
+function BackgroundOption({ label, name, value, onChange }) {
   return (
     <div>
-      <h3>배경을 선택해주세요 </h3>
+      <label htmlFor={name}>{label}</label>
       <div className={styles.bgGrid}>
         {BACKGROUND_OPTIONS.map((background) => {
           const isSelected = value === background.id;
@@ -38,8 +38,7 @@ function BackgroundOption({ value, onChange }) {
               className={`${styles.bgButton} ${value === background.id ? styles.selected : ''}`}
               onClick={() => onChange(isSelected ? null : background.id)}
               style={buttonStyle}
-            >
-            </button>
+            ></button>
           );
         })}
       </div>

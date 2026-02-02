@@ -1,11 +1,9 @@
 import { useState } from 'react';
 //컴포넌트, 스타일 import
-import { BackgroundTile } from './components/BackgroundTile/BackgroundTile';
-import { InputField } from './components/InputField';
 import style from './StudyCreate.module.css';
 
 import Textarea from './components/Textarea/Textarea';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import Input from './components/Input/Input';
 import BackgroundOption from './components/BackgroundOption/BackgroundOption';
 
@@ -19,74 +17,71 @@ const StudyCreate = () => {
     password: '',
     passwordCheck: '',
   });
-
-  //생각을 잘못해서 아래 비동기랑 엮여서 원하는 기능이 안 나옴.. 좀 더 고민해보고 수정하겠습니다
   const [errors, setErrors] = useState({});
-  //입력값 반영
-  const inputHandle = (name, value) => {
-    setFormData((data) => ({ ...data, [name]: value }));
-    if (errors[name]) setErrors((data) => ({ ...data, [name]: '' }));
+  const navigate = useNavigate();
+
+  // 검증 목록
+  const validators = {
+    nickname: (value) => (value.trim() ? '' : '*닉네임을 입력해주세요'),
+    title: (value) => (value.trim() ? '' : '*스터디 이름을 입력해주세요'),
+    password: (value) => (value ? '' : '*비밀번호를 입력해주세요'),
+    passwordCheck: (value, formData) =>
+      value === formData.password ? '' : '*비밀번호가 일치하지 않습니다',
+  };
+  // 개별 필드 검증
+  const validateField = (name, value) => {
+    const validator = validators[name];
+    if (!validator) return;
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: validator(value, formData) || undefined,
+    }));
   };
 
-  //form 제출 (다시 작성하기)
-  const submit = async (formData) => {
-    const data = Object.fromEntries(formData.entries());
+  //handleChange (Input에서 사용)
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    validateField(name, value);
+  };
+  
+  // BackgroundOption 전용 handler
+  const handleBackgroundChange = (selectedId) => {
+    setFormData((prev) => ({ ...prev, background: selectedId }));
+  };
+
+  // submit 함수
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // 새로고침 방지
+
     try {
-      await postStudy({
-        ...data,
-      });
-      Navigate('/studies');
+      const result = await postStudy(formData); // API 호출
+      console.log('스터디 등록 성공:', result);
+      navigate(`/studies/${result.id}`);
     } catch (error) {
-      console.error(error);
+      console.error('스터디 등록 실패:', error);
       alert('스터디 등록 실패');
     }
   };
-
-  // //request 전 확인
-  // const submitHandle = async () => {
-  //   const newErrors = {};
-  //   if (!formData.nickname.trim()) newErrors.nickname = '닉네임을 입력해주세요';
-  //   if (!formData.title.trim()) newErrors.title = '스터디 이름을 입력해주세요';
-  //   if (!formData.password) newErrors.password = '비밀번호를 입력해주세요';
-  //   if (formData.password !== formData.passwordCheck) {
-  //     newErrors.passwordCheck = '*비밀번호가 일치하지 않습니다';
-  //   }
-
-  //   setErrors(newErrors);
-
-  //   if (Object.keys(newErrors).length === 0) {
-  //     try {
-  //       await axios.post('/api/studies', {
-  //         nickname: formData.nickname,
-  //         title: formData.title,
-  //         description: formData.description,
-  //         password: formData.password,
-  //         background: formData.background,
-  //       });
-  //       alert('스터디가 생성되었습니다.');
-  //     } catch {
-  //       alert('스터디 생성에 실패했습니다.');
-  //     }
-  //   }
-  // };
 
   return (
     <section>
       <div className={style.container}>
         <div className={style.createPageTitle}>스터디 만들기</div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault(); // 새로고침 방지
-            submit(new FormData(event.target));
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <Input
+            name="nickname"
             label="닉네임"
-            name="nickName"
             type="text"
             placeholder="닉네임을 입력해주세요"
             value={formData.nickname}
-            onChange={(error) => inputHandle('nickname', error.target.value)}
+            onChange={handleChange}
             errorMessage={errors.nickname}
           />
           <Input
@@ -95,7 +90,7 @@ const StudyCreate = () => {
             type="text"
             placeholder="스터디 이름을 입력해주세요"
             value={formData.title}
-            onChange={(error) => inputHandle('title', error.target.value)}
+            onChange={handleChange}
             errorMessage={errors.title}
           />
           <Textarea
@@ -104,50 +99,31 @@ const StudyCreate = () => {
             type="text"
             placeholder="소개 멘트를 작성해주세요"
             value={formData.description}
-            onChange={(error) => inputHandle('description', error.target.value)}
+            onChange={handleChange}
             errorMessage={errors.description}
           />
-
           <BackgroundOption
+            label="배경을 선택해주세요"
+            name="background"
             value={formData.background}
-            onChange={(bg) =>
-              setFormData((prev) => ({
-                ...prev,
-                background: bg,
-              }))
-            }
+            onChange={handleBackgroundChange}
           />
-
-          {/* //수정필요
-          <InputField type={'text'} inputTitle={'배경을 선택해주세요'}>
-            {BACKGROUND_OPTIONS.map((bg) => (
-              <BackgroundTile
-                key={bg.id}
-                background={bg}
-                isSelected={formData.background === bg.id}
-                onSelect={(id) => inputHandle('background', id)}
-              />
-            ))}
-          </InputField> */}
-
           <Input
             label="비밀번호"
             name="password "
             type="password"
-            placeholder={'비밀번호를 입력해주세요'}
+            placeholder="비밀번호를 입력해주세요"
             value={formData.password}
-            onChange={(error) => inputHandle('password', error.target.value)}
+            onChange={handleChange}
             errorMessage={errors.password}
           />
           <Input
             label="비밀번호 확인"
             name=""
-            type={'password'}
-            placeholder={'비밀번호를 다시 한 번 입력해주세요'}
+            type="password"
+            placeholder="비밀번호를 다시 한 번 입력해주세요"
             value={formData.passwordCheck}
-            onChange={(error) =>
-              inputHandle('passwordCheck', error.target.value)
-            }
+            onChange={handleChange}
             errorMessage={errors.passwordCheck}
           />
 

@@ -1,14 +1,12 @@
 import styles from './Textarea.module.css';
 
-function Textarea({ label, errorMessage, className = '', ...props }) {
+function Textarea({ label, name, errorMessage, className = '', ...props }) {
   return (
     <div className={styles.textareaWrapper}>
-      {label && (
-        <label htmlFor={props.name} classNames={styles.label}>
-          {label}
-        </label>
-      )}
+      <label htmlFor={name}>{label}</label>
       <input
+        id={name}
+        name={name}
         className={`${styles.input} ${errorMessage ? styles.error : ''} ${className}`}
         {...props}
       />
