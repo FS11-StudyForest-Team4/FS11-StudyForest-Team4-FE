@@ -23,7 +23,7 @@ export const createFocus = async (studyId) => {
 // PATCH - 오늘의 집중 완료 (50포인트 적립)
 export const completeFocus = async (focusId) => {
   try {
-    const res = await client.patch(`focus/${focusId}`);
+    const res = await client.patch(`/focus/${focusId}`);
     return res.data;
   } catch (error) {
     console.error('completeFocus Error: ', error);

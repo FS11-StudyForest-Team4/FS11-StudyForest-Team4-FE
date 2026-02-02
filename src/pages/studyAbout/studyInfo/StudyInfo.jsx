@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import styles from './StudyInfo.module.css';
 import { EmojiService } from '@/api/api';
+import Focus from '@/pages/focus/Focus';
 
 {
   /* TO DO LIST 
@@ -14,10 +15,12 @@ import { EmojiService } from '@/api/api';
   */
 }
 
-const StudyInfo = () => {
+const StudyInfo = ({ studyId }) => {
   const [emojiList, setEmojiList] = useState([]);
   const [moreEmoji, setMoreEmoji] = useState(false);
   const [emojiTab, setEmojiTab] = useState(false);
+
+  const [showFocus, setShowFocus] = useState(false);
 
   const onEmojiClick = (emojiName) => {
     createEmoji(emojiName);
@@ -115,11 +118,12 @@ const StudyInfo = () => {
             <button>
               오늘의 습관 <i />
             </button>
-            <button>
+            <button type="button" onClick={() => setShowFocus((prev) => !prev)}>
               오늘의 집중 <i />
             </button>
           </div>
         </div>
+        {showFocus && <Focus studyId={studyId} />}
         <div className={styles.studyInfo}>
           <h4>소개</h4>
           <p>[데이터 넣기] 다들 오늘 하루도 화이팅 ;) 현재까지</p>
