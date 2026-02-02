@@ -22,3 +22,12 @@ export const createEmoji = (studyId, { name }) => {
       console.log('createEmoji Error:', error.response?.data || error.message);
     });
 };
+
+export const patchEmoji = (studyId, { name }) => {
+  return instance
+    .patch(`/${studyId}`, { name })
+    .then((res) => res)
+    .catch((error) => {
+      console.log('patchEmoji Error:', error.response?.data || error.message);
+    });
+};
