@@ -1,0 +1,53 @@
+.cardContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.cardContainer:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.textOverlay {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+}
+
+.studyTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.studyInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pointText {
+  color: #3692ff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.participantText {
+  color: #666666;
+  font-size: 13px;
+}

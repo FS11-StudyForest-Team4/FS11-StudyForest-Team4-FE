@@ -1,0 +1,35 @@
+/* background: var(--bg-bg_F6F4EF, #f6f4ef); */
+
+.createPageTitle {
+  color: #414141;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.container {
+  max-width: 696px;
+  display: flex;
+  margin: 0 auto 107px;
+  padding: 24px 24px 40px 24px;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.submitButton {
+  border-radius: 16px;
+  background: #99c08e;
+  width: 100%;
+  height: 58px;
+  color: #fff;
+  text-align: center;
+  font-family: EF_jejudoldam;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
