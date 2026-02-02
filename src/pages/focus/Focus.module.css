@@ -1,4 +1,4 @@
-.timer-wrapper {
+.timerWrapper {
   display: flex;
   flex-direction: column;
   max-width: 1120px;
@@ -19,15 +19,15 @@
   line-weight: normal;
 }
 
-.timer-title {
+.timerTitle {
   margin: 0 auto;
   text-align: right;
   font-size: 24px;
   line-weight: normal;
 }
 
-.start-time-tag-wrapper,
-.start-time-tag-wrapper-placeholder {
+.startTimeTagWrapper,
+.startTimeTagWrapperPlaceholder {
   display: flex;
   padding: 6px 8px;
   flex-direction: column;
@@ -38,26 +38,26 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-.start-time-tag,
-.start-time-tag-placeholder {
+.startTimeTag,
+.startTimeTagPlaceholder {
   display: flex;
   gap: 4px;
   justify-content: center;
 }
 
-.timer-icon {
+.timerIcon {
   width: 19px;
   height: 19px;
   color: #414141;
 }
 
-.start-time-tag-time {
+.startTimeTagTime {
   font-size: 16px;
   font-weight: 500;
 }
 
-.start-time-tag-placeholder,
-.start-time-tag-wrapper-placeholder {
+.startTimeTagPlaceholder,
+.startTimeTagWrapperPlaceholder {
   border: 1px solid #fff;
   background: #fff;
   color: #fff;
@@ -70,15 +70,15 @@
   font-size: 150px;
 }
 
-.time-over {
+.timeOver {
   color: var(--gray-gray_818181, #818181);
 }
 
-.time-warning {
+.timeWarning {
   color: var(--red-red_F50E0E, #f50e0e);
 }
 
-.timer-button-wrapper {
+.timerButtonWrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -87,17 +87,17 @@
   margin-top: 94.5px;
 }
 
-.timer-wrapper button {
+.timerwrapper button {
   border: 0;
 }
 
-.pause-icon,
-.reset-icon {
+.pauseIcon,
+.resetIcon {
   display: block;
 }
 
-.timer-pause-button,
-.timer-reset-button {
+.timerPauseButton,
+.timerResetButton {
   line-height: 0;
   background: #fff;
 }
@@ -108,7 +108,7 @@
   background: #fff;
 }
 
-.timer-start-button {
+.timerStartButton {
   font-size: 28px;
   text-align: center;
   color: #fff;
@@ -126,18 +126,18 @@
   gap: 16px;
 }
 
-.timer-start-button:disabled {
+.timerStartButton:disabled {
   background-color: var(--gray-gray_818181, #818181);
 }
 
-.img-play-icon,
-.img-stop-icon {
+.imgPlayIcon,
+.imgStopIcon {
   width: 44px;
   height: 44px;
 }
 
-.toast-completed,
-.toast-paused {
+.toastCompleted,
+.toastPaused {
   position: bottom-center;
 
   display: inline-flex;
@@ -152,13 +152,13 @@
   font-weight: 500;
 }
 
-.toast-paused {
+.toastPaused {
   background: var(--pink-pink_FDE0E9, #fde0e9);
   color: var(--red-red_F50E0E, #f50e0e);
 }
 
 @media (max-width: 744px) {
-  .timer-wrapper {
+  .timerWrapper {
     max-width: 648px;
     padding: 40px 24px;
     height: 512px;
@@ -168,13 +168,13 @@
     font-size: 120px;
   }
 
-  .timer-button-wrapper {
+  .timerButtonWrapper {
     margin-top: 100px;
   }
 }
 
 @media (max-width: 375px) {
-  .timer-wrapper {
+  .timerWrapper {
     max-width: 312px;
     padding: 24px 16px 24px 16px;
   }
@@ -184,24 +184,24 @@
     font-size: 80px;
   }
 
-  .img-play-icon,
-  .img-stop-icon {
+  .imgPlayIcon,
+  .imgStopIcon {
     width: 24px;
     height: 24px;
   }
 
-  .timer-button-wrapper {
+  .timerButtonWrapper {
     margin-top: 64.94px;
     margin-bottom: 0;
   }
 
-  .timer-start-button {
+  .timerStartButton {
     width: 140px;
     height: 45px;
     font-size: 18px;
   }
 
-  .timer-button-wrapper {
+  .timerButtonWrapper {
     display: flex;
     height: 48px;
     padding: 0 14px;
@@ -209,8 +209,8 @@
     align-items: center;
   }
 
-  .timer-pause-button,
-  .timer-reset-button {
+  .timerPauseButton,
+  .timerResetButton {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -218,8 +218,8 @@
     background: #fff;
   }
 
-  .pause-icon,
-  .reset-icon {
+  .pauseIcon,
+  .resetIcon {
     display: block;
     width: 48px;
     height: 48px;
