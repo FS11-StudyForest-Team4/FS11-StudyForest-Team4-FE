@@ -1,23 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
-<<<<<<< HEAD
 import arrow_Vector from '../../assets/images/arrow_Vector.png';
 import delete_Icon from '../../assets/images/delete_Icon.png';
-import { updateHabit, createHabit, deleteHabit } from '../../api/habitService';
-=======
->>>>>>> origin/develop
+import {
+  updateHabit,
+  createHabit,
+  deleteHabit,
+  getHabitList,
+} from '../../api/habitService';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import { useParams } from 'react-router';
 dayjs.locale('ko');
 
 const ONE_MINUTE_MS = 60 * 1000;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Habit() {
+  const { studyId } = useParams();
   //현재 시간을 저장하는 state
   const [now, setNow] = useState(new Date());
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [habits, setHabits] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function getHabits() {
+      if (!studyId) return;
+      setIsLoading(true);
+      const habits = await getHabitList(studyId);
+      setHabits(habits);
+      setIsLoading(false);
+    }
+    getHabits();
+  }, [studyId]);
 
   //시계
   useEffect(() => {
@@ -30,17 +49,6 @@ function Habit() {
 
   //시계모양
   const timeString = dayjs(now).format('YYYY-MM-DD A hh:mm'); //dayjs 사용
-
-  // 나중에 습관 목록을 새로 만들기
-  const [habits, setHabits] = useState([
-    { id: 1, name: '미라클모닝 6시 기상', completed: true },
-    { id: 2, name: '아침 챙겨 먹기', completed: true },
-    { id: 3, name: 'React 스터디 책 1챕터 읽기', completed: false },
-    { id: 4, name: '스트레칭', completed: false },
-    { id: 5, name: '영양제 챙겨 먹기', completed: false },
-    { id: 6, name: '사이드 프로젝트', completed: false },
-    { id: 7, name: '물 2L 먹기', completed: false },
-  ]);
 
   // 수정 완료 로직(하림님 updateHabit 활용)
   const handleSubmit = async () => {
@@ -65,7 +73,6 @@ function Habit() {
     }
 
     try {
-      const studyId = 1; // studyId ?
       // 하림님의 API 호출
       const response = await createHabit(studyId, { name: newHabitName });
 
@@ -152,21 +159,22 @@ function Habit() {
           </div>
 
           {/* frame 2609498 */}
-          <div className={styles.habitList}>
-            {habits.map((habit) => (
-              <button
-                key={habit.id}
-                className={clsx(
-                  styles.habitItem,
-                  habit.completed && styles.completed,
-                )}
-              >
-                {' '}
-                {/* 레이어: chip */}
-                {habit.name}
-              </button>
-            ))}
-          </div>
+          {isLoading && <div>로딩중...</div>}
+          {!isLoading && (
+            <ul className={styles.habitList}>
+              {habits.map((habit) => (
+                <li
+                  key={habit.id}
+                  className={clsx(
+                    styles.habitItem,
+                    habit.completed && styles.completed,
+                  )}
+                >
+                  {habit.name}
+                </li>
+              ))}
+            </ul>
+          )}
         </main>
       </div>
       {/* 모달 레이아웃 추가 */}
