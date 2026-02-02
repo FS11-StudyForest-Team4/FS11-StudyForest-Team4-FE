@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
-import arrow_Vector from '../../assets/images/arrow_Vector.png';
-import delete_Icon from '../../assets/images/delete_Icon.png';
+import arrow_Vector from '../../assets/images/habit_img/arrow_Vector.png';
+import delete_Icon from '../../assets/images//habit_img/delete_Icon.png';
+import underline_Vector from '../../assets/images/habit_img/underline_Vector.png';
 import {
   updateHabit,
   createHabit,
@@ -216,14 +217,21 @@ function Habit() {
             </ul>
             {/* 아진짜 왜 안되냐 */}
             {/* 습관 추가 섹션구현(+)  */}{' '}
-            <input
-              type="text"
-              placeholder=""
-              className={styles.addInput}
-              value={newHabitName}
-              onChange={(e) => setNewHabitName(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-            />
+            <div className={styles.inputWrapper}>
+              <input
+                type="text"
+                placeholder=""
+                className={styles.addInput}
+                value={newHabitName}
+                onChange={(e) => setNewHabitName(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+              />
+              <img
+                src={underline_Vector}
+                alt="underline"
+                className={styles.underlineIcon}
+              />
+            </div>
             <div className={styles.addHabitSection}>
               <button className={styles.addBtn} onClick={handleCreate}>
                 +
