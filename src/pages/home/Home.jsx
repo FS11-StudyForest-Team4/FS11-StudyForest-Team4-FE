@@ -52,9 +52,32 @@ const Home = () => {
     navigate(`/study/${study.id}`);
   };
 
-  const filteredList = (studies || []).filter((study) =>
-    study.title?.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const filteredList = [...(studies || [])]
+    .filter((study) =>
+      study.title?.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+    .sort((a, b) => {
+      switch (selectedSort.value) {
+        case 'MOST_POINTS': // 많은 포인트 순 (내림차순)
+          return (b.totalPoint || 0) - (a.totalPoint || 0);
+
+        case 'LEAST_POINTS': // 적은 포인트 순 (오름차순)
+          return (a.totalPoint || 0) - (b.totalPoint || 0);
+
+        case 'LATEST': // 최근 순 (내림차순)
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+
+        case 'OLDEST': // 오래된 순 (오름차순)
+          return (
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          );
+
+        default:
+          return 0;
+      }
+    });
 
   return (
     <div className={styles.homeContainer}>
@@ -130,7 +153,7 @@ const Home = () => {
                   <StudyCard
                     key={study.id}
                     study={study}
-                    background={study.background} // 💡 배경색 전달 확인
+                    background={study.background}
                     onClick={() => handleStudyClick(study)}
                   />
                 ))
