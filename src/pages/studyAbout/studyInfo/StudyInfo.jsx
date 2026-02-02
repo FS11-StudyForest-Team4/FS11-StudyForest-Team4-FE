@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
-import styles from './studyInfo.module.css';
+import styles from './StudyInfo.module.css';
 import { EmojiService } from '@/api/api';
 import { PasswordModal } from '@/components/index';
 import { util } from '@/utils';

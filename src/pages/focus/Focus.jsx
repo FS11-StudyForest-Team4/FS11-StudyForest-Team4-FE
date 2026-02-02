@@ -43,13 +43,13 @@ const Focus = () => {
 
     console.log('세션이 완료되었습니다!');
     toast('🎉 50포인트를 획득했습니다!', {
-      className: styles['toast-completed'],
+      className: styles['toastCompleted'],
     });
   }, [isOver]);
 
   useEffect(() => {
     if (isPaused) {
-      toast('🚨 집중이 중단되었습니다.', { className: styles['toast-paused'] });
+      toast('🚨 집중이 중단되었습니다.', { className: styles['toastPaused'] });
     } else {
       toast.dismiss();
     }
@@ -82,57 +82,57 @@ const Focus = () => {
   };
 
   return (
-    <div className={styles['timer-wrapper']}>
-      <p className={styles['timer-title']}>오늘의 집중</p>
+    <div className={styles.timerWrapper}>
+      <p className={styles.timerTitle}>오늘의 집중</p>
       {isRunning || isOver ? (
-        <div className={styles['start-time-tag-wrapper']}>
-          <div className={styles['start-time-tag']}>
+        <div className={styles.startTimeTagWrapper}>
+          <div className={styles.startTimeTag}>
             <img
-              className={styles['timer-icon']}
+              className={styles.timerIcon}
               src={timer_ic}
               alt="timer_icon.png"
             />
-            <div className={styles['start-time-tag-time']}>
+            <div className={styles.startTimeTagTime}>
               {setTimeFormat(START_TIME)}
             </div>
           </div>
         </div>
       ) : (
-        <div className={styles['start-time-tag-wrapper-placeholder']}>
-          <div className={styles['start-time-tag-placeholder']}>
-            <div className={styles['start-time-tag-time']}>
+        <div className={styles.startTimeTagWrapperPlaceholder}>
+          <div className={styles.startTimeTagPlaceholder}>
+            <div className={styles.startTimeTagTime}>
               {setTimeFormat(START_TIME)}
             </div>
           </div>
         </div>
       )}
       <div
-        className={`${styles.timer} ${timeLeft < 0 ? styles['time-over'] : timeLeft <= 10 ? styles['time-warning'] : ''}`}
+        className={`${styles.timer} ${timeLeft < 0 ? styles.timeOver : timeLeft <= 10 ? styles.timeWarning : ''}`}
       >
         {setTimeFormat(timeLeft)}
       </div>
 
-      <div className={styles['timer-button-wrapper']}>
+      <div className={styles.timerButtonWrapper}>
         <button
           type="button"
-          className={`${styles['timer-pause-button']} ${
-            !(isRunning && !isOver) ? styles['hidden'] : ''
+          className={`${styles.timerPauseButton} ${
+            !(isRunning && !isOver) ? styles.hidden : ''
           }`}
           onClick={handlePause}
         >
-          <img className={styles['pause-icon']} src={pause_ic} />
+          <img className={styles.pauseIcon} src={pause_ic} />
         </button>
 
         <button
           type="button"
-          className={styles['timer-start-button']}
+          className={styles.timerStartButton}
           disabled={isRunning && !isOver}
           onClick={isOver ? handleStop : handleStart}
         >
           {isOver ? (
             <>
               <img
-                className={styles['img-stop-icon']}
+                className={styles.imgStopIcon}
                 src={stop_ic}
                 alt="stop_icon.png"
               />
@@ -141,7 +141,7 @@ const Focus = () => {
           ) : (
             <>
               <img
-                className={styles['img-play-icon']}
+                className={styles.imgPlayIcon}
                 src={play_ic}
                 alt="play_icon.png"
               />
@@ -152,12 +152,12 @@ const Focus = () => {
 
         <button
           type="button"
-          className={`${styles['timer-reset-button']} ${
-            !(isRunning && !isOver) ? styles['hidden'] : ''
+          className={`${styles.timerResetButton} ${
+            !(isRunning && !isOver) ? styles.hidden : ''
           }`}
           onClick={handleReset}
         >
-          <img className={styles['reset-icon']} src={reset_ic} />
+          <img className={styles.resetIcon} src={reset_ic} />
         </button>
       </div>
       <ToastContainer

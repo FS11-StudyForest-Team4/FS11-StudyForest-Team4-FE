@@ -19,3 +19,10 @@
   font-weight: 400;
   line-height: normal;
 }
+
+@media screen and (max-width: 375px) {
+  .btn {
+    width: 100%;
+    max-width: 312px;
+  }
+}

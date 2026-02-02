@@ -1,0 +1,90 @@
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+
+  label {
+    display: block;
+    color: var(--black-black_414141, #414141);
+    font-family: Pretendard;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .inputWrapper {
+    display: flex;
+    align-items: flex-center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 48px;
+    border-radius: 15px;
+    border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+    background: #fff;
+    cursor: text;
+    input {
+      outline: none;
+      border: none;
+      flex: 1; /*아이콘 뒤로 밀려고 늘렸*/
+    }
+
+    input::placeholder {
+      color: var(--gray-gray_818181, #818181);
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+  .inputWrapper:focus-within {
+    border: 1px solid #c41013;
+  }
+  .descriptionWrapper {
+    height: 98px;
+  }
+}
+
+/*비밀번호 보이게 하는 버튼*/
+.buttonShowPassword {
+  width: 24px;
+  height: 24px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+textarea {
+  all: unset;
+  width: 100%;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.errorMessage {
+  color: var(--red-error_C41013, #c41013);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.tileWrapper {
+  display: flex;
+  width: 648px;
+  height: auto !important;
+  border: none !important;
+  padding: 0 !important;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
