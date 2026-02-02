@@ -25,10 +25,13 @@ import {
   sticker17,
   sticker18,
 } from '@/assets/icons/stickers/index';
+//import { useParams } from 'react-router';
 
 function Habitlog() {
+  // const { studyId } = useParams();
   const studyId = '01KG6V43DV6F8YGRN8AZ6J7XVQ';
-
+  //study를 프롭으로 받거나
+  // useparams
   const [habits, setHabits] = useState([]); // 습관목록
   const [habitlogs, setHabitlogs] = useState([]); // 습관기록
   const startOfWeek = getStartOfweek(); // 오늘날짜로 이번주 첫날
@@ -88,29 +91,41 @@ function Habitlog() {
   return (
     <section className={styles.habitList}>
       <h2>습관기록표</h2>
-      <div className={styles.habitlogGrid}>
-        <div></div>
-        {days.map((day) => (
-          <div key={day} className={styles.dayHeader}>
-            {day}
-          </div>
-        ))}
-        {habits.map((habit, rowIndex) => (
-          //하나로 묶고 그리드 깨짐방지 key 중요
-          <Fragment key={habit.id}>
-            <div className={styles.habitName}>{habit.name}</div>
-            {days.map((day) => (
-              <div key={day} className={styles.habitlogCell}>
-                {habitlogsWithWeek[habit.id]?.[day] ? (
-                  <img src={rowStickers[rowIndex]} alt="습관완료" width={36} />
-                ) : (
-                  <img src={stickerEmpty} alt="습관미완료" width={36} />
-                )}
-              </div>
-            ))}
-          </Fragment>
-        ))}
-      </div>
+      {habits.length === 0 ? (
+        <p className={styles.emptyMessage}>
+          아직 습관이 없어요
+          <br />
+          오늘의 습관에서 습관을 생성해보세요
+        </p>
+      ) : (
+        <div className={styles.habitlogGrid}>
+          <div></div>
+          {days.map((day) => (
+            <div key={day} className={styles.dayHeader}>
+              {day}
+            </div>
+          ))}
+          {habits.map((habit, rowIndex) => (
+            //하나로 묶고 그리드 깨짐방지 key 중요
+            <Fragment key={habit.id}>
+              <div className={styles.habitName}>{habit.name}</div>
+              {days.map((day) => (
+                <div key={day} className={styles.habitlogCell}>
+                  {habitlogsWithWeek[habit.id]?.[day] ? (
+                    <img
+                      src={rowStickers[rowIndex]}
+                      alt="습관완료"
+                      width={36}
+                    />
+                  ) : (
+                    <img src={stickerEmpty} alt="습관미완료" width={36} />
+                  )}
+                </div>
+              ))}
+            </Fragment>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
