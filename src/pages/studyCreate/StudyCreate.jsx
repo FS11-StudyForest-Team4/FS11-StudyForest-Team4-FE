@@ -39,6 +39,19 @@ const StudyCreate = () => {
     }));
   };
 
+  // 모든 필드 검증 (submit 시)
+  const validateAll = () => {
+    const newErrors = {};
+    Object.keys(validators).forEach((name) => {
+      const error = validators[name](formData[name], formData);
+      newErrors[name] = error || undefined;
+    });
+    setErrors(newErrors);
+
+    // 모든 필드 유효하면 true 반환
+    return Object.values(newErrors).every((err) => !err);
+  };
+
   //handleChange (Input에서 사용)
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -50,7 +63,7 @@ const StudyCreate = () => {
 
     validateField(name, value);
   };
-  
+
   // BackgroundOption 전용 handler
   const handleBackgroundChange = (selectedId) => {
     setFormData((prev) => ({ ...prev, background: selectedId }));
@@ -60,8 +73,14 @@ const StudyCreate = () => {
   const handleSubmit = async (event) => {
     event.preventDefault(); // 새로고침 방지
 
+    const isValid = validateAll(); //전체검증
+    if (!isValid) return;
+
+    // passwordCheck만 제외하고 전송
+    const { _passwordCheck, ...dataToSend } = formData;
+
     try {
-      const result = await postStudy(formData); // API 호출
+      const result = await postStudy(dataToSend); // API 호출
       console.log('스터디 등록 성공:', result);
       navigate(`/studies/${result.id}`);
     } catch (error) {
@@ -110,7 +129,7 @@ const StudyCreate = () => {
           />
           <Input
             label="비밀번호"
-            name="password "
+            name="password"
             type="password"
             placeholder="비밀번호를 입력해주세요"
             value={formData.password}
@@ -119,7 +138,7 @@ const StudyCreate = () => {
           />
           <Input
             label="비밀번호 확인"
-            name=""
+            name="passwordCheck"
             type="password"
             placeholder="비밀번호를 다시 한 번 입력해주세요"
             value={formData.passwordCheck}
