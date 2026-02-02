@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styles from './habit.module.css';
+import styles from './Habit.module.css';
 import arrow_Vector from '../../assets/images/arrow_Vector.png';
 import delete_Icon from '../../assets/images/delete_Icon.png';
-import {
-  updateHabit,
-  createHabit,
-  deleteHabit,
-} from '../../api/habit/habitService';
+import { updateHabit, createHabit, deleteHabit } from '../../api/habitService';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -50,14 +46,37 @@ function Habit() {
         updateHabit(habit.id, { name: habit.name }),
       );
       await Promise.all(updatePromises);
-      alert('습관이 성공적으로 수정되었습니다!');
+      alert('습관이 수정되었습니다!');
       setIsEditModalOpen(false);
     } catch (error) {
       console.error('수정 중 오류 발생:', error);
     }
   };
 
-  // 2. 삭제 로직 (하림님의 deleteHabit 활용)
+  // 생성 로직(하림님 createHabit 활용)
+  const [newHabitName, setNewHabitName] = useState('');
+  const handleCreate = async () => {
+    if (!newHabitName.trim()) {
+      alert('습관 이름을 입력해주세요!');
+      return;
+    }
+
+    try {
+      const studyId = 1; // studyId ?
+      // 하림님의 API 호출
+      const response = await createHabit(studyId, { name: newHabitName });
+
+      if (response) {
+        // 서버 저장 성공 후 화면(UI)에 바로 반영
+        setHabits([...habits, response]);
+        setNewHabitName(''); // 입력창 초기화
+      }
+    } catch (error) {
+      console.error('습관 생성 오류:', error);
+    }
+  };
+
+  // 삭제 로직 (하림님의 deleteHabit 활용)
   const handleDelete = async (habitId) => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
@@ -89,7 +108,11 @@ function Habit() {
                 {/* Frame 2609447 */}
                 <button className={styles.headerTopBtnToday}>
                   오늘의 집중
-                  <img src={arrow_Vector} alt="" className={styles.iconArrow} />
+                  <img
+                    src={arrow_Vector}
+                    alt="arrow"
+                    className={styles.iconArrow}
+                  />
                 </button>
                 {/* Frame 2609447 */}
                 <button className={styles.headerTopBtnHome}>
@@ -169,10 +192,20 @@ function Habit() {
                 </li>
               ))}
             </ul>
-
-            {/* 습관 추가 섹션구현(+) */}
+            {/* 아진짜 왜 안되냐 */}
+            {/* 습관 추가 섹션구현(+)  */}{' '}
+            <input
+              type="text"
+              placeholder=""
+              className={styles.addInput}
+              value={newHabitName}
+              onChange={(e) => setNewHabitName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+            />
             <div className={styles.addHabitSection}>
-              <button className={styles.addBtn}>+</button>
+              <button className={styles.addBtn} onClick={handleCreate}>
+                +
+              </button>
             </div>
             <div className={styles.modalFooter}>
               <button

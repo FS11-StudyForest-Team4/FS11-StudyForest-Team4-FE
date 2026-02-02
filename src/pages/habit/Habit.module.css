@@ -249,7 +249,7 @@
 
 .modalContent {
   width: 648px;
-  height: 870px;
+  height: 920px;
   max-height: 80vh;
   opacity: 1;
   top: 99px;
@@ -355,6 +355,50 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.addInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: #818181;
+  background-color: #eeeeee;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 400px;
+  height: 54px;
+
+  gap: 12px;
+  color: #818181;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: underline;
+  text-decoration-style: solid;
+
+  opacity: 1;
+  border-radius: 20px;
+  padding: 12px;
+  cursor: pointer;
+  max-width: 400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin: 20px auto 0;
 }
 
 .addHabitSection {
