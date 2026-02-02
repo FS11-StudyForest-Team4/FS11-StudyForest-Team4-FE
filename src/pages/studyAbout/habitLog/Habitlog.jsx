@@ -22,7 +22,6 @@ import stiker15 from '@/assets/icons/stickers/sticker_yellow_15.svg';
 import stiker16 from '@/assets/icons/stickers/sticker_pink_16.svg';
 import stiker17 from '@/assets/icons/stickers/sticker_pink_17.svg';
 import stiker18 from '@/assets/icons/stickers/sticker_pink_18.svg';
-import styles from './Habitlog.module.css';
 
 // 이번주 날짜 확인 및 요청 util 만들어서 설정하기
 // return  { startDate, endDate } // 월요일부터 일요일로 설정
@@ -73,8 +72,6 @@ function Habitlog() {
     stiker18,
   ];
 
-  const days = ['월', '화', '수', '목', '금', '토', '일'];
-
   const historyWithWeek = habitlog
     .filter((h) => !h.isDeleted) // 데이터 가져올때 아예 안가져오는걸로
     .reduce((acc, cur) => {
@@ -91,7 +88,7 @@ function Habitlog() {
     }, {});
 
   return (
-    <section className={styles['habit-list']}>
+    <section className={styles.habitList}>
       <h2>습관기록표</h2>
       <table>
         <thead>
