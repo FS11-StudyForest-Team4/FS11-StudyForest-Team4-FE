@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
+<<<<<<< HEAD
 import arrow_Vector from '../../assets/images/arrow_Vector.png';
 import delete_Icon from '../../assets/images/delete_Icon.png';
 import { updateHabit, createHabit, deleteHabit } from '../../api/habitService';
+=======
+>>>>>>> origin/develop
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
