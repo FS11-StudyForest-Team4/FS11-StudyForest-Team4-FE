@@ -337,6 +337,23 @@
   width: 400px;
   margin-left: 50px;
 }
+
+.emptyMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #818181;
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.emptyMessage p {
+  margin: 0;
+}
+
 .modalFooter {
   display: flex;
 

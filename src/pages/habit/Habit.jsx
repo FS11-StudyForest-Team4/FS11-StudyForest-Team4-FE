@@ -160,20 +160,31 @@ function Habit() {
 
           {/* frame 2609498 */}
           {isLoading && <div>로딩중...</div>}
+          {/* 습관 목록이 있을때 */}
           {!isLoading && (
-            <ul className={styles.habitList}>
-              {habits.map((habit) => (
-                <li
-                  key={habit.id}
-                  className={clsx(
-                    styles.habitItem,
-                    habit.completed && styles.completed,
-                  )}
-                >
-                  {habit.name}
-                </li>
-              ))}
-            </ul>
+            <>
+              {habits.length > 0 ? (
+                <ul className={styles.habitList}>
+                  {habits.map((habit) => (
+                    <li
+                      key={habit.id}
+                      className={clsx(
+                        styles.habitItem,
+                        habit.completed && styles.completed,
+                      )}
+                    >
+                      {habit.name}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                /* 습관 목록이 없을 때 (추가된 부분) */
+                <div className={styles.emptyMessage}>
+                  <p>아직 습관이 없어요</p>
+                  <p>목록 수정을 눌러 습관을 생성해보세요</p>
+                </div>
+              )}
+            </>
           )}
         </main>
       </div>
