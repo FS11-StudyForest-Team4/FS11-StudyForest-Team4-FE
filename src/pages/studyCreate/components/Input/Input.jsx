@@ -2,7 +2,7 @@ import styles from './Input.module.css';
 
 function Input({ label, errorMessage, className = '', ...props }) {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.inputwrapper}>
       {label && (
         <label htmlFor={props.name} classNames={styles.label}>
           {label}
