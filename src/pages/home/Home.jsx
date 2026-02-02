@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { getStudyList } from '../../api/studyService';
 import { MOCK_STUDY_LIST } from '../../mock/studyData.js';
 import StudyCard from './StudyCard';
 import styles from './home.module.css';
@@ -17,23 +18,40 @@ const Home = () => {
   const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [recentStudies, setRecentStudies] = useState([]);
+
+  const [nextCursor, setNextCursor] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchStudies = async () => {
-      try {
-        const response = await fetch(
-          `/api/studies?orderBy=${selectedSort.value}`,
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setStudies(data || MOCK_STUDY_LIST);
-        }
-      } catch (error) {
-        setStudies(MOCK_STUDY_LIST);
+  // 💡 fetchStudies를 useEffect 밖으로 빼서 '더보기' 버튼에서도 쓸 수 있게 함
+  const fetchStudies = async (isLoadMore = false) => {
+    setIsLoading(true);
+    try {
+      const result = await getStudyList({
+        orderBy: selectedSort.value,
+        cursor: isLoadMore ? nextCursor : undefined,
+        limit: 6,
+      });
+
+      const newData = result?.data || [];
+      const newCursor = result?.nextCursor || null;
+
+      if (isLoadMore) {
+        setStudies((prev) => [...prev, ...newData]);
+      } else {
+        setStudies(newData.length > 0 ? newData : MOCK_STUDY_LIST);
       }
-    };
-    fetchStudies();
+      setNextCursor(newCursor);
+    } catch (error) {
+      if (!isLoadMore) setStudies(MOCK_STUDY_LIST);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudies(false);
   }, [selectedSort]);
 
   useEffect(() => {
@@ -58,22 +76,18 @@ const Home = () => {
     )
     .sort((a, b) => {
       switch (selectedSort.value) {
-        case 'MOST_POINTS': // 많은 포인트 순 (내림차순)
+        case 'MOST_POINTS':
           return (b.totalPoint || 0) - (a.totalPoint || 0);
-
-        case 'LEAST_POINTS': // 적은 포인트 순 (오름차순)
+        case 'LEAST_POINTS':
           return (a.totalPoint || 0) - (b.totalPoint || 0);
-
-        case 'LATEST': // 최근 순 (내림차순)
+        case 'LATEST':
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
-
-        case 'OLDEST': // 오래된 순 (오름차순)
+        case 'OLDEST':
           return (
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
           );
-
         default:
           return 0;
       }
@@ -92,7 +106,7 @@ const Home = () => {
                   <StudyCard
                     key={`recent-${study.id}`}
                     study={study}
-                    background={study.background} // 💡 배경색 전달 확인
+                    background={study.background}
                     onClick={() => navigate(`/study/${study.id}`)}
                   />
                 ))
@@ -163,6 +177,18 @@ const Home = () => {
                 </div>
               )}
             </div>
+
+            {nextCursor && (
+              <div className={styles.moreButtonContainer}>
+                <button
+                  className={styles.moreButton}
+                  onClick={() => fetchStudies(true)}
+                  disabled={isLoading}
+                >
+                  {isLoading ? '로딩 중...' : '더보기'}
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </div>
