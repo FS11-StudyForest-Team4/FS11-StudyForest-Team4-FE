@@ -6,8 +6,8 @@ import logo from '@/assets/images/img_logo.svg';
 const Header = () => {
   const location = useLocation();
 
-  const shouldShowCreateButton =
-    location.pathname === '/' || location.pathname.startsWith('/study');
+  const buttonShowUrl = ['/', '/study/create'];
+  const urlCheck = buttonShowUrl.includes(location.pathname);
 
   return (
     <header>
@@ -17,7 +17,7 @@ const Header = () => {
             <img src={logo} alt="공부의 숲 로고" />
           </Link>
         </div>
-        {shouldShowCreateButton && (
+        {urlCheck && (
           <Link to="/study/create" className="btnStudyCreate">
             스터디 만들기
           </Link>
