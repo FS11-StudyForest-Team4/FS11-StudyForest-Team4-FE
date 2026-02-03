@@ -11,7 +11,7 @@ import { createStudy } from '@/api/studyService';
 const StudyCreate = () => {
   //입력값 관리
   const [formData, setFormData] = useState({
-    nickname: '',
+    nickName: '',
     title: '',
     description: '',
     background: 'GREEN', // 기본값
@@ -23,7 +23,7 @@ const StudyCreate = () => {
 
   // 검증 목록
   const validators = {
-    nickname: (value) => (value.trim() ? '' : '*닉네임을 입력해주세요'),
+    nickName: (value) => (value.trim() ? '' : '*닉네임을 입력해주세요'),
     title: (value) => (value.trim() ? '' : '*스터디 이름을 입력해주세요'),
     password: (value) => (value ? '' : '*비밀번호를 입력해주세요'),
     passwordCheck: (value, formData) =>
@@ -69,7 +69,7 @@ const StudyCreate = () => {
   const handleBackgroundChange = (selectedId) => {
     setFormData((prev) => ({ ...prev, background: selectedId }));
   };
-
+  
   // submit 함수
   const handleSubmit = async (event) => {
     event.preventDefault(); // 새로고침 방지
@@ -79,11 +79,11 @@ const StudyCreate = () => {
 
     // passwordCheck만 제외하고 전송
     const { _passwordCheck, ...dataToSend } = formData;
-
+     console.log('createStudy 데이터:', dataToSend);
     try {
       const result = await createStudy(dataToSend); // API 호출
       console.log('스터디 등록 성공:', result);
-      navigate(`/studies/${result.id}`);
+      navigate(`/study/About/${result.id}`);
     } catch (error) {
       console.error('스터디 등록 실패:', error);
       alert('스터디 등록 실패');
@@ -96,13 +96,13 @@ const StudyCreate = () => {
         <div className={style.createPageTitle}>스터디 만들기</div>
         <form onSubmit={handleSubmit}>
           <Input
-            name="nickname"
+            name="nickName"
             label="닉네임"
             type="text"
             placeholder="닉네임을 입력해주세요"
-            value={formData.nickname}
+            value={formData.nickName}
             onChange={handleChange}
-            errorMessage={errors.nickname}
+            errorMessage={errors.nickName}
           />
           <Input
             label="스터디 이름"

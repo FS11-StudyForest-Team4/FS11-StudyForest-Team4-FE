@@ -1,5 +1,27 @@
 import client from '@/lib/client';
 
+// GET 스터디 목록조회하기  
+export const getStudyList = async (params) => {
+  try {
+    const response = await client.get('/studies', { params });
+    return response.data;
+  } catch (error) {
+    console.error('getStudyList Error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// GET 스터디상세 조회하기 
+export const getStudy = async (id) => {
+  try {
+    const response = await client.get(`/studies/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('getStudy Error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
 // POST 스터디 만들기
 export const createStudy = async (data) => {
   try {
@@ -18,52 +40,20 @@ export const updateStudy = async (studyId, data) => {
   } catch (error) {
     console.log('updateStudy Error:', error.response?.data || error.message);
   }
-}
+};
 
-// GET 스터디 목록조회하기
-export const getStudyList = async (params) => {
+
+// DELETE 스터디 삭제하기  다른 파일 주소 확인하기 
+export const deleteStudy = async (id) => {
   try {
-    const response = await client.get('/studies', { params });
+    const response = await client.delete(`/studies/${id}`);
     return response.data;
   } catch (error) {
-    console.error('getEmojiList Error:', error.response?.data || error.message);
+    console.error('deleteStudy Error:', error.response?.data || error.message);
     throw error;
   }
 };
 
 
-export const getStudyList = () => {
-  return instance
-    .get(`/studies`)
-    .then((res) => res)
-    .catch((error) => {
-      console.log('getEmojiList Error:', error.response?.data || error.message);
-    });
-};
 
-export const getStudy = (id) => {
-  return instance
-    .get(`/studies/${id}`)
-    .then((res) => res)
-    .catch((error) => {
-      console.log('getEmojiList Error:', error.response?.data || error.message);
-    });
-};
 
-export const deleteStudy = (id) => {
-  return instance
-    .delete(`/studies/${id}`)
-    .then((res) => res)
-    .catch((error) => {
-      console.log('userCheck Error:', error.response?.data || error.message);
-    });
-};
-
-export const userCheck = (id, { password }) => {
-  return instance
-    .get(`/studies/${id}/verify`, { password })
-    .then((res) => res)
-    .catch((error) => {
-      console.log('userCheck Error:', error.response?.data || error.message);
-    });
-};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { getStudyList } from '../../api/studyService';
+import { getStudyList } from '@/api/studyService';
 import StudyCard from './StudyCard';
 import styles from './home.module.css';
 
