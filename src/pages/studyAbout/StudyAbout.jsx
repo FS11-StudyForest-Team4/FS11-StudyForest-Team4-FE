@@ -13,7 +13,9 @@ import { util } from '@/utils';
 const StudyAbout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const studyId = location.search.slice(1) || '01KG4143RE0S23R20FEBJB64M4';
+  const id = location.pathname.split('/').filter(Boolean).pop();
+
+  const studyId = location.search.slice(1) || id;
 
   const [studyInfo, setStudyInfo] = useState([]);
 
@@ -43,7 +45,7 @@ const StudyAbout = () => {
       {studyInfo ? (
         <>
           <StudyInfo studyInfo={studyInfo} />
-          <Habitlog studyInfo={studyInfo} />
+          <Habitlog studyId={studyId} />
         </>
       ) : (
         <Spinner />

@@ -14,8 +14,6 @@ const StudyInfo = ({ studyInfo }) => {
   const [emojiTab, setEmojiTab] = useState(false);
   const [modalType, setModalType] = useState(null);
 
-  const [showFocus, setShowFocus] = useState(false);
-
   const onEmojiClick = (emojiName) => {
     const emoji = emojiList.find((x) => x.name === emojiName);
 
@@ -144,12 +142,10 @@ const StudyInfo = ({ studyInfo }) => {
               오늘의 습관 <i />
             </button>
             <button onClick={() => onUserHandler('focus')}>
-            <button type="button" onClick={() => setShowFocus((prev) => !prev)}>
               오늘의 집중 <i />
             </button>
           </div>
         </div>
-        {showFocus && <Focus studyId={studyId} />}
         <div className={styles.studyInfo}>
           <h4>소개</h4>
           <p>{description}</p>

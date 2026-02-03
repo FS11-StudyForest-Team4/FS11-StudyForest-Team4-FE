@@ -11,7 +11,7 @@ import {
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { useParams } from 'react-router';
+import { useLocation } from 'react-router';
 dayjs.locale('ko');
 
 const ONE_MINUTE_MS = 60 * 1000;
@@ -19,7 +19,8 @@ const ONE_MINUTE_MS = 60 * 1000;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Habit() {
-  const { studyId } = useParams();
+  const location = useLocation();
+  const studyId = location.state?.studyId;
   //현재 시간을 저장하는 state
   const [now, setNow] = useState(new Date());
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)

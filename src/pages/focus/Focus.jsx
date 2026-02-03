@@ -8,7 +8,7 @@ import reset_ic from '#assets/images/focus_img/reset_ic.png';
 import stop_ic from '#assets/images/focus_img/stop_ic.png';
 import timer_ic from '#assets/images/focus_img/timer_ic.png';
 import { getFocus, createFocus, completeFocus } from '@/api/focusService';
-
+import { useLocation } from 'react-router';
 
 const START_TIME = 20; // 테스트를 위하여 20초로 설정했습니다. 이후 25*60으로 바꾸면 25분으로 설정됩니다.
 
@@ -22,7 +22,9 @@ function setTimeFormat(seconds) {
   return `${sign}${mm}:${ss}`;
 }
 
-const Focus = ({ studyId }) => {
+const Focus = () => {
+  const location = useLocation();
+  const studyId = location.state?.studyId;
   const [timeLeft, setTimeLeft] = useState(START_TIME); // 초 단위 (0 밑으로도 내려감)
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);

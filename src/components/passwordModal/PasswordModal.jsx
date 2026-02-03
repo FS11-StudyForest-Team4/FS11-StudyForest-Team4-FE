@@ -33,15 +33,15 @@ const PasswordModal = (props) => {
 
   const BTN_ACTIONS = {
     habit: () =>
-      navigate('/habit', {
+      navigate('/study/habit', {
         state: {
-          studyInfo: studyInfo,
+          studyId: id,
         },
       }),
     focus: () =>
-      navigate('/focus', {
+      navigate('/study/focus', {
         state: {
-          studyInfo: studyInfo,
+          studyId: id,
         },
       }),
     edit: () =>

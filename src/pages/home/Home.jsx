@@ -69,7 +69,7 @@ const Home = () => {
     );
     localStorage.setItem('recentStudies', JSON.stringify(updated));
     setRecentStudies(updated);
-    navigate(`/study/${study.id}`);
+    navigate(`/study/about/${study.id}`);
   };
 
   return (
@@ -86,7 +86,7 @@ const Home = () => {
                     key={`recent-${study.id}`}
                     study={study}
                     background={study.background}
-                    onClick={() => navigate(`/study/${study.id}`)}
+                    onClick={() => navigate(`/study/about/${study.id}`)}
                   />
                 ))
               ) : (
