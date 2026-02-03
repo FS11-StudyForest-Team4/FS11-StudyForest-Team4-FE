@@ -8,9 +8,12 @@
     align-items: center;
     position: relative;
     & aside {
+      height: 450px;
+      width: 350px;
+      border-radius: 12px;
       position: absolute;
-      top: 50px;
-      left: 0;
+      left: 250px;
+      top: 45px;
     }
   }
 
@@ -82,7 +85,6 @@
   }
 
   & .emojiBtn {
-    height: 31px;
     border-radius: 50px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.3);
@@ -114,6 +116,9 @@
       font-style: normal;
       font-weight: 500;
       line-height: normal;
+      &:hover {
+        cursor: pointer;
+      }
       &:after {
         content: '|';
         margin: 0 16px;
@@ -136,12 +141,14 @@
     justify-content: space-between;
     margin: 29px 0 21px 0;
     & h1 {
+      width: calc(100% - 295px);
       color: #414141;
       font-family: Pretendard;
       font-size: 32px;
       font-style: normal;
       font-weight: 800;
       line-height: normal;
+      padding: 0 10px 0 0;
     }
     & .moreBtn {
       display: flex;
@@ -223,6 +230,20 @@
         font-weight: 500;
         line-height: normal;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .studyNav {
+    color: #ccc;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .emojiBox {
+    & aside {
+      left: 0 !important;
     }
   }
 }

@@ -1,0 +1,19 @@
+label {
+  color: var(--black-black_414141, #414141);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+input {
+  width: 648px;
+  height: 48px;
+  border-radius: 15px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+}
+
+input::placeholder {
+      color: var(--gray-gray_818181, #818181);
+      font-size: 16px;
+      font-weight: 400;
+    }

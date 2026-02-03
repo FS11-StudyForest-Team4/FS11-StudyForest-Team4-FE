@@ -1,0 +1,30 @@
+.bgGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.bgButton {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-size: cover; /* 이미지 꽉 채우기 */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.selected::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  background: url('/src/assets/images/icons/ic_bg_selected.svg') center/cover
+    no-repeat;
+  pointer-events: none;
+}
