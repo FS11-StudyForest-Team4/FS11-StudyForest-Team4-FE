@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import style from './StudyCreate.module.css';
 import { util } from '@/utils';
 import { StudiesService } from '@/api/api';
-
 import {
   Textarea,
   Input,

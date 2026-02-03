@@ -1,9 +1,8 @@
 import { Fragment, useEffect, useState, useMemo } from 'react';
 
-import styles from './Habitlogs.module.css';
+import styles from './Habitlog.module.css';
 import { getHabitList } from '@/api/habitService';
 import { getHabitlogs } from '@/api/habitlogService';
-import { getStartOfweek } from '@/utils/getStartOfweek';
 import {
   stickerEmpty,
   sticker01,
@@ -25,30 +24,30 @@ import {
   sticker17,
   sticker18,
 } from '@/assets/icons/stickers/index';
+import { getStartOfWeek } from '@/utils/getStartOfweek';
 
 function Habitlog(props) {
   const { studyId } = props;
   const [habits, setHabits] = useState([]); // 습관목록
   const [habitlogs, setHabitlogs] = useState([]); // 습관기록
-  const startOfWeek = useMemo(() => getStartOfweek(), []); // 오늘날짜로 이번주 첫날
+  const startOfWeek = useMemo(() => getStartOfWeek(), []); // 오늘날짜로 이번주 첫날
 
   useEffect(() => {
     if (!studyId && !startOfWeek) return;
 
-    //에러 체크 부탁드립니다!
-    // const fetchData = async () => {
-    //   try {
-    //     const [habiList, habitlogList] = await Promise.all([
-    //       getHabitList(studyId),
-    //       getHabitlogs(studyId, startOfWeek),
-    //     ]);
-    //     setHabits(habiList);
-    //     setHabitlogs(habitlogList);
-    //   } catch (error) {
-    //     console.error('fetchData Error:', error);
-    //   }
-    // };
-    // fetchData();
+    const fetchData = async () => {
+      try {
+        const [habiList, habitlogList] = await Promise.all([
+          getHabitList(studyId),
+          getHabitlogs(studyId, startOfWeek),
+        ]);
+        setHabits(habiList);
+        setHabitlogs(habitlogList);
+      } catch (error) {
+        console.error('fetchData Error:', error);
+      }
+    };
+    fetchData();
   }, [studyId, startOfWeek]);
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];

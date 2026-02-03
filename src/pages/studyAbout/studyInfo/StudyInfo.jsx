@@ -13,6 +13,10 @@ const StudyInfo = ({ studyInfo }) => {
   const [emojiTab, setEmojiTab] = useState(false);
   const [modalType, setModalType] = useState(null);
 
+  // focus 표시 여부
+  const [showFocus, setShowFocus] = useState(false);
+  const [isFocusing, setIsFocusing] = useState(false);
+
   const handleEmoji = (emojiName) => {
     const emoji = emojiList.find((x) => x.name === emojiName);
 
@@ -142,11 +146,15 @@ const StudyInfo = ({ studyInfo }) => {
             <button onClick={() => onUserHandler('habit')}>
               오늘의 습관 <i />
             </button>
-            <button onClick={() => onUserHandler('focus')}>
-              오늘의 집중 <i />
-            </button>
+            {isFocusing === true ? null : (
+              <button onClick={() => onUserHandler('focus')}>
+                오늘의 집중 <i />
+              </button>
+            )}
           </div>
         </div>
+        {/* studyInfo 내부에서 Focus 랜더링 */}
+        {showFocus && id && <Focus studyId={id} />}
         <div className={styles.studyInfo}>
           <h4>소개</h4>
           <p>{description}</p>
@@ -164,6 +172,14 @@ const StudyInfo = ({ studyInfo }) => {
           type={modalType}
           studyInfo={studyInfo}
           modalClose={() => setModalType(null)}
+          //type=focus 일 때 -> 페이지 이동 x, studyInfo 안에서 랜더링
+          onSuccess={(type) => {
+            if (type === 'focus') {
+              setShowFocus(true);
+              setModalType(null);
+              setIsFocusing(true);
+            }
+          }}
         />
       )}
     </section>
