@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getStudyList } from '../../api/studyService';
 import StudyCard from './StudyCard';
-import styles from './home.module.css';
+import styles from './Home.module.css';
 
 const SORT_OPTIONS = [
   { label: '최근 순', value: 'LATEST' },
