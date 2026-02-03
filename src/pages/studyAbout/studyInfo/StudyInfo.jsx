@@ -2,55 +2,80 @@ import React, { useEffect, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import styles from './StudyInfo.module.css';
 import { EmojiService } from '@/api/api';
+import { PasswordModal } from '@/components/index';
+import { util } from '@/utils';
 import Focus from '@/pages/focus/Focus';
 
-{
-  /* TO DO LIST 
-  
-    1. 오늘의 습관, 오늘의 집중, 수정하기, 삭제하기 눌렀을 때 비밀번호 모달 띄우기 
-    2. 이모지 버튼 클릭시 - api 호출 및 실시간 반영 체크
-    3. 공유하기 - 링크 복사 - toast창
-    4. 습관 기록표 뿌리는 부분 고민 필요
+const StudyInfo = ({ studyInfo }) => {
+  const { id, title, description, totalPoint } = studyInfo || {};
 
-  */
-}
-
-const StudyInfo = ({ studyId }) => {
   const [emojiList, setEmojiList] = useState([]);
   const [moreEmoji, setMoreEmoji] = useState(false);
   const [emojiTab, setEmojiTab] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
   const [showFocus, setShowFocus] = useState(false);
 
   const onEmojiClick = (emojiName) => {
-    createEmoji(emojiName);
+    const emoji = emojiList.find((x) => x.name === emojiName);
+
+    if (!emoji) {
+      createEmoji(emojiName);
+    } else {
+      patchEmoji(emojiName);
+    }
   };
 
-  const getEmojiList = async () => {
+  const getEmojiList = async (studyId) => {
     try {
-      const res = await EmojiService.getEmojiList(
-        '01KG4143RBBN6DG5CFSNNNSXQ8', //studyId
-      );
-      setEmojiList(res);
+      const res = await EmojiService.getEmojiList(studyId);
+      if (res.status == 200) setEmojiList(res.data);
     } catch (err) {
       console.log('err:', err);
     }
   };
 
   useEffect(() => {
-    getEmojiList();
-  }, []);
+    if (!id) return;
+    const fetchEmojiList = async () => {
+      await getEmojiList(id);
+    };
+
+    fetchEmojiList();
+  }, [id]);
 
   const createEmoji = async (emojiName) => {
     try {
-      const res = await EmojiService.createEmoji(
-        '01KG4143RBBN6DG5CFSNNNSXQ8', //studyId
-        { name: emojiName },
-      );
-      if (res.status == 201) getEmojiList();
+      const res = await EmojiService.createEmoji(id, { name: emojiName });
+      if (res.status == 201) getEmojiList(id);
     } catch (err) {
       console.log('err:', err);
     }
+  };
+
+  const patchEmoji = async (emojiName) => {
+    try {
+      const res = await EmojiService.patchEmoji(id, { name: emojiName });
+      if (res.status == 200) getEmojiList(id);
+    } catch (err) {
+      console.log('err:', err);
+    }
+  };
+
+  const onUserHandler = (type) => {
+    setModalType(type);
+  };
+
+  const onShareHandler = () => {
+    const url = `${window.location.origin}${window.location.pathname}?${id}`;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        util.successAlert('URL이 클립보드에 복사되었습니다!');
+      })
+      .catch((err) => {
+        console.error('복사 실패:', err);
+      });
   };
 
   return (
@@ -70,7 +95,7 @@ const StudyInfo = ({ studyId }) => {
                 </li>
               ))}
           </ul>
-          {emojiList.length > 3 && (
+          {emojiList && emojiList.length > 3 && (
             <>
               <button
                 onClick={() => setMoreEmoji(!moreEmoji)}
@@ -106,18 +131,19 @@ const StudyInfo = ({ studyId }) => {
           )}
         </div>
         <ul className={styles.btnList}>
-          <li>공유하기</li>
-          <li>수정하기</li>
-          <li>스터디 삭제하기</li>
+          <li onClick={onShareHandler}>공유하기</li>
+          <li onClick={() => onUserHandler('edit')}>수정하기</li>
+          <li onClick={() => onUserHandler('delete')}>스터디 삭제하기</li>
         </ul>
       </article>
       <article className={styles.studyContent}>
         <div className={styles.studyTop}>
-          <h1>연우의 개발공장 데이터 넣기</h1>
+          <h1>{title}</h1>
           <div className={styles.moreBtn}>
-            <button>
+            <button onClick={() => onUserHandler('habit')}>
               오늘의 습관 <i />
             </button>
+            <button onClick={() => onUserHandler('focus')}>
             <button type="button" onClick={() => setShowFocus((prev) => !prev)}>
               오늘의 집중 <i />
             </button>
@@ -126,15 +152,23 @@ const StudyInfo = ({ studyId }) => {
         {showFocus && <Focus studyId={studyId} />}
         <div className={styles.studyInfo}>
           <h4>소개</h4>
-          <p>[데이터 넣기] 다들 오늘 하루도 화이팅 ;) 현재까지</p>
+          <p>{description}</p>
         </div>
         <div className={styles.studyPoint}>
           <h4>현재 획득한 포인트</h4>
           <p className={styles.point}>
-            <i /> <span>310P[데이터 넣기] 획득</span>
+            <i /> <span>{totalPoint} 획득</span>
           </p>
         </div>
       </article>
+
+      {modalType && (
+        <PasswordModal
+          type={modalType}
+          studyInfo={studyInfo}
+          modalClose={() => setModalType(null)}
+        />
+      )}
     </section>
   );
 };
