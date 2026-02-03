@@ -30,6 +30,7 @@
 .recentViewBox {
   min-height: 382px;
 }
+
 .studyBrowseBox {
   min-height: 822px;
 }
@@ -45,13 +46,6 @@
   font-size: 24px;
   font-weight: 800;
   color: #414141;
-}
-
-.studyGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
 }
 
 .filterControls {
@@ -82,6 +76,7 @@
 .dropdownWrapper {
   position: relative;
 }
+
 .sortDropdown {
   background: #ffffff;
   border: 1px solid #dddddd;
@@ -115,9 +110,17 @@
   text-align: center;
   cursor: pointer;
 }
+
 .selectedItem {
   font-weight: 700;
   color: #111111;
+}
+
+.studyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
 }
 
 .emptyDisplay {
@@ -125,8 +128,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 200px;
 }
+
 .emptyMessage {
   color: #414141;
   font-size: 16px;
+}
+
+.moreButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.moreButton {
+  width: 280px;
+  height: 53px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #578246;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.moreButton:hover {
+  background-color: #f9f9f9;
+  border-color: #cccccc;
+}
+
+.moreButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
