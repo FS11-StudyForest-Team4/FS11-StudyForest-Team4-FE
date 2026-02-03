@@ -10,7 +10,7 @@ const Header = () => {
     location.pathname === '/' || location.pathname.startsWith('/study');
 
   return (
-    <header className="header">
+    <header>
       <div className="headerContainer">
         <div className="logo">
           <Link to="/">

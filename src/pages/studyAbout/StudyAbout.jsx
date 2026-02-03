@@ -33,7 +33,7 @@ const StudyAbout = () => {
         const res = await StudiesService.getStudy(studyId);
         if (res.status == 200) setStudyInfo(res.data);
       } catch (err) {
-        console.log('err:', err);
+        console.log('getStudyId err:', err);
       }
     };
 
