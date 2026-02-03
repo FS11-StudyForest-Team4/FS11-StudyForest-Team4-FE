@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getStudyList } from '../../api/studyService';
-import { MOCK_STUDY_LIST } from '../../mock/studyData.js';
 import StudyCard from './StudyCard';
 import styles from './home.module.css';
 
@@ -13,7 +12,7 @@ const SORT_OPTIONS = [
 ];
 
 const Home = () => {
-  const [studies, setStudies] = useState(MOCK_STUDY_LIST || []);
+  const [studies, setStudies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -24,27 +23,30 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  // 💡 fetchStudies를 useEffect 밖으로 빼서 '더보기' 버튼에서도 쓸 수 있게 함
   const fetchStudies = async (isLoadMore = false) => {
+    if (isLoading) return;
     setIsLoading(true);
+
     try {
       const result = await getStudyList({
-        orderBy: selectedSort.value,
-        cursor: isLoadMore ? nextCursor : undefined,
+        q: searchTerm || undefined, //
+        orderBy: selectedSort.value, //
         limit: 6,
+        cursor: isLoadMore ? nextCursor : undefined,
       });
 
       const newData = result?.data || [];
-      const newCursor = result?.nextCursor || null;
+      const cursor = result?.nextCursor || null;
 
       if (isLoadMore) {
         setStudies((prev) => [...prev, ...newData]);
       } else {
-        setStudies(newData.length > 0 ? newData : MOCK_STUDY_LIST);
+        setStudies(newData);
       }
-      setNextCursor(newCursor);
+      setNextCursor(cursor);
     } catch (error) {
-      if (!isLoadMore) setStudies(MOCK_STUDY_LIST);
+      console.error('데이터 로드 실패');
+      setStudies([]);
     } finally {
       setIsLoading(false);
     }
@@ -52,7 +54,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchStudies(false);
-  }, [selectedSort]);
+  }, [selectedSort, searchTerm]);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
@@ -70,33 +72,10 @@ const Home = () => {
     navigate(`/study/${study.id}`);
   };
 
-  const filteredList = [...(studies || [])]
-    .filter((study) =>
-      study.title?.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-    .sort((a, b) => {
-      switch (selectedSort.value) {
-        case 'MOST_POINTS':
-          return (b.totalPoint || 0) - (a.totalPoint || 0);
-        case 'LEAST_POINTS':
-          return (a.totalPoint || 0) - (b.totalPoint || 0);
-        case 'LATEST':
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        case 'OLDEST':
-          return (
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        default:
-          return 0;
-      }
-    });
-
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContent}>
-        {/* 최근 조회 섹션 */}
+        {/* 최근 조회 섹션 (기존과 동일) */}
         <section className={styles.studySection}>
           <div className={`${styles.emptyStatusBox} ${styles.recentViewBox}`}>
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
@@ -162,8 +141,8 @@ const Home = () => {
             </div>
 
             <div className={styles.studyGrid}>
-              {filteredList.length > 0 ? (
-                filteredList.map((study) => (
+              {studies.length > 0 ? (
+                studies.map((study) => (
                   <StudyCard
                     key={study.id}
                     study={study}
@@ -173,7 +152,9 @@ const Home = () => {
                 ))
               ) : (
                 <div className={styles.emptyDisplay}>
-                  <p className={styles.emptyMessage}>스터디가 없어요</p>
+                  <p className={styles.emptyMessage}>
+                    {isLoading ? '로딩 중...' : '스터디가 없어요'}
+                  </p>
                 </div>
               )}
             </div>
