@@ -10,6 +10,7 @@ export const getHabitList = async (studyId) => {
     //throw error ? 호출에서 에러메시지 여부고민
   }
 };
+
 // POST 습관생성
 export const createHabit = async (studyId, { name }) => {
   try {

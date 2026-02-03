@@ -35,20 +35,19 @@ function Habitlog(props) {
   useEffect(() => {
     if (!studyId && !startOfWeek) return;
 
-    //에러 체크 부탁드립니다!
-    // const fetchData = async () => {
-    //   try {
-    //     const [habiList, habitlogList] = await Promise.all([
-    //       getHabitList(studyId),
-    //       getHabitlogs(studyId, startOfWeek),
-    //     ]);
-    //     setHabits(habiList);
-    //     setHabitlogs(habitlogList);
-    //   } catch (error) {
-    //     console.error('fetchData Error:', error);
-    //   }
-    // };
-    // fetchData();
+    const fetchData = async () => {
+      try {
+        const [habiList, habitlogList] = await Promise.all([
+          getHabitList(studyId),
+          getHabitlogs(studyId, startOfWeek),
+        ]);
+        setHabits(habiList);
+        setHabitlogs(habitlogList);
+      } catch (error) {
+        console.error('fetchData Error:', error);
+      }
+    };
+    fetchData();
   }, [studyId, startOfWeek]);
 
   const days = ['월', '화', '수', '목', '금', '토', '일'];
