@@ -65,7 +65,7 @@ const Home = () => {
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
     const updated = [study, ...saved.filter((s) => s.id !== study.id)].slice(
       0,
-      4,
+      3,
     );
     localStorage.setItem('recentStudies', JSON.stringify(updated));
     setRecentStudies(updated);
@@ -75,7 +75,7 @@ const Home = () => {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContent}>
-        {/* 최근 조회 섹션 (기존과 동일) */}
+        {/* 최근 조회 섹션  */}
         <section className={styles.studySection}>
           <div className={`${styles.emptyStatusBox} ${styles.recentViewBox}`}>
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
