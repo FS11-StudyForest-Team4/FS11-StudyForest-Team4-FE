@@ -22,9 +22,9 @@ function setTimeFormat(seconds) {
   return `${sign}${mm}:${ss}`;
 }
 
-const Focus = () => {
-  const location = useLocation();
-  const studyId = location.state?.studyId;
+const Focus = ({ studyId }) => {
+  //const location = useLocation();
+  //const studyId = location.state?.studyId || '01KGE2ENDJMTK213JW7C0TRDVN'; // 테스트용
   const [timeLeft, setTimeLeft] = useState(START_TIME); // 초 단위 (0 밑으로도 내려감)
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -49,7 +49,7 @@ const Focus = () => {
 
     const fetchData = async () => {
       try {
-        completeFocus(focusId);
+        await completeFocus(focusId);
         console.log('세션이 완료되었습니다!');
         toast('🎉 50포인트를 획득했습니다!', {
           className: styles['toastCompleted'],

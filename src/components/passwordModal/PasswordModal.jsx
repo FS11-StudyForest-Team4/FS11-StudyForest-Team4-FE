@@ -7,7 +7,7 @@ import { StudiesService } from '@/api/api';
 import { util, session } from '@/utils';
 
 const PasswordModal = (props) => {
-  const { type, studyInfo, modalClose } = props;
+  const { type, studyInfo, modalClose, onSuccess } = props; // onSuccess: focus 랜더링하기 위해 추가했습니다.
   const { id, password, title } = studyInfo;
 
   const navigate = useNavigate();
@@ -77,6 +77,11 @@ const PasswordModal = (props) => {
 
     if (password !== passwordVal) {
       await util.errorAlert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    if (type === 'focus') {
+      onSuccess?.('focus');
       return;
     }
     userCheckHandle();
