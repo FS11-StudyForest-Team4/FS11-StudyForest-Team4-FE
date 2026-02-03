@@ -111,7 +111,7 @@ function Habit() {
         // 서버 저장 성공 후 화면 UI 업데이트
         setHabits(
           habits.map((h) =>
-            h.id === habit.id ? { ...h, completed: updatedHabit.completed } : h,
+            h.id === habit.id ? { ...h, completed: !habit.completed } : h,
           ),
         );
       }
