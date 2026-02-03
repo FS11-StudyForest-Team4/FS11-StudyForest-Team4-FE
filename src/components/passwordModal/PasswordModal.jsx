@@ -6,8 +6,7 @@ import Button from '@/components/button/button';
 import { StudiesService } from '@/api/api';
 import { util, session } from '@/utils';
 
-const PasswordModal = (props) => {
-  const { type, studyInfo, modalClose } = props;
+const PasswordModal = ({ type, studyInfo, modalClose }) => {
   const { id, password, title } = studyInfo;
 
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ const PasswordModal = (props) => {
 
   const BTN_ACTIONS = {
     habit: () =>
-      navigate('/study/habit', {
+      navigate(`/study/${id}/habit`, {
         state: {
           studyId: id,
         },
@@ -60,13 +59,11 @@ const PasswordModal = (props) => {
 
   const userCheckHandle = async () => {
     try {
-      const res = StudiesService.userCheck(id, { password: passwordVal });
+      const res = await StudiesService.userCheck(id, { password: passwordVal });
       const { token } = res.data;
-      if (res.success) {
-        session.set('auth-token', token); //토큰 체크
-
-        BTN_ACTIONS[type]?.();
-      }
+      if (res.status !== 200) return;
+      session.set('auth-token', token); //토큰 체크
+      BTN_ACTIONS.habit();
     } catch (err) {
       console.log('userCheckErr:', err);
     }
