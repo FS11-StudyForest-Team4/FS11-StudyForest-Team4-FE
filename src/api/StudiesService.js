@@ -34,7 +34,7 @@ export const deleteStudy = (id) => {
 
 export const userCheck = (id, { password }) => {
   return instance
-    .get(`/studies/${id}/verify`, { password })
+    .post(`/auth/${id}/verify`, { password })
     .then((res) => res)
     .catch((error) => {
       console.log('userCheck Error:', error.response?.data || error.message);
