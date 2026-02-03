@@ -7,7 +7,7 @@ export const getHabitList = async (studyId) => {
     return res.data;
   } catch (error) {
     console.log('getHabitList Error:', error.response?.data || error.message);
-    //throw error ? 호출에서 에러메시지 여부고민 
+    //throw error ? 호출에서 에러메시지 여부고민
   }
 };
 // POST 습관생성

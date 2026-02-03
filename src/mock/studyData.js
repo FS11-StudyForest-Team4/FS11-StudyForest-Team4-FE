@@ -1,6 +1,6 @@
 export const MOCK_STUDY_LIST = [
   {
-    id: '01HRPZ',
+    id: '01KGEGGM1T0KTJMBZ6H24SDMFA',
     title: '리액트 마스터 스터디',
     description: '매일 3시간씩 리액트 공식 문서를 읽고 정리합니다.',
     nickName: '공부왕하늘',
@@ -10,7 +10,7 @@ export const MOCK_STUDY_LIST = [
     updatedAt: '2024-01-20T10:00:00Z',
   },
   {
-    id: '01HRQA',
+    id: '01KGEGGM1XW2P2HS99Y7J0K8GE',
     title: '아침 기상 인증 모임',
     description: '아침 7시 기상 후 해빗 로그를 남기는 모임입니다.',
     nickName: '얼리버드',
@@ -20,7 +20,7 @@ export const MOCK_STUDY_LIST = [
     updatedAt: '2024-01-22T08:00:00Z',
   },
   {
-    id: '01HRQB',
+    id: '01KGEGGM1XAQ9RYM0Z4AMV2V7X',
     title: '디자인 시스템 스터디',
     description: '피그마를 활용해 나만의 디자인 시스템을 구축합니다.',
     nickName: '디자인꿈나무',
