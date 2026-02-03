@@ -22,9 +22,9 @@ function setTimeFormat(seconds) {
   return `${sign}${mm}:${ss}`;
 }
 
-const Focus = () => {
-  const location = useLocation();
-  const studyId = location.state?.studyId; // 테스트용
+const Focus = ({ studyId }) => {
+  //const location = useLocation();
+  //const studyId = location.state?.studyId || '01KGE2ENDJMTK213JW7C0TRDVN'; // 테스트용
   const [timeLeft, setTimeLeft] = useState(START_TIME); // 초 단위 (0 밑으로도 내려감)
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
