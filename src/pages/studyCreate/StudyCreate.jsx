@@ -80,7 +80,7 @@ const StudyCreate = () => {
     const { _passwordCheck, ...dataToSend } = formData;
 
     try {
-      const result = await postStudy(dataToSend); // API 호출
+      const result = await createStudy(data); // API 호출
       console.log('스터디 등록 성공:', result);
       navigate(`/studies/${result.id}`);
     } catch (error) {
