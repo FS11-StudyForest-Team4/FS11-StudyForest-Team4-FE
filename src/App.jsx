@@ -14,11 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/study/create" element={<StudyCreate />} />
         <Route path="/study/about" element={<StudyAbout />} />
-        <Route path="/habit" element={<Habit />} />
-        <Route
-          path="/focus"
-          element={<Focus studyId="01KGE2ENDGN8959C597KQ2ZC5Z" />} // studyId 임시값: 이후에 studyInfo에서 내려줄 예정
-        />
+        <Route path="/study/:studyId/habit" element={<Habit />} />
+        <Route path="/study/:studyId/focus" element={<Focus />} />
       </Routes>
     </Layout>
   );
