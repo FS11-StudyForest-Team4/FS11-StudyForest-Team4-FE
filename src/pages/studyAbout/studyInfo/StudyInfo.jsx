@@ -16,6 +16,7 @@ const StudyInfo = ({ studyInfo }) => {
 
   // focus 표시 여부
   const [showFocus, setShowFocus] = useState(false);
+  const [isFocusing, setIsFocusing] = useState(false);
 
   const onEmojiClick = (emojiName) => {
     const emoji = emojiList.find((x) => x.name === emojiName);
@@ -144,9 +145,11 @@ const StudyInfo = ({ studyInfo }) => {
             <button onClick={() => onUserHandler('habit')}>
               오늘의 습관 <i />
             </button>
-            <button onClick={() => onUserHandler('focus')}>
-              오늘의 집중 <i />
-            </button>
+            {isFocusing === true ? null : (
+              <button onClick={() => onUserHandler('focus')}>
+                오늘의 집중 <i />
+              </button>
+            )}
           </div>
         </div>
         {/* studyInfo 내부에서 Focus 랜더링 */}
@@ -173,6 +176,7 @@ const StudyInfo = ({ studyInfo }) => {
             if (type === 'focus') {
               setShowFocus(true);
               setModalType(null);
+              setIsFocusing(true);
             }
           }}
         />
