@@ -242,28 +242,29 @@ function Habit() {
             <div className={styles.modalHeader}>
               <h3>습관 목록</h3>
             </div>
-            <ul className={styles.editList}>
-              {habits.map((habit) => (
-                <li key={habit.id} className={styles.editCaseWrapper}>
-                  <div className={styles.editCase}>
-                    <span>{habit.name}</span>
-                  </div>
-                  <button
-                    className={styles.deleteBtn}
-                    onClick={() => handleDelete(habit.id)}
-                  >
-                    <img
-                      src={delete_Icon}
-                      alt="delete"
-                      className={styles.deleteIcon}
-                    />
-                  </button>
-                </li>
-              ))}
-            </ul>
-            {/* 아진짜 왜 안되냐 */}
-            {/* 습관 추가 섹션구현(+)  */}{' '}
-            {/* <div className={styles.inputWrapper}>
+            <section>
+              <ul className={styles.editList}>
+                {habits.map((habit) => (
+                  <li key={habit.id} className={styles.editCaseWrapper}>
+                    <div className={styles.editCase}>
+                      <span>{habit.name}</span>
+                    </div>
+                    <button
+                      className={styles.deleteBtn}
+                      onClick={() => handleDelete(habit.id)}
+                    >
+                      <img
+                        src={delete_Icon}
+                        alt="delete"
+                        className={styles.deleteIcon}
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {/* 아진짜 왜 안되냐 */}
+              {/* 습관 추가 섹션구현(+)  */}{' '}
+              {/* <div className={styles.inputWrapper}>
               <input
                 type="text"
                 placeholder=""
@@ -278,8 +279,7 @@ function Habit() {
                 className={styles.underlineIcon}
               />
             </div> */}
-            <div className={styles.inputWrapper}>
-              <div className={styles.inputRow}>
+              <div className={styles.inputWrapper}>
                 {' '}
                 {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
                 <div className={styles.addInputContainer}>
@@ -310,12 +310,10 @@ function Habit() {
                   />
                 </button>
               </div>
-            </div>
-            <div className={styles.addHabitSection}>
               <button className={styles.addBtn} onClick={handleCreate}>
                 +
               </button>
-            </div>
+            </section>
             <div className={styles.modalFooter}>
               <button
                 className={styles.closeBtn}
