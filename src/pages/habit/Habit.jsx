@@ -99,6 +99,30 @@ function Habit() {
     }
   };
 
+  // 습관 목록 전체 삭제 기능 추가
+  const handleDeleteAll = async () => {
+    if (habits.length === 0) {
+      alert('삭제할 습관이 없습니다.');
+      return;
+    }
+
+    if (window.confirm('모든 습관 목록을 삭제하시겠습니까?')) {
+      try {
+        setIsLoading(true);
+
+        await Promise.all(habits.map((habit) => deleteHabit(habit.id)));
+
+        setHabits([]);
+        alert('모든 습관이 삭제되었습니다.');
+      } catch (error) {
+        console.error('전체 삭제 중 오류 발생:', error);
+        alert('일부 습관을 삭제하지 못했습니다. 다시 시도해주세요.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <div className={styles.habitPage}>
       {' '}
@@ -217,7 +241,7 @@ function Habit() {
             </ul>
             {/* 아진짜 왜 안되냐 */}
             {/* 습관 추가 섹션구현(+)  */}{' '}
-            <div className={styles.inputWrapper}>
+            {/* <div className={styles.inputWrapper}>
               <input
                 type="text"
                 placeholder=""
@@ -231,7 +255,43 @@ function Habit() {
                 alt="underline"
                 className={styles.underlineIcon}
               />
-            </div>
+            </div> */}
+<div className={styles.inputWrapper}>
+  <div className={styles.inputRow}> {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
+    <div className={styles.addInputContainer}>
+      <input
+        type="text"
+        placeholder=""
+        className={styles.addInput}
+        value={newHabitName}
+        onChange={(e) => setNewHabitName(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+      />
+      <img
+        src={underline_Vector}
+        alt="underline"
+        className={styles.underlineIcon}
+      />
+    </div>
+
+    {/* 2. 인풋탭 오른쪽의 전체 삭제 버튼 */}
+    <button
+      className={styles.deleteAllBtn}
+      onClick={handleDeleteAll}
+      title="전체 삭제"
+    >
+      <img
+        src={delete_Icon}
+        alt="delete all"
+        className={styles.deleteIcon}
+      />
+    </button>
+  </div>
+</div>
+
+{/* 추가 ^ */}
+
+
             <div className={styles.addHabitSection}>
               <button className={styles.addBtn} onClick={handleCreate}>
                 +
@@ -251,7 +311,9 @@ function Habit() {
           </div>
         </div>
       )}
+      
     </div>
+    
   );
 }
 
