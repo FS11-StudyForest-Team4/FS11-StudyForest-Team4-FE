@@ -13,9 +13,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/study/create" element={<StudyCreate />} />
-        <Route path="/study/about" element={<StudyAbout />} />
-        <Route path="/habit" element={<Habit />} />
-        <Route path="/focus" element={<Focus />} />
+        <Route path="/study/about/:studyId" element={<StudyAbout />} />
+        <Route path="/study/habit" element={<Habit />} />
+        <Route path="/study/focus" element={<Focus />} />
       </Routes>
     </Layout>
   );
