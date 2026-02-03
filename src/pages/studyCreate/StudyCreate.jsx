@@ -6,6 +6,7 @@ import Textarea from './components/Textarea/Textarea';
 import { Navigate, useNavigate } from 'react-router';
 import Input from './components/Input/Input';
 import BackgroundOption from './components/BackgroundOption/BackgroundOption';
+import { createStudy } from '@/api/studyService';
 
 const StudyCreate = () => {
   //입력값 관리
@@ -80,7 +81,7 @@ const StudyCreate = () => {
     const { _passwordCheck, ...dataToSend } = formData;
 
     try {
-      const result = await createStudy(data); // API 호출
+      const result = await createStudy(dataToSend); // API 호출
       console.log('스터디 등록 성공:', result);
       navigate(`/studies/${result.id}`);
     } catch (error) {

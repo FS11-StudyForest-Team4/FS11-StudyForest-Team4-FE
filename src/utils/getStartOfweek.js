@@ -1,4 +1,4 @@
-export function getStartOfweek(current = new Date()) {
+export function getStartOfWeek(current = new Date()) {
   const today = new Date(current);
   today.setHours(0, 0, 0, 0); // 시간 초기화
   const diff = (today.getDay() + 6) % 7; //월요일 시작으로 조정
