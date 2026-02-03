@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 //컴포넌트, 스타일 import
 import style from './StudyCreate.module.css';
 
 import Textarea from './components/Textarea/Textarea';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Input from './components/Input/Input';
 import BackgroundOption from './components/BackgroundOption/BackgroundOption';
-import { createStudy } from '@/api/studyService';
+import { createStudy, getStudy, updateStudy } from '@/api/studyService';
 
 const StudyCreate = () => {
+  const { id } = useParams(); // 있으면 수정
+  const isEdit = Boolean(id);
+
   //입력값 관리
   const [formData, setFormData] = useState({
     nickName: '',
@@ -20,6 +23,29 @@ const StudyCreate = () => {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  // 수정시 input 채워넣기
+  useEffect(() => {
+    if (!isEdit || !id) return;
+
+    const fetchStudy = async () => {
+      try {
+        const data = await getStudy(id);
+        setFormData({
+          nickName: data.nickName,
+          title: data.title,
+          description: data.description,
+          background: data.background,
+          password: '', // 수정 시 비밀번호는 비워두기
+          passwordCheck: '', // 확인 필드도 비워두기
+        });
+      } catch (error) {
+        console.error('스터디 상세 조회 실패:', error);
+        alert('스터디 정보를 불러오는데 실패했습니다.');
+      }
+    };
+    fetchStudy();
+  }, [id, isEdit]);
 
   // 검증 목록
   const validators = {
@@ -69,7 +95,7 @@ const StudyCreate = () => {
   const handleBackgroundChange = (selectedId) => {
     setFormData((prev) => ({ ...prev, background: selectedId }));
   };
-  
+
   // submit 함수
   const handleSubmit = async (event) => {
     event.preventDefault(); // 새로고침 방지
@@ -79,21 +105,25 @@ const StudyCreate = () => {
 
     // passwordCheck만 제외하고 전송
     const { _passwordCheck, ...dataToSend } = formData;
-     console.log('createStudy 데이터:', dataToSend);
+
     try {
-      const result = await createStudy(dataToSend); // API 호출
-      console.log('스터디 등록 성공:', result);
+      // API 호출 삼항연산자로 api 호출
+      const result = isEdit
+        ? await updateStudy(id, dataToSend)
+        : await createStudy(dataToSend);
+
+      console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
       navigate(`/study/About/${result.id}`);
     } catch (error) {
-      console.error('스터디 등록 실패:', error);
-      alert('스터디 등록 실패');
+      console.error(isEdit ? '스터디 수정 실패' : '스터디 등록 실패', error);
+      alert(isEdit ? '스터디 수정 실패' : '스터디 등록 실패');
     }
   };
 
   return (
     <section>
       <div className={style.container}>
-        <div className={style.createPageTitle}>스터디 만들기</div>
+        <div className={style.createPageTitle}>{isEdit ? '스터디 수정하기' : '스터디 만들기'}</div>
         <form onSubmit={handleSubmit}>
           <Input
             name="nickName"
@@ -149,7 +179,7 @@ const StudyCreate = () => {
 
           {/* 임시 제출 버튼 */}
           <button type="submit" className={style.submitButton}>
-            만들기
+            {isEdit ? '수정하기' : '만들기'}
           </button>
         </form>
       </div>

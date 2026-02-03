@@ -1,4 +1,4 @@
 import * as EmojiService from './EmojiService';
-import * as StudiesService from './StudiesService';
+// import * as StudiesService from './StudiesService';
 
-export { EmojiService, StudiesService };
+export { EmojiService };
