@@ -99,6 +99,29 @@ function Habit() {
     }
   };
 
+  // 습관 완료 상태를 토글(반전)하는 함수
+  const handleToggleHabit = async (habit) => {
+    // 1. habit 객체 전체를 인자로 받습니다.
+    try {
+      // 2. 서버가 요구하는 대로 name과 바뀔 completed 상태를 함께 보냅니다.
+      const updatedHabit = await updateHabit(habit.id, {
+        name: habit.name, // 기존 이름 그대로 전달
+        completed: !habit.completed, // 상태 반전
+      });
+
+      if (updatedHabit) {
+        // 서버 저장 성공 후 화면 UI 업데이트
+        setHabits(
+          habits.map((h) =>
+            h.id === habit.id ? { ...h, completed: updatedHabit.completed } : h,
+          ),
+        );
+      }
+    } catch (error) {
+      console.error('상태 변경 중 오류 발생:', error);
+    }
+  };
+
   // 습관 목록 전체 삭제 기능 추가
   const handleDeleteAll = async () => {
     if (habits.length === 0) {
@@ -193,10 +216,11 @@ function Habit() {
                   {habits.map((habit) => (
                     <li
                       key={habit.id}
-                      className={clsx(
-                        styles.habitItem,
-                        habit.completed && styles.completed,
-                      )}
+                      className={clsx(styles.habitItem, {
+                        [styles.completed]: habit.completed,
+                      })}
+                      // 2. 클릭 시 상태를 반전시키는 함수 연결
+                      onClick={() => handleToggleHabit(habit)}
                     >
                       {habit.name}
                     </li>
@@ -256,42 +280,39 @@ function Habit() {
                 className={styles.underlineIcon}
               />
             </div> */}
-<div className={styles.inputWrapper}>
-  <div className={styles.inputRow}> {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
-    <div className={styles.addInputContainer}>
-      <input
-        type="text"
-        placeholder=""
-        className={styles.addInput}
-        value={newHabitName}
-        onChange={(e) => setNewHabitName(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-      />
-      <img
-        src={underline_Vector}
-        alt="underline"
-        className={styles.underlineIcon}
-      />
-    </div>
-
-    {/* 2. 인풋탭 오른쪽의 전체 삭제 버튼 */}
-    <button
-      className={styles.deleteAllBtn}
-      onClick={handleDeleteAll}
-      title="전체 삭제"
-    >
-      <img
-        src={delete_Icon}
-        alt="delete all"
-        className={styles.deleteIcon}
-      />
-    </button>
-  </div>
-</div>
-
-{/* 추가 ^ */}
-
-
+            <div className={styles.inputWrapper}>
+              <div className={styles.inputRow}>
+                {' '}
+                {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
+                <div className={styles.addInputContainer}>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className={styles.addInput}
+                    value={newHabitName}
+                    onChange={(e) => setNewHabitName(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+                  />
+                  <img
+                    src={underline_Vector}
+                    alt="underline"
+                    className={styles.underlineIcon}
+                  />
+                </div>
+                {/* 2. 인풋탭 오른쪽의 전체 삭제 버튼 */}
+                <button
+                  className={styles.deleteAllBtn}
+                  onClick={handleDeleteAll}
+                  title="전체 삭제"
+                >
+                  <img
+                    src={delete_Icon}
+                    alt="delete all"
+                    className={styles.deleteIcon}
+                  />
+                </button>
+              </div>
+            </div>
             <div className={styles.addHabitSection}>
               <button className={styles.addBtn} onClick={handleCreate}>
                 +
@@ -311,9 +332,7 @@ function Habit() {
           </div>
         </div>
       )}
-      
     </div>
-    
   );
 }
 
