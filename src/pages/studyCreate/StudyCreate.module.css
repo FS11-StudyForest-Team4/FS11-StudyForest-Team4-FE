@@ -1,13 +1,9 @@
-.createPageTitle {
-  color: #414141;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
+.createWrap {
+  padding: 40px 0 107px 0;
 }
 
 .container {
+  width: 100%;
   max-width: 696px;
   display: flex;
   margin: 0 auto 107px;
@@ -16,6 +12,32 @@
   gap: 24px;
   border-radius: 20px;
   background: #ffffff;
+  & h1 {
+    color: #414141;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    & label {
+      margin-bottom: 16px;
+    }
+    & p {
+      color: var(--red-error_C41013, #c41013);
+      font-family: Pretendard;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      margin: 8px 0 0 0;
+    }
+  }
 }
 
 .submitButton {
@@ -30,4 +52,16 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+@media screen and (max-width: 774px) {
+  .createWrap {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .createWrap {
+    padding: 20px 16px;
+  }
 }

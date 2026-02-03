@@ -18,7 +18,7 @@ export const updateStudy = async (studyId, data) => {
   } catch (error) {
     console.log('updateStudy Error:', error.response?.data || error.message);
   }
-}
+};
 
 export const getStudyList = async (params) => {
   try {

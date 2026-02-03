@@ -53,12 +53,12 @@ const PasswordModal = (props) => {
     delete: () => deleteStudyHandle(id),
   };
 
-  const onInputHandler = (e) => {
+  const handleInputChange = (e) => {
     const { value } = e.target;
     setPasswordVal(value);
   };
 
-  const userCheckHandle = async () => {
+  const getUserCheck = async () => {
     try {
       const res = StudiesService.userCheck(id, { password: passwordVal });
       const { token } = res.data;
@@ -84,7 +84,7 @@ const PasswordModal = (props) => {
       onSuccess?.('focus');
       return;
     }
-    userCheckHandle();
+    getUserCheck();
   };
 
   return (
@@ -104,7 +104,7 @@ const PasswordModal = (props) => {
               name="password"
               id="password"
               value={passwordVal}
-              onChange={onInputHandler}
+              onChange={handleInputChange}
               placeholder="비밀번호를 입력해 주세요"
             />
             <button
