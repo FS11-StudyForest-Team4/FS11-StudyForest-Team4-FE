@@ -17,7 +17,8 @@ export const updateStudy = async (studyId, data) => {
     return res.data;
   } catch (error) {
     console.log('updateStudy Error:', error.response?.data || error.message);
-import client from '../lib/client';
+  }
+};
 
 export const getStudyList = async (params) => {
   try {

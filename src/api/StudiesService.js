@@ -14,6 +14,15 @@ export const getStudyList = () => {
     });
 };
 
+export const createStudy = (data) => {
+  return instance
+    .post(`/studies`, data)
+    .then((res) => res)
+    .catch((error) => {
+      console.log('createStudy Error:', error.response?.data || error.message);
+    });
+};
+
 export const getStudy = (id) => {
   return instance
     .get(`/studies/${id}`)

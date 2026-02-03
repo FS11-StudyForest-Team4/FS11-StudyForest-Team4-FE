@@ -1,16 +1,20 @@
 import { useState } from 'react';
-//컴포넌트, 스타일 import
+import { useNavigate } from 'react-router';
 import style from './StudyCreate.module.css';
+import { util } from '@/utils';
+import { StudiesService } from '@/api/api';
 
-import Textarea from './components/Textarea/Textarea';
-import { Navigate, useNavigate } from 'react-router';
-import Input from './components/Input/Input';
-import BackgroundOption from './components/BackgroundOption/BackgroundOption';
+import {
+  Textarea,
+  Input,
+  BackgroundOption,
+} from './components/componentsIndex';
+import { Button } from '@/components';
 
 const StudyCreate = () => {
   //입력값 관리
   const [formData, setFormData] = useState({
-    nickname: '',
+    nickName: '',
     title: '',
     description: '',
     background: 'GREEN', // 기본값
@@ -22,7 +26,7 @@ const StudyCreate = () => {
 
   // 검증 목록
   const validators = {
-    nickname: (value) => (value.trim() ? '' : '*닉네임을 입력해주세요'),
+    nickName: (value) => (value.trim() ? '' : '*닉네임을 입력해주세요'),
     title: (value) => (value.trim() ? '' : '*스터디 이름을 입력해주세요'),
     password: (value) => (value ? '' : '*비밀번호를 입력해주세요'),
     passwordCheck: (value, formData) =>
@@ -77,31 +81,41 @@ const StudyCreate = () => {
     if (!isValid) return;
 
     // passwordCheck만 제외하고 전송
-    const { _passwordCheck, ...dataToSend } = formData;
+    const { passwordCheck: _passwordCheck, ...submitData } = formData;
+
+    if (formData.password.length < 4) {
+      util.errorAlert('비밀번호를 4자리 이상 적어주세요!');
+      return;
+    }
 
     try {
-      const result = await createStudy(data); // API 호출
-      console.log('스터디 등록 성공:', result);
-      navigate(`/studies/${result.id}`);
+      const res = await StudiesService.createStudy(submitData);
+      const { id } = res.data;
+
+      if (res.status === 201) {
+        util.successAlert('스터디 등록이 성공하셨습니다!').then(() => {
+          navigate(`/study/about/${id}`);
+        });
+      }
     } catch (error) {
       console.error('스터디 등록 실패:', error);
-      alert('스터디 등록 실패');
+      util.errorAlert('스터디 등록 실패');
     }
   };
 
   return (
-    <section>
+    <section className={style.createWrap}>
       <div className={style.container}>
-        <div className={style.createPageTitle}>스터디 만들기</div>
+        <h1>스터디 만들기</h1>
         <form onSubmit={handleSubmit}>
           <Input
-            name="nickname"
+            name="nickName"
             label="닉네임"
             type="text"
             placeholder="닉네임을 입력해주세요"
-            value={formData.nickname}
+            value={formData.nickName}
             onChange={handleChange}
-            errorMessage={errors.nickname}
+            errorMessage={errors.nickName}
           />
           <Input
             label="스터디 이름"
@@ -146,10 +160,9 @@ const StudyCreate = () => {
             errorMessage={errors.passwordCheck}
           />
 
-          {/* 임시 제출 버튼 */}
-          <button type="submit" className={style.submitButton}>
+          <Button type="submit" className={'createBtn'}>
             만들기
-          </button>
+          </Button>
         </form>
       </div>
     </section>
