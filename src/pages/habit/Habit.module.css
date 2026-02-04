@@ -52,6 +52,7 @@
   opacity: 1;
   width: auto;
   height: auto;
+  white-space: nowrap;     /* 중요! 글자가 절대 줄바꿈되지 않게 함 */
 }
 
 /* frame 2609451 */
@@ -148,7 +149,7 @@
   justify-content: center;
 }
 
-.nickname {
+.nickName {
   font-weight: 800;
   font-style: ExtraBold;
   font-size: 32px;
@@ -173,10 +174,10 @@
 .listHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
   justify-content: center;
   position: relative;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .listHeader h2 {
@@ -187,7 +188,6 @@
   letter-spacing: 0%;
   vertical-align: center;
   margin: 0;
-  width: 120px;
 }
 
 .editLink {
@@ -198,9 +198,9 @@
   letter-spacing: 0%;
   color: #818181;
   background-color: transparent;
-  position: absolute;
   right: 0;
   border: none;
+  position: absolute;
 }
 
 /* 습관 리스트 frame 2609498 */
@@ -525,31 +525,47 @@
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .h1{
-    font-size: 24px;
-  }
-   .mainWrapper {
-    width: 100%;
+  .headerTopRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
     height: auto;
   }
-  .btnGroup {
-    width: 100%;
+  .headerTopRow h1 {
+    font-size: 20px;
+    vertical-align: middle;
+  }
+  .nickName {
+    font-size: inherit;
   }
 
+  .mainWrapper {
+    width: 100%;
+    height: auto;
+    line-height: 0;
+  }
+  .btnGroup {
+    width: 70%;
+    height: 70%;
+  }
   .headerTopBtnToday,
   .headerTopBtnHome {
-    width: 120px; /* 버튼 너비 축소 */
-    font-size: 14px;
+    width: auto; /* 고정 너비 해제 (내용물에 맞게) */
+    min-width: 70px; /* 최소 너비만 지정 */
+    height: 36px; /* 높이를 낮춤 (기존 48px) */
+    padding: 0 12px; /* 좌우 여백으로 크기 조절 */
+    font-size: 13px; /* 글자 크기 축소 (기존 16px) */
+    gap: 6px; /* 아이콘과 글자 사이 간격 축소 */
   }
 
   .timeDisplay {
-    width: 100%; /* 시간 표시창도 가득 차게 */
-    font-size: 14px;
+    width: 100%;
+    height: 100%;
   }
+
 
   .habitItem {
     width: 100%;
-    font-size: 14px;
   }
 
   .modalFooter {
@@ -557,10 +573,12 @@
   }
   .addBtn {
     width: 100%;
+    margin: auto 0;
   }
   .closeBtn,
   .submitBtn {
-    width: 100%;
+    width: 140px;
     height: 48px;
+    font-size: 100%;
   }
 }

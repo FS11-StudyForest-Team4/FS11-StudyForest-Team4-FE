@@ -157,7 +157,7 @@ function Habit() {
             {/* frame 2609451 */}
             <div className={styles.headerTopRow}>
               <h1>
-                <span className={styles.nickname}>연우</span>의 개발공장
+                <span className={styles.nickName}>연우</span>의 개발공장
               </h1>
               {/* Frame 2609450 */}
               <div className={styles.btnGroup}>
