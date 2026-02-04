@@ -4,7 +4,6 @@ import styles from './StudyInfo.module.css';
 import { EmojiService } from '@/api/api';
 import { PasswordModal } from '@/components/index';
 import { util } from '@/utils';
-import Focus from '@/pages/focus/Focus';
 
 const StudyInfo = ({ studyInfo }) => {
   const { id, title, description, totalPoint } = studyInfo || {};
@@ -16,8 +15,9 @@ const StudyInfo = ({ studyInfo }) => {
 
   // focus 표시 여부
   const [showFocus, setShowFocus] = useState(false);
+  const [isFocusing, setIsFocusing] = useState(false);
 
-  const onEmojiClick = (emojiName) => {
+  const handleEmoji = (emojiName) => {
     const emoji = emojiList.find((x) => x.name === emojiName);
 
     if (!emoji) {
@@ -32,7 +32,7 @@ const StudyInfo = ({ studyInfo }) => {
       const res = await EmojiService.getEmojiList(studyId);
       if (res.status == 200) setEmojiList(res.data);
     } catch (err) {
-      console.log('err:', err);
+      console.log('getEmojiList err:', err);
     }
   };
 
@@ -50,7 +50,7 @@ const StudyInfo = ({ studyInfo }) => {
       const res = await EmojiService.createEmoji(id, { name: emojiName });
       if (res.status == 201) getEmojiList(id);
     } catch (err) {
-      console.log('err:', err);
+      console.log('createEmoji err:', err);
     }
   };
 
@@ -59,7 +59,7 @@ const StudyInfo = ({ studyInfo }) => {
       const res = await EmojiService.patchEmoji(id, { name: emojiName });
       if (res.status == 200) getEmojiList(id);
     } catch (err) {
-      console.log('err:', err);
+      console.log('patchEmoji err:', err);
     }
   };
 
@@ -67,7 +67,7 @@ const StudyInfo = ({ studyInfo }) => {
     setModalType(type);
   };
 
-  const onShareHandler = () => {
+  const handleShare = () => {
     const url = `${window.location.origin}${window.location.pathname}?${id}`;
     navigator.clipboard
       .writeText(url)
@@ -83,19 +83,21 @@ const StudyInfo = ({ studyInfo }) => {
     <section>
       <article className={styles.studyNav}>
         <div className={styles.emojiBox}>
-          <ul className={styles.emojiList}>
-            {emojiList &&
-              emojiList.slice(0, 3).map((emojiItem) => (
-                <li
-                  id={emojiItem.id}
-                  key={emojiItem.id}
-                  onClick={() => onEmojiClick(emojiItem.name)}
-                >
-                  <span>{emojiItem.name}</span>
-                  <span>{emojiItem.count}</span>
-                </li>
-              ))}
-          </ul>
+          {emojiList.length > 0 && (
+            <ul className={styles.emojiList}>
+              {emojiList &&
+                emojiList.slice(0, 3).map((emojiItem) => (
+                  <li
+                    id={emojiItem.id}
+                    key={emojiItem.id}
+                    onClick={() => handleEmoji(emojiItem.name)}
+                  >
+                    <span>{emojiItem.name}</span>
+                    <span>{emojiItem.count}</span>
+                  </li>
+                ))}
+            </ul>
+          )}
           {emojiList && emojiList.length > 3 && (
             <>
               <button
@@ -111,7 +113,7 @@ const StudyInfo = ({ studyInfo }) => {
                       <li
                         id={emojiItem.id}
                         key={emojiItem.id}
-                        onClick={() => onEmojiClick(emojiItem.name)}
+                        onClick={() => handleEmoji(emojiItem.name)}
                       >
                         <span>{emojiItem.name}</span>
                         <span>{emojiItem.count}</span>
@@ -128,11 +130,11 @@ const StudyInfo = ({ studyInfo }) => {
             <i className={styles.iEmoji} /> 추가
           </button>
           {emojiTab && (
-            <EmojiPicker onEmojiClick={(e) => onEmojiClick(e.emoji)} />
+            <EmojiPicker onEmojiClick={(e) => handleEmoji(e.emoji)} />
           )}
         </div>
         <ul className={styles.btnList}>
-          <li onClick={onShareHandler}>공유하기</li>
+          <li onClick={handleShare}>공유하기</li>
           <li onClick={() => onUserHandler('edit')}>수정하기</li>
           <li onClick={() => onUserHandler('delete')}>스터디 삭제하기</li>
         </ul>
@@ -144,9 +146,11 @@ const StudyInfo = ({ studyInfo }) => {
             <button onClick={() => onUserHandler('habit')}>
               오늘의 습관 <i />
             </button>
-            <button onClick={() => onUserHandler('focus')}>
-              오늘의 집중 <i />
-            </button>
+            {isFocusing === true ? null : (
+              <button onClick={() => onUserHandler('focus')}>
+                오늘의 집중 <i />
+              </button>
+            )}
           </div>
         </div>
         {/* studyInfo 내부에서 Focus 랜더링 */}
@@ -173,6 +177,7 @@ const StudyInfo = ({ studyInfo }) => {
             if (type === 'focus') {
               setShowFocus(true);
               setModalType(null);
+              setIsFocusing(true);
             }
           }}
         />

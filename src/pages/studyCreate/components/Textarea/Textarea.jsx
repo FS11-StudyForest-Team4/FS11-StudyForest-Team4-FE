@@ -4,13 +4,15 @@ function Textarea({ label, name, errorMessage, className = '', ...props }) {
   return (
     <div className={styles.textareaWrapper}>
       <label htmlFor={name}>{label}</label>
-      <input
+
+      <textarea
         id={name}
         name={name}
-        className={`${styles.input} ${errorMessage ? styles.error : ''} ${className}`}
+        rows="4"
+        className={`${errorMessage ? styles.error : ''} ${className}`}
         {...props}
-      />
-      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+      ></textarea>
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 }

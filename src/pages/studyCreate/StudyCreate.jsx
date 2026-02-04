@@ -1,6 +1,15 @@
+
 import { useEffect, useState } from 'react';
 //컴포넌트, 스타일 import
 import style from './StudyCreate.module.css';
+import { util } from '@/utils';
+import { StudiesService } from '@/api/api';
+import {
+  Textarea,
+  Input,
+  BackgroundOption,
+} from './components/componentsIndex';
+import { Button } from '@/components';
 
 import Textarea from './components/Textarea/Textarea';
 import { useNavigate, useParams } from 'react-router';
@@ -104,7 +113,12 @@ const StudyCreate = () => {
     if (!isValid) return;
 
     // passwordCheck만 제외하고 전송
-    const { _passwordCheck, ...dataToSend } = formData;
+    const { passwordCheck: _passwordCheck, ...submitData } = formData;
+
+    if (formData.password.length < 4) {
+      util.errorAlert('비밀번호를 4자리 이상 적어주세요!');
+      return;
+    }
 
     try {
       // API 호출 삼항연산자로 api 호출
@@ -114,16 +128,27 @@ const StudyCreate = () => {
 
       console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
       navigate(`/study/About/${result.id}`);
+      const res = await StudiesService.createStudy(submitData);
+      const { id } = res.data;
+
+      if (res.status === 201) {
+        util.successAlert('스터디 등록이 성공하셨습니다!').then(() => {
+          navigate(`/study/about/${id}`);
+        });
+      }
     } catch (error) {
+      console.error('스터디 등록 실패:', error);
+      util.errorAlert('스터디 등록 실패');
       console.error(isEdit ? '스터디 수정 실패' : '스터디 등록 실패', error);
       alert(isEdit ? '스터디 수정 실패' : '스터디 등록 실패');
     }
   };
 
   return (
-    <section>
+    <section className={style.createWrap}>
       <div className={style.container}>
         <div className={style.createPageTitle}>{isEdit ? '스터디 수정하기' : '스터디 만들기'}</div>
+        <h1>스터디 만들기</h1>
         <form onSubmit={handleSubmit}>
           <Input
             name="nickName"
@@ -181,6 +206,9 @@ const StudyCreate = () => {
           <button type="submit" className={style.submitButton}>
             {isEdit ? '수정하기' : '만들기'}
           </button>
+          <Button type="submit" className={'createBtn'}>
+            만들기
+          </Button>
         </form>
       </div>
     </section>
