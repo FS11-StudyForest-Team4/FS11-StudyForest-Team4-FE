@@ -4,17 +4,13 @@ import arrow_Vector from '../../assets/images/arrow_Vector.png';
 import delete_Icon from '../../assets/images/delete_Icon.png';
 import { habitService } from '@/api'
 import clsx from 'clsx';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-dayjs.locale('ko');
 
-const ONE_MINUTE_MS = 60 * 1000;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Habit({studyId}) {
   //현재 시간을 저장하는 state
-  const [now, setNow] = useState(new Date());
+
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [habits, setHabits] = useState([]);
@@ -30,18 +26,6 @@ function Habit({studyId}) {
     }
     getHabits();
   }, [studyId]);
-
-  //시계
-  useEffect(() => {
-    const clock = setInterval(() => {
-      setNow(new Date());
-    }, ONE_MINUTE_MS); //1000(1초)에서 60000(1분)으로 변경, 매직넘버 대신 상수 사용
-
-    return () => clearInterval(clock);
-  }, []);
-
-  //시계모양
-  const timeString = dayjs(now).format('YYYY-MM-DD A hh:mm'); //dayjs 사용
 
   // 수정 완료 로직(하림님 updateHabit 활용)
   const handleSubmit = async () => {
@@ -93,49 +77,8 @@ function Habit({studyId}) {
 
   return (
     <div className={styles.habitPage}>
-      {' '}
-      {/* css modules 사용*/}
-      {/* 메인 컨텐츠 박스 */}
-      {/* frame 2609450 */}
       <div className={styles.mainWrapper}>
-        {/* frame 26094508 */}
-        <header className={styles.habitTopSection}>
-          <div className={styles.headerTop}>
-            {/* frame 2609451 */}
-            <div className={styles.headerTopRow}>
-              <h1>
-                <span className={styles.nickName}>연우</span>의 개발공장
-              </h1>
-              {/* Frame 2609450 */}
-              <div className={styles.btnGroup}>
-                {/* Frame 2609447 */}
-                <button className={styles.headerTopBtnToday}>
-                  오늘의 집중
-                  <img
-                    src={arrow_Vector}
-                    alt="arrow"
-                    className={styles.iconArrow}
-                  />
-                </button>
-                {/* Frame 2609447 */}
-                <button className={styles.headerTopBtnHome}>
-                  홈{' '}
-                  <img
-                    src={arrow_Vector}
-                    alt="arrow"
-                    className={styles.iconArrow}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* frame 2609455 */}
-          <div className={styles.timeBox}>
-            <p className={styles.timeLabel}>현재 시간</p>
-            <div className={styles.timeDisplay}>{timeString}</div>
-          </div>
-        </header>
+        
 
         {/* frame 2609478 */}
         <main className={styles.habitListCard}>

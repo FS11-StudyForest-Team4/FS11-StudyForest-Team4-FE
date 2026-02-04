@@ -64,7 +64,7 @@ const StudyAbout = () => {
 
   const handleModalType = (type) => {
     setModalType(type);
-    if (studyCheck && !type === 'delete') BTN_ACTIONS[type]?.();
+    if (studyCheck && type !== 'delete') BTN_ACTIONS[type]?.();
   };
 
   const deleteStudyHandle = async (id) => {

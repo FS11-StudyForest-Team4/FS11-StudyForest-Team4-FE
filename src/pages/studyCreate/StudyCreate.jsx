@@ -9,10 +9,11 @@ import {
   BackgroundOption,
 } from './components/componentsIndex';
 import { Button } from '@/components';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 const StudyCreate = () => {
-  const { id } = useParams(); // 있으면 수정
+  const location = useLocation();
+  const id = location.pathname.split('/').filter(Boolean).pop();
   const isEdit = Boolean(id);
 
   //입력값 관리
@@ -29,11 +30,11 @@ const StudyCreate = () => {
 
   // 수정시 input 채워넣기
   useEffect(() => {
-    if (!isEdit || !id) return;
+    if (!isEdit) return;
 
     const fetchStudy = async () => {
       try {
-        const data = await studyService.getStudy(id);
+        const data = await studyService.getStudyId(id);
         setFormData({
           nickName: data.nickName,
           title: data.title,
@@ -44,11 +45,13 @@ const StudyCreate = () => {
         });
       } catch (error) {
         console.error('스터디 상세 조회 실패:', error);
-        alert('스터디 정보를 불러오는데 실패했습니다.');
+        util.errorAlert('스터디 정보를 불러오는데 실패했습니다.').then(() => {
+          navigate('/');
+        });
       }
     };
     fetchStudy();
-  }, [id, isEdit]);
+  }, [isEdit]);
 
   // 검증 목록
   const validators = {
