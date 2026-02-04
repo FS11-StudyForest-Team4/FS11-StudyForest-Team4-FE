@@ -13,11 +13,13 @@ dayjs.locale('ko');
 
 const ONE_MINUTE_MS = 60 * 1000;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Habit() {
   const { studyId } = useParams();
   const navigate = useNavigate();
   //현재 시간을 저장하는 state
-  const [now, setNow] = useState(new Date());
+
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [habits, setHabits] = useState([]);
@@ -41,18 +43,6 @@ function Habit() {
     }
     getHabits();
   }, [studyId]);
-
-  //시계
-  useEffect(() => {
-    const clock = setInterval(() => {
-      setNow(new Date());
-    }, ONE_MINUTE_MS); //1000(1초)에서 60000(1분)으로 변경, 매직넘버 대신 상수 사용
-
-    return () => clearInterval(clock);
-  }, []);
-
-  //시계모양
-  const timeString = dayjs(now).format('YYYY-MM-DD A hh:mm'); //dayjs 사용
 
   // 수정 완료 로직(하림님 updateHabit 활용)
   const handleSubmit = async () => {
@@ -155,10 +145,6 @@ function Habit() {
 
   return (
     <div className={styles.habitPage}>
-      {' '}
-      {/* css modules 사용*/}
-      {/* 메인 컨텐츠 박스 */}
-      {/* frame 2609450 */}
       <div className={styles.mainWrapper}>
         {/* frame 26094508 */}
         <header className={styles.habitTopSection}>
