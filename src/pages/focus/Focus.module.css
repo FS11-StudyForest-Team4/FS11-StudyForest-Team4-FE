@@ -17,6 +17,7 @@
   font-style: normal;
   font-weight: 800;
   line-weight: normal;
+  box-sizing: border-box;
 }
 
 .timerTitle {
@@ -64,10 +65,20 @@
 }
 
 .timer {
-  margin: 0 auto;
-  margin-top: 49px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   text-align: center;
-  font-size: 150px;
+  font-weight: 800;
+
+  font-size: clamp(80px, 12vw, 150px);
+  font-variant-numeric: tabular-nums;
+
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .timeOver {
@@ -165,7 +176,7 @@
   }
 
   .timer {
-    font-size: 120px;
+    font-size: clamp(72px, 12vw, 120px);
   }
 
   .timerButtonWrapper {
@@ -180,8 +191,7 @@
   }
 
   .timer {
-    margin-top: 64px;
-    font-size: 80px;
+    font-size: clamp(64px, 18vw, 80px);
   }
 
   .imgPlayIcon,
