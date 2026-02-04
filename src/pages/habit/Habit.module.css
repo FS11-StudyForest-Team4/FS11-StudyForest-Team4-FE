@@ -10,7 +10,8 @@
 /* main wrapper */
 /* frame 2609450 */
 .mainWrapper {
-  width: 1248px;
+  width: 100%;
+  max-width: 1248px;
   height: 100%;
   opacity: 1;
   top: 139px;
@@ -158,7 +159,7 @@
 
 /* 습관카드 frame 2609478 */
 .habitListCard {
-  width: 1168px;
+  width: 100%;
   padding: 40px 24px;
   border: 1px solid #dddddd;
   border-radius: 20px;
@@ -503,22 +504,63 @@
 }
 
 /* 태블릿 (iPad mini 등) */
-@media (max-width: 768px) {
+@media (max-width: 744px) {
+  .mainWrapper {
+    width: 100%;
+    height: auto;
+  }
+  .headerTopRow {
+    width: 100%;
+  }
+  .habitList {
+    width: 100%;
+  }
   .habitListCard {
-    padding: 30px;
+    width: 100%;
+  }
+  .modalContent {
+    width: 100%;
   }
 }
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .habitHeaderContainer h1 {
-    font-size: 20px;
+  .h1{
+    font-size: 24px;
   }
-  .habitListCard {
-    padding: 20px;
+   .mainWrapper {
+    width: 100%;
+    height: auto;
   }
+  .btnGroup {
+    width: 100%;
+  }
+
+  .headerTopBtnToday,
+  .headerTopBtnHome {
+    width: 120px; /* 버튼 너비 축소 */
+    font-size: 14px;
+  }
+
+  .timeDisplay {
+    width: 100%; /* 시간 표시창도 가득 차게 */
+    font-size: 14px;
+  }
+
   .habitItem {
-    padding: 12px;
-    font-size: 13px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .modalFooter {
+    height: auto;
+  }
+  .addBtn {
+    width: 100%;
+  }
+  .closeBtn,
+  .submitBtn {
+    width: 100%;
+    height: 48px;
   }
 }
