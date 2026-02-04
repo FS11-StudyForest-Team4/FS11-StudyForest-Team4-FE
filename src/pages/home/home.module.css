@@ -29,6 +29,9 @@
 
 .recentViewBox {
   min-height: 382px;
+  & h3 {
+    margin: 0 0 30px 0;
+  }
 }
 
 .studyBrowseBox {
@@ -120,7 +123,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
-  margin-top: 24px;
 }
 
 .emptyDisplay {

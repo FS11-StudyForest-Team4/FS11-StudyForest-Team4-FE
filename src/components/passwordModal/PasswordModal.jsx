@@ -3,7 +3,8 @@ import styles from './PasswordModal.module.css';
 import { useNavigate } from 'react-router';
 import { visible, invisible } from '@/assets/images/icons';
 import Button from '@/components/button/button';
-import { StudiesService } from '@/api/api';
+import { studyService } from '@/api';
+import { authService } from '@/api/';
 import { util, session } from '@/utils';
 
 const PasswordModal = (props) => {
@@ -22,7 +23,7 @@ const PasswordModal = (props) => {
 
   const deleteStudyHandle = async (id) => {
     try {
-      const res = await StudiesService.deleteStudy(id);
+      const res = await studyService.deleteStudy(id);
 
       console.log('res:', res.status); //에러 나서 백엔드 서버 체크 필요
     } catch (error) {
@@ -60,7 +61,7 @@ const PasswordModal = (props) => {
 
   const getUserCheck = async () => {
     try {
-      const res = StudiesService.userCheck(id, { password: passwordVal });
+      const res = authService.userCheck(id, { password: passwordVal });
       const { token } = res.data;
       if (res.success) {
         session.set('auth-token', token); //토큰 체크

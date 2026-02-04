@@ -1,8 +1,7 @@
 import { Fragment, useEffect, useState, useMemo } from 'react';
 
 import styles from './Habitlog.module.css';
-import { getHabitList } from '@/api/habitService';
-import { getHabitlogs } from '@/api/habitlogService';
+import { habitlogService, habitService } from '@/api/';
 import {
   stickerEmpty,
   sticker01,
@@ -38,8 +37,8 @@ function Habitlog(props) {
     const fetchData = async () => {
       try {
         const [habiList, habitlogList] = await Promise.all([
-          getHabitList(studyId),
-          getHabitlogs(studyId, startOfWeek),
+          habitService.getHabitList(studyId),
+          habitlogService.getHabitlogs(studyId, startOfWeek),
         ]);
         setHabits(habiList);
         setHabitlogs(habitlogList);

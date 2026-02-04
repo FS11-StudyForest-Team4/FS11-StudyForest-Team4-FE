@@ -7,7 +7,7 @@ import play_ic from '#assets/images/focus_img/play_ic.png';
 import reset_ic from '#assets/images/focus_img/reset_ic.png';
 import stop_ic from '#assets/images/focus_img/stop_ic.png';
 import timer_ic from '#assets/images/focus_img/timer_ic.png';
-import { getFocus, createFocus, completeFocus } from '@/api/focusService';
+import { focusService } from '@/api'
 import { useLocation } from 'react-router';
 
 const START_TIME = 20; // 테스트를 위하여 20초로 설정했습니다. 이후 25*60으로 바꾸면 25분으로 설정됩니다.
@@ -49,7 +49,7 @@ const Focus = ({ studyId }) => {
 
     const fetchData = async () => {
       try {
-        await completeFocus(focusId);
+        await focusService.completeFocus(focusId);
         console.log('세션이 완료되었습니다!');
         toast('🎉 50포인트를 획득했습니다!', {
           className: styles['toastCompleted'],
@@ -73,7 +73,7 @@ const Focus = ({ studyId }) => {
   // start 버튼
   const handleStart = async () => {
     try {
-      const data = await createFocus(studyId);
+      const data = await focusService.createFocus(studyId);
       setFocusId(data.id);
       setIsRunning(true);
       setIsPaused(false);

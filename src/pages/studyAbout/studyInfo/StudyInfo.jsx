@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import styles from './StudyInfo.module.css';
-import { EmojiService } from '@/api/api';
+import { emojiService } from '@/api';
 import { PasswordModal } from '@/components/index';
 import { util } from '@/utils';
 
@@ -29,7 +29,7 @@ const StudyInfo = ({ studyInfo }) => {
 
   const getEmojiList = async (studyId) => {
     try {
-      const res = await EmojiService.getEmojiList(studyId);
+      const res = await emojiService.getEmojiList(studyId);
       if (res.status == 200) setEmojiList(res.data);
     } catch (err) {
       console.log('getEmojiList err:', err);
@@ -47,7 +47,7 @@ const StudyInfo = ({ studyInfo }) => {
 
   const createEmoji = async (emojiName) => {
     try {
-      const res = await EmojiService.createEmoji(id, { name: emojiName });
+      const res = await emojiService.createEmoji(id, { name: emojiName });
       if (res.status == 201) getEmojiList(id);
     } catch (err) {
       console.log('createEmoji err:', err);
@@ -56,7 +56,7 @@ const StudyInfo = ({ studyInfo }) => {
 
   const patchEmoji = async (emojiName) => {
     try {
-      const res = await EmojiService.patchEmoji(id, { name: emojiName });
+      const res = await emojiService.patchEmoji(id, { name: emojiName });
       if (res.status == 200) getEmojiList(id);
     } catch (err) {
       console.log('patchEmoji err:', err);
