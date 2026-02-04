@@ -90,8 +90,8 @@ const Focus = ({ studyId }) => {
   };
 
   const handlePause = () => {
-    // pause 버튼
-    setIsPaused((prev) => !prev); //누르면 일시정지 <-> 재개
+    // pause 버튼입니다. 
+    setIsPaused((prev) => !prev); //누르면 일시정지 <-> 재개 
     // setIsPaused(true);
   };
 
