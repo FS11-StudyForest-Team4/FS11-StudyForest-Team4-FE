@@ -9,22 +9,32 @@ import {
   deleteHabit,
   getHabitList,
 } from '../../api/habitService';
+
+import { useNavigate, useParams } from 'react-router'; // 페이지이동
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { useParams } from 'react-router';
 dayjs.locale('ko');
 
 const ONE_MINUTE_MS = 60 * 1000;
 
 function Habit() {
   const { studyId } = useParams();
+  const navigate = useNavigate();
   //현재 시간을 저장하는 state
   const [now, setNow] = useState(new Date());
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const handleGoToFocus = () => {
+    // 오늘의 집중으로 이동
+    navigate('/study/focus');
+  };
+  // 홈으로 이동
+  const handleGoToHome = () => {
+    navigate('/');
+  };
 
   useEffect(() => {
     async function getHabits() {
@@ -162,7 +172,10 @@ function Habit() {
               {/* Frame 2609450 */}
               <div className={styles.btnGroup}>
                 {/* Frame 2609447 */}
-                <button className={styles.headerTopBtnToday}>
+                <button
+                  className={styles.headerTopBtnToday}
+                  onClick={handleGoToFocus}
+                >
                   오늘의 집중
                   <img
                     src={arrow_Vector}
@@ -171,7 +184,10 @@ function Habit() {
                   />
                 </button>
                 {/* Frame 2609447 */}
-                <button className={styles.headerTopBtnHome}>
+                <button
+                  className={styles.headerTopBtnHome}
+                  onClick={handleGoToHome}
+                >
                   홈{' '}
                   <img
                     src={arrow_Vector}
