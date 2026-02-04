@@ -32,6 +32,7 @@ export const createStudy = async (data) => {
   }
 };
 
+
 // PATCH 스터디 수정하기
 export const updateStudy = async (studyId, data) => {
   try {

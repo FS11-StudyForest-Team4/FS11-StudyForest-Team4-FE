@@ -10,11 +10,8 @@ import {
   BackgroundOption,
 } from './components/componentsIndex';
 import { Button } from '@/components';
-
-import Textarea from './components/Textarea/Textarea';
 import { useNavigate, useParams } from 'react-router';
-import Input from './components/Input/Input';
-import BackgroundOption from './components/BackgroundOption/BackgroundOption';
+
 import { createStudy, getStudy, updateStudy } from '@/api/studyService';
 
 const StudyCreate = () => {
@@ -201,13 +198,8 @@ const StudyCreate = () => {
             onChange={handleChange}
             errorMessage={errors.passwordCheck}
           />
-
-          {/* 임시 제출 버튼 */}
-          <button type="submit" className={style.submitButton}>
-            {isEdit ? '수정하기' : '만들기'}
-          </button>
           <Button type="submit" className={'createBtn'}>
-            만들기
+            {isEdit ? '수정하기' : '만들기'}
           </Button>
         </form>
       </div>
