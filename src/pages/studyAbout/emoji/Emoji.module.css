@@ -1,0 +1,103 @@
+& .emojiBox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  & aside {
+    height: 450px;
+    width: 350px;
+    border-radius: 12px;
+    position: absolute;
+    left: 250px;
+    top: 45px;
+    z-index: 5;
+  }
+}
+
+& .emojiList {
+  display: flex;
+  padding: 6px 8px;
+  align-items: center;
+  gap: 5px;
+  & li {
+    height: 31px;
+    display: flex;
+    padding: 6px 8px;
+    align-items: center;
+    gap: 5px;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    &:hover {
+      cursor: pointer;
+    }
+    & span:first-child {
+      font-size: 11px;
+    }
+    & span:last-child {
+      color: #fff;
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+}
+
+& .moreEmoji {
+  max-width: 242px;
+  border-radius: 15px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+  position: absolute;
+  top: 45px;
+  left: 0;
+  padding: 12px;
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+& .moreEmojiBtn {
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  padding: 6px 8px;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0 8px 0 0;
+  & i {
+    width: 16px;
+    height: 16px;
+    background: url(@/assets/images/ic_plus.svg) no-repeat;
+    background-size: 100% auto;
+  }
+}
+
+& .emojiBtn {
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  padding: 6px 8px;
+  align-items: flex-start;
+  gap: 5px;
+  color: var(--black-black_414141, #414141);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  & .iEmoji {
+    width: 18px;
+    height: 18px;
+    background: url(@/assets/images/ic_smile.svg) no-repeat;
+    background-size: 100% auto;
+  }
+}

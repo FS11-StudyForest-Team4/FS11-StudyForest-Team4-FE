@@ -5,7 +5,8 @@ const session = {
 
   get(key) {
     const v = sessionStorage.getItem(key);
-    return v ? JSON.parse(v) : null;
+    if (!v || v === 'undefined') return null;
+    return JSON.parse(v);
   },
 
   remove(key) {

@@ -1,6 +1,6 @@
 import client from '@/lib/client';
 
-// GET 스터디 목록조회하기  
+// GET 스터디 목록조회하기
 export const getStudyList = async (params) => {
   try {
     const response = await client.get('/studies', { params });
@@ -11,8 +11,8 @@ export const getStudyList = async (params) => {
   }
 };
 
-// GET 스터디상세 조회하기 
-export const getStudy = async (id) => {
+// GET 스터디상세 조회하기
+export const getStudyId = async (id) => {
   try {
     const response = await client.get(`/studies/${id}`);
     return response.data;
@@ -32,7 +32,6 @@ export const createStudy = async (data) => {
   }
 };
 
-
 // PATCH 스터디 수정하기
 export const updateStudy = async (studyId, data) => {
   try {
@@ -44,8 +43,7 @@ export const updateStudy = async (studyId, data) => {
   }
 };
 
-
-// DELETE 스터디 삭제하기 
+// DELETE 스터디 삭제하기
 export const deleteStudy = async (id) => {
   try {
     const response = await client.delete(`/studies/${id}`);
@@ -55,7 +53,3 @@ export const deleteStudy = async (id) => {
     throw error;
   }
 };
-
-
-
-
