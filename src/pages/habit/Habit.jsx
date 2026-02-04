@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
 import arrow_Vector from '../../assets/images/arrow_Vector.png';
 import delete_Icon from '../../assets/images/delete_Icon.png';
-import {
-  updateHabit,
-  createHabit,
-  deleteHabit,
-  getHabitList,
-} from '../../api/habitService';
+import { habitService } from '@/api'
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -32,7 +27,7 @@ function Habit() {
     async function getHabits() {
       if (!studyId) return;
       setIsLoading(true);
-      const habits = await getHabitList(studyId);
+      const habits = await habitService.getHabitList(studyId);
       setHabits(habits);
       setIsLoading(false);
     }
@@ -55,7 +50,7 @@ function Habit() {
   const handleSubmit = async () => {
     try {
       const updatePromises = habits.map((habit) =>
-        updateHabit(habit.id, { name: habit.name }),
+        habitService.updateHabit(habit.id, { name: habit.name }),
       );
       await Promise.all(updatePromises);
       alert('습관이 수정되었습니다!');
@@ -75,7 +70,7 @@ function Habit() {
 
     try {
       // 하림님의 API 호출
-      const response = await createHabit(studyId, { name: newHabitName });
+      const response = await habitService.createHabit(studyId, { name: newHabitName });
 
       if (response) {
         // 서버 저장 성공 후 화면(UI)에 바로 반영
@@ -91,7 +86,7 @@ function Habit() {
   const handleDelete = async (habitId) => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await deleteHabit(habitId); // 서버 삭제
+        await habitService.deleteHabit(habitId); // 서버 삭제
         setHabits(habits.filter((h) => h.id !== habitId)); // UI 반영
       } catch (error) {
         console.error('삭제 중 오류 발생:', error);

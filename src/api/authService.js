@@ -5,7 +5,7 @@ export const userCheck = async (id, { password }) => {
     const response = await client.get(`/studies/${id}/verify`, { password });
     return response.data;
   } catch (error) {
-    console.error('deleteStudy Error:', error.response?.data || error.message);
+    console.error('userCheck Error:', error.response?.data || error.message);
     throw error;
   }
 };

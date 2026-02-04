@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from 'react';
 //컴포넌트, 스타일 import
 import style from './StudyCreate.module.css';
 import { util } from '@/utils';
-import { StudiesService } from '@/api/api';
+import { studyService } from '@/api';
 import {
   Textarea,
   Input,
@@ -11,8 +10,6 @@ import {
 } from './components/componentsIndex';
 import { Button } from '@/components';
 import { useNavigate, useParams } from 'react-router';
-
-import { createStudy, getStudy, updateStudy } from '@/api/studyService';
 
 const StudyCreate = () => {
   const { id } = useParams(); // 있으면 수정
@@ -36,7 +33,7 @@ const StudyCreate = () => {
 
     const fetchStudy = async () => {
       try {
-        const data = await getStudy(id);
+        const data = await studyService.getStudy(id);
         setFormData({
           nickName: data.nickName,
           title: data.title,
@@ -120,8 +117,8 @@ const StudyCreate = () => {
     try {
       // API 호출 삼항연산자로 api 호출
       const result = isEdit
-        ? await updateStudy(id, dataToSend)
-        : await createStudy(dataToSend);
+        ? await studyService.updateStudy(id, dataToSend)
+        : await studyService.createStudy(dataToSend);
 
       console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
       navigate(`/study/About/${result.id}`);
@@ -144,7 +141,9 @@ const StudyCreate = () => {
   return (
     <section className={style.createWrap}>
       <div className={style.container}>
-        <div className={style.createPageTitle}>{isEdit ? '스터디 수정하기' : '스터디 만들기'}</div>
+        <div className={style.createPageTitle}>
+          {isEdit ? '스터디 수정하기' : '스터디 만들기'}
+        </div>
         <h1>스터디 만들기</h1>
         <form onSubmit={handleSubmit}>
           <Input

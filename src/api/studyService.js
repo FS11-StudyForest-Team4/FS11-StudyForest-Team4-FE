@@ -40,11 +40,12 @@ export const updateStudy = async (studyId, data) => {
     return res.data;
   } catch (error) {
     console.log('updateStudy Error:', error.response?.data || error.message);
+    throw error;
   }
 };
 
 
-// DELETE 스터디 삭제하기  다른 파일 주소 확인하기 
+// DELETE 스터디 삭제하기 
 export const deleteStudy = async (id) => {
   try {
     const response = await client.delete(`/studies/${id}`);

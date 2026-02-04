@@ -7,7 +7,7 @@ export const getHabitList = async (studyId) => {
     return res.data;
   } catch (error) {
     console.log('getHabitList Error:', error.response?.data || error.message);
-    //throw error ? 호출에서 에러메시지 여부고민
+    throw error;
   }
 };
 
@@ -18,6 +18,7 @@ export const createHabit = async (studyId, { name }) => {
     return res.data;
   } catch (error) {
     console.log('createHabit Error:', error.response?.data || error.message);
+    throw error;
   }
 };
 
@@ -28,6 +29,7 @@ export const updateHabit = async (habitId, { name }) => {
     return res.data;
   } catch (error) {
     console.log('updateHabit Error:', error.response?.data || error.message);
+    throw error;
   }
 };
 
@@ -38,5 +40,6 @@ export const deleteHabit = async (habitId) => {
     return res.data;
   } catch (error) {
     console.log('deleteHabit Error:', error.response?.data || error.message);
+    throw error;
   }
 };

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './StudyAbout.module.css';
 import StudyInfo from './studyInfo/StudyInfo';
 import Habitlog from './habitLog/Habitlog';
-import { getStudy } from '@/api/studyService';
+import { studyService } from '@/api';
 import { Spinner } from '@/components/index';
 import { useLocation, useNavigate } from 'react-router';
 import { util } from '@/utils';
@@ -30,7 +30,7 @@ const StudyAbout = () => {
 
     const getStudyId = async (studyId) => {
       try {
-        const res = await getStudy(studyId);
+        const res = await studyService.getStudy(studyId);
         if (res.status == 200) setStudyInfo(res.data);
       } catch (err) {
         console.log('getStudyId err:', err);

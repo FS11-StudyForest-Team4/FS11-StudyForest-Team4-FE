@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getEmojiList } from '../../api/EmojiService';
-import styles from './StudyCard.module.css';
+
+import { emojiService } from '@/api';
+import styles from './studyCard.module.css';
 import GroupIcon from '@/assets/images/Group.svg';
 import bgDesign from '@/assets/images/backgrounds/bgDesign.jpg';
 import bgLeaf from '@/assets/images/backgrounds/bgLeaf.jpg';
@@ -13,7 +14,7 @@ const StudyCard = ({ study, onClick }) => {
   useEffect(() => {
     const fetchEmojis = async () => {
       try {
-        const res = await getEmojiList(study.id);
+        const res = await emojiService.getEmojiList(study.id);
         if (res && res.data) {
           const emojiData = res.data.slice(0, 3).map((e) => ({
             name: e.name,
