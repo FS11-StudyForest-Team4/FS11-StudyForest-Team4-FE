@@ -18,7 +18,7 @@ const StudyCard = ({ study, onClick }) => {
     createdAt,
     description,
   } = study;
-  
+
   const backgroundMap = {
     green: '#e1edde',
     yellow: '#fff1cc',
@@ -36,7 +36,6 @@ const StudyCard = ({ study, onClick }) => {
 
   const createdDate = new Date(createdAt);
   const today = new Date();
-
   const diffTime =
     today.setHours(0, 0, 0, 0) - createdDate.setHours(0, 0, 0, 0);
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -44,7 +43,7 @@ const StudyCard = ({ study, onClick }) => {
 
   return (
     <div
-      className={`${styles.studyCardContainer} ${isImageBackground ? styles.isImage : ''}`}
+      className={`${styles.studyCardContainer} ${isImageBackground ? styles.isImage : ''} ${bgType}`}
       onClick={onClick}
       style={{
         backgroundImage: isImageBackground
@@ -64,7 +63,7 @@ const StudyCard = ({ study, onClick }) => {
 
       <div className={styles.cardBody}>
         <h3 className={styles.studyTitle}>
-          {nickName}의 {title}
+          <span className={styles.nickNameText}>{nickName}</span>의 {title}
         </h3>
         <p className={styles.progressText}>{dDay}일째 진행 중</p>
         <p className={styles.studySlogan}>{description}</p>

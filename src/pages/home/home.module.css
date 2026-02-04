@@ -29,9 +29,11 @@
 
 .recentViewBox {
   min-height: 382px;
-  & h3 {
-    margin: 0 0 30px 0;
-  }
+}
+
+/* SCSS 문법을 표준 CSS로 유지 */
+.recentViewBox h3 {
+  margin: 0 0 30px 0;
 }
 
 .studyBrowseBox {
@@ -49,6 +51,7 @@
   font-size: 24px;
   font-weight: 800;
   color: #414141;
+  margin: 0;
 }
 
 .filterControls {
@@ -123,6 +126,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
+  width: 100%;
 }
 
 .emptyDisplay {
@@ -131,11 +135,13 @@
   align-items: center;
   justify-content: center;
   min-height: 200px;
+  width: 100%;
 }
 
 .emptyMessage {
   color: #414141;
   font-size: 16px;
+  text-align: center;
 }
 
 .moreButtonContainer {
@@ -169,4 +175,40 @@
 .moreButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 20px 16px;
+  }
+
+  .emptyStatusBox {
+    padding: 24px 16px;
+  }
+
+  .filterControls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .searchBarContainer,
+  .sortDropdown,
+  .dropdownWrapper,
+  .moreButton {
+    width: 100% !important;
+  }
+
+  .dropdownMenu {
+    width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+  }
+
+  .studyGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
 }

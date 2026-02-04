@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { studyService } from '@/api';
+import { getStudyList } from '../../api/studyService';
 import StudyCard from './StudyCard';
-import styles from './home.module.css';
+import styles from './Home.module.css';
 
 const SORT_OPTIONS = [
   { label: '최근 순', value: 'LATEST' },
@@ -28,9 +28,9 @@ const Home = () => {
     setIsLoading(true);
 
     try {
-      const result = await studyService.getStudyList({
-        q: searchTerm || undefined, //
-        orderBy: selectedSort.value, //
+      const result = await getStudyList({
+        q: searchTerm || undefined,
+        orderBy: selectedSort.value,
         limit: 6,
         cursor: isLoadMore ? nextCursor : undefined,
       });
@@ -58,7 +58,7 @@ const Home = () => {
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-    setRecentStudies(saved);
+    setRecentStudies(saved.slice(0, 3));
   }, []);
 
   const handleStudyClick = (study) => {
@@ -75,26 +75,26 @@ const Home = () => {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContent}>
-        {/* 최근 조회 섹션  */}
+        {/* 최근 조회 섹션 */}
         <section className={styles.studySection}>
           <div className={`${styles.emptyStatusBox} ${styles.recentViewBox}`}>
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
-            <div className={styles.studyGrid}>
-              {recentStudies.length > 0 ? (
-                recentStudies.map((study) => (
+            {recentStudies.length > 0 ? (
+              <div className={styles.studyGrid}>
+                {recentStudies.slice(0, 3).map((study) => (
                   <StudyCard
                     key={`recent-${study.id}`}
                     study={study}
                     background={study.background}
                     onClick={() => navigate(`/study/about/${study.id}`)}
                   />
-                ))
-              ) : (
-                <div className={styles.emptyDisplay}>
-                  <p className={styles.emptyMessage}>조회 기록이 없어요</p>
-                </div>
-              )}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.emptyDisplay}>
+                <p className={styles.emptyMessage}>조회 기록이 없어요</p>
+              </div>
+            )}
           </div>
         </section>
 
@@ -140,24 +140,24 @@ const Home = () => {
               </div>
             </div>
 
-            <div className={styles.studyGrid}>
-              {studies.length > 0 ? (
-                studies.map((study) => (
+            {studies.length > 0 ? (
+              <div className={styles.studyGrid}>
+                {studies.map((study) => (
                   <StudyCard
                     key={study.id}
                     study={study}
                     background={study.background}
                     onClick={() => handleStudyClick(study)}
                   />
-                ))
-              ) : (
-                <div className={styles.emptyDisplay}>
-                  <p className={styles.emptyMessage}>
-                    {isLoading ? '로딩 중...' : '스터디가 없어요'}
-                  </p>
-                </div>
-              )}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.emptyDisplay}>
+                <p className={styles.emptyMessage}>
+                  {isLoading ? '로딩 중...' : '스터디가 없어요'}
+                </p>
+              </div>
+            )}
 
             {nextCursor && (
               <div className={styles.moreButtonContainer}>
