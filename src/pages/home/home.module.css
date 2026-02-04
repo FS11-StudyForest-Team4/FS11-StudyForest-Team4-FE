@@ -18,6 +18,7 @@
   margin-bottom: 48px;
 }
 
+/* 💡 포인트: flex-direction: column과 flex: 1 설정으로 자식을 중앙에 배치함 */
 .emptyStatusBox {
   background-color: #ffffff;
   border-radius: 20px;
@@ -29,9 +30,11 @@
 
 .recentViewBox {
   min-height: 382px;
-  & h3 {
-    margin: 0 0 30px 0;
-  }
+}
+
+/* SCSS 문법을 표준 CSS로 유지 */
+.recentViewBox h3 {
+  margin: 0 0 30px 0;
 }
 
 .studyBrowseBox {
@@ -49,6 +52,7 @@
   font-size: 24px;
   font-weight: 800;
   color: #414141;
+  margin: 0;
 }
 
 .filterControls {
@@ -123,19 +127,23 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
+  width: 100%;
 }
 
+/* 💡 중앙 정렬 핵심: flex: 1이 부모의 남은 공간을 다 차지함 */
 .emptyDisplay {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 200px;
+  width: 100%;
 }
 
 .emptyMessage {
   color: #414141;
   font-size: 16px;
+  text-align: center;
 }
 
 .moreButtonContainer {

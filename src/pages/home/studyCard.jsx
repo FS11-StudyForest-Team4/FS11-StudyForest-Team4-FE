@@ -18,7 +18,7 @@ const StudyCard = ({ study, onClick }) => {
     createdAt,
     description,
   } = study;
-  
+
   const backgroundMap = {
     green: '#e1edde',
     yellow: '#fff1cc',
@@ -44,7 +44,8 @@ const StudyCard = ({ study, onClick }) => {
 
   return (
     <div
-      className={`${styles.studyCardContainer} ${isImageBackground ? styles.isImage : ''}`}
+      /* 💡 bgType을 클래스에 추가하여 CSS에서 색상을 구분할 수 있게 합니다 */
+      className={`${styles.studyCardContainer} ${isImageBackground ? styles.isImage : ''} ${styles[bgType] || ''}`}
       onClick={onClick}
       style={{
         backgroundImage: isImageBackground
@@ -64,7 +65,8 @@ const StudyCard = ({ study, onClick }) => {
 
       <div className={styles.cardBody}>
         <h3 className={styles.studyTitle}>
-          {nickName}의 {title}
+          {/* 💡 닉네임만 따로 스타일을 주기 위해 span으로 감쌉니다 */}
+          <span className={styles.nickNameText}>{nickName}</span>의 {title}
         </h3>
         <p className={styles.progressText}>{dDay}일째 진행 중</p>
         <p className={styles.studySlogan}>{description}</p>
