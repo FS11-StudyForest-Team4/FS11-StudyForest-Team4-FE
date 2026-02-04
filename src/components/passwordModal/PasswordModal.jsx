@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import styles from './PasswordModal.module.css';
-import { useNavigate } from 'react-router';
 import { visible, invisible } from '@/assets/images/icons';
 import Button from '@/components/button/button';
-import { studyService } from '@/api';
 import { authService } from '@/api/';
-import { util, session } from '@/utils';
+import { session } from '@/utils';
 
 const PasswordModal = (props) => {
-  const { type, studyInfo, modalClose, onSuccess } = props; // onSuccess: focus 랜더링하기 위해 추가했습니다.
-  const { id, password, title } = studyInfo;
-
-  const navigate = useNavigate();
+  const { modalType, studyInfo, modalClose, BTN_ACTIONS } = props; // onSuccess: focus 랜더링하기 위해 추가했습니다.
+  const { id, title } = studyInfo;
   const [showPassword, setShowPassword] = useState(false);
   const [passwordVal, setPasswordVal] = useState('');
   const BTN_TEXT = {
@@ -21,71 +17,24 @@ const PasswordModal = (props) => {
     delete: '스터디 삭제',
   };
 
-  const deleteStudyHandle = async (id) => {
-    try {
-      const res = await studyService.deleteStudy(id);
-
-      console.log('res:', res.status); //에러 나서 백엔드 서버 체크 필요
-    } catch (error) {
-      console.log('delteStudy Error:', error);
-    }
-    modalClose();
-  };
-
-  const BTN_ACTIONS = {
-    habit: () =>
-      navigate('/study/habit', {
-        state: {
-          studyId: id,
-        },
-      }),
-    focus: () =>
-      navigate('/study/focus', {
-        state: {
-          studyId: id,
-        },
-      }),
-    edit: () =>
-      navigate('/study/edit', {
-        state: {
-          studyInfo: studyInfo,
-        },
-      }),
-    delete: () => deleteStudyHandle(id),
-  };
-
   const handleInputChange = (e) => {
     const { value } = e.target;
     setPasswordVal(value);
   };
 
-  const getUserCheck = async () => {
-    try {
-      const res = authService.userCheck(id, { password: passwordVal });
-      const { token } = res.data;
-      if (res.success) {
-        session.set('auth-token', token); //토큰 체크
-
-        BTN_ACTIONS[type]?.();
-      }
-    } catch (err) {
-      console.log('userCheckErr:', err);
-    }
+  const fetchUserCheck = async (id) => {
+    const res = await authService.createUserCheck(id, {
+      password: passwordVal,
+    });
+    session.set('userId', res.data?.id);
+    modalClose();
+    BTN_ACTIONS[modalType]?.();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== passwordVal) {
-      await util.errorAlert('비밀번호가 일치하지 않습니다.');
-      return;
-    }
-
-    if (type === 'focus') {
-      onSuccess?.('focus');
-      return;
-    }
-    getUserCheck();
+    fetchUserCheck(id);
   };
 
   return (
@@ -121,7 +70,7 @@ const PasswordModal = (props) => {
           </div>
 
           <Button type="submit" disabled={false}>
-            {BTN_TEXT[type]}
+            {BTN_TEXT[modalType]}
           </Button>
         </form>
       </div>

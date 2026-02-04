@@ -5,19 +5,25 @@ import React, { useEffect, useState } from 'react';
 import styles from './StudyAbout.module.css';
 import StudyInfo from './studyInfo/StudyInfo';
 import Habitlog from './habitLog/Habitlog';
+import Focus from '@/pages/focus/Focus';
+import Habit from '../habit/Habit';
+import { PasswordModal } from '@/components';
 import { studyService } from '@/api';
 import { Spinner } from '@/components/index';
 import { useLocation, useNavigate } from 'react-router';
-import { util } from '@/utils';
+import { util, session } from '@/utils';
 
 const StudyAbout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const id = location.pathname.split('/').filter(Boolean).pop();
-
   const studyId = location.search.slice(1) || id;
-
   const [studyInfo, setStudyInfo] = useState([]);
+  const [studyTab, setStypeTab] = useState('habitLog');
+  const [modalType, setModalType] = useState(null);
+  const userId = session.get('userId');
+  const studyCheck = studyId === userId ? true : false;
+  const passwordCheck = (!studyCheck && modalType) || modalType === 'delete';
 
   useEffect(() => {
     if (!studyId) {
@@ -30,8 +36,8 @@ const StudyAbout = () => {
 
     const getStudyId = async (studyId) => {
       try {
-        const res = await studyService.getStudy(studyId);
-        if (res.status == 200) setStudyInfo(res.data);
+        const res = await studyService.getStudyId(studyId);
+        setStudyInfo(res);
       } catch (err) {
         console.log('getStudyId err:', err);
       }
@@ -40,12 +46,60 @@ const StudyAbout = () => {
     getStudyId(studyId);
   }, [studyId, navigate]);
 
+  const STUDY_TAB_COMPONENTS = {
+    habitLog: Habitlog,
+    focus: Focus,
+    habit: Habit,
+  };
+
+  const StudyComponent = STUDY_TAB_COMPONENTS[studyTab];
+
+  const BTN_ACTIONS = {
+    habitLog: () => setStypeTab('habitLog'),
+    habit: () => setStypeTab('habit'),
+    focus: () => setStypeTab('focus'),
+    edit: () => navigate(`/study/edit/${id}`),
+    delete: () => deleteStudyHandle(id),
+  };
+
+  const handleModalType = (type) => {
+    setModalType(type);
+    if (studyCheck && !type === 'delete') BTN_ACTIONS[type]?.();
+  };
+
+  const deleteStudyHandle = async (id) => {
+    try {
+      const res = await studyService.deleteStudy(id);
+      util.successAlert(res.message).then(() => {
+        if (studyCheck) session.remove(userId);
+        navigate(`/`);
+      });
+    } catch (error) {
+      console.log('delteStudy Error:', error);
+    }
+    setModalType(null);
+  };
+
   return (
     <div className={styles.studyAboutWrap}>
       {studyInfo ? (
         <>
-          <StudyInfo studyInfo={studyInfo} />
-          <Habitlog studyId={studyId} />
+          <StudyInfo
+            studyInfo={studyInfo}
+            onModalType={handleModalType}
+            studyTab={studyTab}
+          />
+
+          {StudyComponent && <StudyComponent studyId={studyId} />}
+
+          {passwordCheck && (
+            <PasswordModal
+              modalType={modalType}
+              studyInfo={studyInfo}
+              modalClose={() => setModalType(null)}
+              BTN_ACTIONS={BTN_ACTIONS}
+            />
+          )}
         </>
       ) : (
         <Spinner />

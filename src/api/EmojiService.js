@@ -13,7 +13,7 @@ export const getEmojiList = async (studyId) => {
 export const createEmoji = async (studyId, { name }) => {
   try {
     const res = await client.post(`/emojis/${studyId}`, { name });
-    return res.data;
+    return res;
   } catch (error) {
     console.log('createEmoji Error:', error.response?.data || error.message);
     throw error;
@@ -23,7 +23,7 @@ export const createEmoji = async (studyId, { name }) => {
 export const patchEmoji = async (studyId, { name }) => {
   try {
     const res = await client.patch(`/emojis/${studyId}`, { name });
-    return res.data;
+    return res;
   } catch (error) {
     console.log('patchEmoji Error:', error.response?.data || error.message);
     throw error;

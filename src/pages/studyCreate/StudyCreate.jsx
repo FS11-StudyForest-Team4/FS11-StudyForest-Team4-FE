@@ -117,34 +117,34 @@ const StudyCreate = () => {
     try {
       // API 호출 삼항연산자로 api 호출
       const result = isEdit
-        ? await studyService.updateStudy(id, dataToSend)
-        : await studyService.createStudy(dataToSend);
+        ? await studyService.updateStudy(id, submitData)
+        : await studyService.createStudy(submitData);
 
-      console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
-      navigate(`/study/About/${result.id}`);
-      const res = await StudiesService.createStudy(submitData);
-      const { id } = res.data;
-
-      if (res.status === 201) {
-        util.successAlert('스터디 등록이 성공하셨습니다!').then(() => {
-          navigate(`/study/about/${id}`);
+      util
+        .successAlert(
+          isEdit
+            ? '스터디 수정이 완료되었습니다!'
+            : '스터디 등록이 성공하셨습니다!',
+        )
+        .then(() => {
+          navigate(`/study/about/${result.id}`);
         });
-      }
     } catch (error) {
-      console.error('스터디 등록 실패:', error);
-      util.errorAlert('스터디 등록 실패');
-      console.error(isEdit ? '스터디 수정 실패' : '스터디 등록 실패', error);
-      alert(isEdit ? '스터디 수정 실패' : '스터디 등록 실패');
+      console.error('studyService Error:', error);
+      util.errorAlert(
+        isEdit
+          ? '스터디 수정이 실패하였습니다.'
+          : '스터디 등록이 실패하였습니다.',
+      );
     }
   };
 
   return (
     <section className={style.createWrap}>
       <div className={style.container}>
-        <div className={style.createPageTitle}>
-          {isEdit ? '스터디 수정하기' : '스터디 만들기'}
-        </div>
-        <h1>스터디 만들기</h1>
+        <h1>
+          {isEdit ? `${formData.title} 스터디 수정하기` : '스터디 만들기'}
+        </h1>
         <form onSubmit={handleSubmit}>
           <Input
             name="nickName"
