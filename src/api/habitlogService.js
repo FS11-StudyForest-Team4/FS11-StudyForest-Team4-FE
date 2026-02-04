@@ -7,6 +7,7 @@ export const createHabitlog = async (habitId) => {
     return res.data;
   } catch (error) {
     console.log('createHabitlog Error:', error.response?.data || error.message);
+    throw error;
   }
 };
 
@@ -19,5 +20,6 @@ export const getHabitlogs = async (studyId, startOfWeek) => {
     return res.data;
   } catch (error) {
     console.log('getHabitlogs Error:', error.response?.data || error.message);
+    throw error;
   }
 };

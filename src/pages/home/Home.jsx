@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { getStudyList } from '../../api/studyService';
+import { studyService } from '@/api';
 import StudyCard from './StudyCard';
-import styles from './Home.module.css';
+import styles from './home.module.css';
 
 const SORT_OPTIONS = [
   { label: '최근 순', value: 'LATEST' },
@@ -28,7 +28,7 @@ const Home = () => {
     setIsLoading(true);
 
     try {
-      const result = await getStudyList({
+      const result = await studyService.getStudyList({
         q: searchTerm || undefined, //
         orderBy: selectedSort.value, //
         limit: 6,

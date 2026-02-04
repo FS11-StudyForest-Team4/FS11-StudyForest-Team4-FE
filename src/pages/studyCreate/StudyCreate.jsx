@@ -1,16 +1,20 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+//컴포넌트, 스타일 import
 import style from './StudyCreate.module.css';
 import { util } from '@/utils';
-import { StudiesService } from '@/api/api';
+import { studyService } from '@/api';
 import {
   Textarea,
   Input,
   BackgroundOption,
 } from './components/componentsIndex';
 import { Button } from '@/components';
+import { useNavigate, useParams } from 'react-router';
 
 const StudyCreate = () => {
+  const { id } = useParams(); // 있으면 수정
+  const isEdit = Boolean(id);
+
   //입력값 관리
   const [formData, setFormData] = useState({
     nickName: '',
@@ -22,6 +26,29 @@ const StudyCreate = () => {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  // 수정시 input 채워넣기
+  useEffect(() => {
+    if (!isEdit || !id) return;
+
+    const fetchStudy = async () => {
+      try {
+        const data = await studyService.getStudy(id);
+        setFormData({
+          nickName: data.nickName,
+          title: data.title,
+          description: data.description,
+          background: data.background,
+          password: '', // 수정 시 비밀번호는 비워두기
+          passwordCheck: '', // 확인 필드도 비워두기
+        });
+      } catch (error) {
+        console.error('스터디 상세 조회 실패:', error);
+        alert('스터디 정보를 불러오는데 실패했습니다.');
+      }
+    };
+    fetchStudy();
+  }, [id, isEdit]);
 
   // 검증 목록
   const validators = {
@@ -88,6 +115,13 @@ const StudyCreate = () => {
     }
 
     try {
+      // API 호출 삼항연산자로 api 호출
+      const result = isEdit
+        ? await studyService.updateStudy(id, dataToSend)
+        : await studyService.createStudy(dataToSend);
+
+      console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
+      navigate(`/study/About/${result.id}`);
       const res = await StudiesService.createStudy(submitData);
       const { id } = res.data;
 
@@ -99,12 +133,17 @@ const StudyCreate = () => {
     } catch (error) {
       console.error('스터디 등록 실패:', error);
       util.errorAlert('스터디 등록 실패');
+      console.error(isEdit ? '스터디 수정 실패' : '스터디 등록 실패', error);
+      alert(isEdit ? '스터디 수정 실패' : '스터디 등록 실패');
     }
   };
 
   return (
     <section className={style.createWrap}>
       <div className={style.container}>
+        <div className={style.createPageTitle}>
+          {isEdit ? '스터디 수정하기' : '스터디 만들기'}
+        </div>
         <h1>스터디 만들기</h1>
         <form onSubmit={handleSubmit}>
           <Input
@@ -158,9 +197,8 @@ const StudyCreate = () => {
             onChange={handleChange}
             errorMessage={errors.passwordCheck}
           />
-
           <Button type="submit" className={'createBtn'}>
-            만들기
+            {isEdit ? '수정하기' : '만들기'}
           </Button>
         </form>
       </div>

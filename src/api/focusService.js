@@ -7,6 +7,7 @@ export const getFocus = async (studyId) => {
     return res.data;
   } catch (error) {
     console.error('getFocus Error: ', error);
+    throw error;
   }
 };
 
@@ -17,6 +18,7 @@ export const createFocus = async (studyId) => {
     return res.data;
   } catch (error) {
     console.error('createFocus Error: ', error);
+    throw error;
   }
 };
 
@@ -27,5 +29,6 @@ export const completeFocus = async (focusId) => {
     return res.data;
   } catch (error) {
     console.error('completeFocus Error: ', error);
+    throw error;
   }
 };
