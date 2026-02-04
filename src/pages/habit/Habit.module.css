@@ -361,9 +361,11 @@
 
 .modalFooter {
   display: flex;
-
+  align-items: center;
+  justify-self: center;
+  height: 58px;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 24px;
 }
 .deleteBtn {
   background: none;
@@ -470,7 +472,7 @@
   text-align: center;
   vertical-align: middle;
   width: 288px;
-  height: 42px;
+  height: 100%;
   opacity: 1;
   border-radius: 16px;
   padding: 10px;
@@ -492,7 +494,7 @@
   text-align: center;
   vertical-align: middle;
   width: 288px;
-  height: 42px;
+  height: 100%;
   opacity: 1;
   border-radius: 16px;
   padding: 10px;
