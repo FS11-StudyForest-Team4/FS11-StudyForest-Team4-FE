@@ -18,7 +18,6 @@
   margin-bottom: 48px;
 }
 
-/* 💡 포인트: flex-direction: column과 flex: 1 설정으로 자식을 중앙에 배치함 */
 .emptyStatusBox {
   background-color: #ffffff;
   border-radius: 20px;
@@ -130,7 +129,6 @@
   width: 100%;
 }
 
-/* 💡 중앙 정렬 핵심: flex: 1이 부모의 남은 공간을 다 차지함 */
 .emptyDisplay {
   flex: 1;
   display: flex;
@@ -177,4 +175,40 @@
 .moreButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 20px 16px;
+  }
+
+  .emptyStatusBox {
+    padding: 24px 16px;
+  }
+
+  .filterControls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .searchBarContainer,
+  .sortDropdown,
+  .dropdownWrapper,
+  .moreButton {
+    width: 100% !important;
+  }
+
+  .dropdownMenu {
+    width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+  }
+
+  .studyGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
 }

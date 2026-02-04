@@ -36,7 +36,6 @@ const StudyCard = ({ study, onClick }) => {
 
   const createdDate = new Date(createdAt);
   const today = new Date();
-
   const diffTime =
     today.setHours(0, 0, 0, 0) - createdDate.setHours(0, 0, 0, 0);
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -44,8 +43,7 @@ const StudyCard = ({ study, onClick }) => {
 
   return (
     <div
-      /* 💡 bgType을 클래스에 추가하여 CSS에서 색상을 구분할 수 있게 합니다 */
-      className={`${styles.studyCardContainer} ${isImageBackground ? styles.isImage : ''} ${styles[bgType] || ''}`}
+      className={`${styles.studyCardContainer} ${isImageBackground ? styles.isImage : ''} ${bgType}`}
       onClick={onClick}
       style={{
         backgroundImage: isImageBackground
@@ -65,7 +63,6 @@ const StudyCard = ({ study, onClick }) => {
 
       <div className={styles.cardBody}>
         <h3 className={styles.studyTitle}>
-          {/* 💡 닉네임만 따로 스타일을 주기 위해 span으로 감쌉니다 */}
           <span className={styles.nickNameText}>{nickName}</span>의 {title}
         </h3>
         <p className={styles.progressText}>{dDay}일째 진행 중</p>

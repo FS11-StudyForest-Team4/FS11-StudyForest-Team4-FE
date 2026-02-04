@@ -58,7 +58,6 @@ const Home = () => {
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-    // 불러올 때도 안전하게 3개만 저장
     setRecentStudies(saved.slice(0, 3));
   }, []);
 
@@ -82,7 +81,6 @@ const Home = () => {
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
             {recentStudies.length > 0 ? (
               <div className={styles.studyGrid}>
-                {/* 💡 .slice(0, 3)를 추가하여 화면에 최대 3개만 출력되도록 보장합니다 */}
                 {recentStudies.slice(0, 3).map((study) => (
                   <StudyCard
                     key={`recent-${study.id}`}
