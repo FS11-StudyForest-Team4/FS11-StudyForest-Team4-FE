@@ -140,8 +140,7 @@ const StudyCreate = () => {
       console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
       navigate(`/study/About/${result.id}`);
 
-      const res = await studyService.createStudy(submitData);
-      const { id } = res.data;
+    
 
       
     } catch (error) {
