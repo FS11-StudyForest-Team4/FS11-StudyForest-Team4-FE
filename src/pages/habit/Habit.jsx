@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
-import arrow_Vector from '../../assets/images/arrow_Vector.png';
-import delete_Icon from '../../assets/images/delete_Icon.png';
-import { habitService } from '@/api'
+import arrow_Vector from '../../assets/images/habit_img/arrow_Vector.png';
+import delete_Icon from '../../assets/images//habit_img/delete_Icon.png';
+import underline_Vector from '../../assets/images/habit_img/underline_Vector.png';
+import { habitService } from '@/api';
+
+import { useNavigate, useParams } from 'react-router'; // 페이지이동
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -10,15 +13,23 @@ dayjs.locale('ko');
 
 const ONE_MINUTE_MS = 60 * 1000;
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-function Habit({studyId}) {
+function Habit() {
+  const { studyId } = useParams();
+  const navigate = useNavigate();
   //현재 시간을 저장하는 state
   const [now, setNow] = useState(new Date());
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const handleGoToFocus = () => {
+    // 오늘의 집중으로 이동
+    navigate('/study/focus');
+  };
+  // 홈으로 이동
+  const handleGoToHome = () => {
+    navigate('/');
+  };
 
   useEffect(() => {
     async function getHabits() {
@@ -67,7 +78,9 @@ function Habit({studyId}) {
 
     try {
       // 하림님의 API 호출
-      const response = await habitService.createHabit(studyId, { name: newHabitName });
+      const response = await habitService.createHabit(studyId, {
+        name: newHabitName,
+      });
 
       if (response) {
         // 서버 저장 성공 후 화면(UI)에 바로 반영
@@ -91,6 +104,55 @@ function Habit({studyId}) {
     }
   };
 
+  // 습관 완료 상태를 토글(반전)하는 함수
+  const handleToggleHabit = async (habit) => {
+    // 1. habit 객체 전체를 인자로 받습니다.
+    try {
+      // 2. 서버가 요구하는 대로 name과 바뀔 completed 상태를 함께 보냅니다.
+      const updatedHabit = await habitService.updateHabit(habit.id, {
+        name: habit.name, // 기존 이름 그대로 전달
+        completed: !habit.completed, // 상태 반전
+      });
+
+      if (updatedHabit) {
+        // 서버 저장 성공 후 화면 UI 업데이트
+        setHabits(
+          habits.map((h) =>
+            h.id === habit.id ? { ...h, completed: !habit.completed } : h,
+          ),
+        );
+      }
+    } catch (error) {
+      console.error('상태 변경 중 오류 발생:', error);
+    }
+  };
+
+  // 습관 목록 전체 삭제 기능 추가
+  const handleDeleteAll = async () => {
+    if (habits.length === 0) {
+      alert('삭제할 습관이 없습니다.');
+      return;
+    }
+
+    if (window.confirm('모든 습관 목록을 삭제하시겠습니까?')) {
+      try {
+        setIsLoading(true);
+
+        await Promise.all(
+          habits.map((habit) => habitService.deleteHabit(habit.id)),
+        );
+
+        setHabits([]);
+        alert('모든 습관이 삭제되었습니다.');
+      } catch (error) {
+        console.error('전체 삭제 중 오류 발생:', error);
+        alert('일부 습관을 삭제하지 못했습니다. 다시 시도해주세요.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <div className={styles.habitPage}>
       {' '}
@@ -106,10 +168,14 @@ function Habit({studyId}) {
               <h1>
                 <span className={styles.nickName}>연우</span>의 개발공장
               </h1>
+
               {/* Frame 2609450 */}
               <div className={styles.btnGroup}>
                 {/* Frame 2609447 */}
-                <button className={styles.headerTopBtnToday}>
+                <button
+                  className={styles.headerTopBtnToday}
+                  onClick={handleGoToFocus}
+                >
                   오늘의 집중
                   <img
                     src={arrow_Vector}
@@ -118,7 +184,10 @@ function Habit({studyId}) {
                   />
                 </button>
                 {/* Frame 2609447 */}
-                <button className={styles.headerTopBtnHome}>
+                <button
+                  className={styles.headerTopBtnHome}
+                  onClick={handleGoToHome}
+                >
                   홈{' '}
                   <img
                     src={arrow_Vector}
@@ -129,12 +198,11 @@ function Habit({studyId}) {
               </div>
             </div>
           </div>
-
-          {/* frame 2609455 */}
           <div className={styles.timeBox}>
             <p className={styles.timeLabel}>현재 시간</p>
             <div className={styles.timeDisplay}>{timeString}</div>
           </div>
+          {/* frame 2609455 */}
         </header>
 
         {/* frame 2609478 */}
@@ -161,10 +229,11 @@ function Habit({studyId}) {
                   {habits.map((habit) => (
                     <li
                       key={habit.id}
-                      className={clsx(
-                        styles.habitItem,
-                        habit.completed && styles.completed,
-                      )}
+                      className={clsx(styles.habitItem, {
+                        [styles.completed]: habit.completed,
+                      })}
+                      // 2. 클릭 시 상태를 반전시키는 함수 연결
+                      onClick={() => handleToggleHabit(habit)}
                     >
                       {habit.name}
                     </li>
@@ -188,40 +257,78 @@ function Habit({studyId}) {
             <div className={styles.modalHeader}>
               <h3>습관 목록</h3>
             </div>
-            <ul className={styles.editList}>
-              {habits.map((habit) => (
-                <li key={habit.id} className={styles.editCaseWrapper}>
-                  <div className={styles.editCase}>
-                    <span>{habit.name}</span>
-                  </div>
-                  <button
-                    className={styles.deleteBtn}
-                    onClick={() => handleDelete(habit.id)}
-                  >
-                    <img
-                      src={delete_Icon}
-                      alt="delete"
-                      className={styles.deleteIcon}
-                    />
-                  </button>
-                </li>
-              ))}
-            </ul>
-            {/* 아진짜 왜 안되냐 */}
-            {/* 습관 추가 섹션구현(+)  */}{' '}
-            <input
-              type="text"
-              placeholder=""
-              className={styles.addInput}
-              value={newHabitName}
-              onChange={(e) => setNewHabitName(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-            />
-            <div className={styles.addHabitSection}>
+            <section>
+              <ul className={styles.editList}>
+                {habits.map((habit) => (
+                  <li key={habit.id} className={styles.editCaseWrapper}>
+                    <div className={styles.editCase}>
+                      <span>{habit.name}</span>
+                    </div>
+                    <button
+                      className={styles.deleteBtn}
+                      onClick={() => handleDelete(habit.id)}
+                    >
+                      <img
+                        src={delete_Icon}
+                        alt="delete"
+                        className={styles.deleteIcon}
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {/* 아진짜 왜 안되냐 */}
+              {/* 습관 추가 섹션구현(+)  */}{' '}
+              {/* <div className={styles.inputWrapper}>
+              <input
+                type="text"
+                placeholder=""
+                className={styles.addInput}
+                value={newHabitName}
+                onChange={(e) => setNewHabitName(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+              />
+              <img
+                src={underline_Vector}
+                alt="underline"
+                className={styles.underlineIcon}
+              />
+            </div> */}
+              <div className={styles.inputWrapper}>
+                {' '}
+                {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
+                <div className={styles.addInputContainer}>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className={styles.addInput}
+                    value={newHabitName}
+                    onChange={(e) => setNewHabitName(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+                  />
+                  <img
+                    src={underline_Vector}
+                    alt="underline"
+                    className={styles.underlineIcon}
+                  />
+                </div>
+                {/* 2. 인풋탭 오른쪽의 전체 삭제 버튼 */}
+                <button
+                  className={styles.deleteAllBtn}
+                  onClick={handleDeleteAll}
+                  title="전체 삭제"
+                >
+                  <img
+                    src={delete_Icon}
+                    alt="delete all"
+                    className={styles.deleteIcon}
+                  />
+                </button>
+              </div>
               <button className={styles.addBtn} onClick={handleCreate}>
                 +
               </button>
-            </div>
+            </section>
             <div className={styles.modalFooter}>
               <button
                 className={styles.closeBtn}

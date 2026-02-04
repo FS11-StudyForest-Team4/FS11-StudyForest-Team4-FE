@@ -10,7 +10,8 @@
 /* main wrapper */
 /* frame 2609450 */
 .mainWrapper {
-  width: 1248px;
+  width: 100%;
+  max-width: 1248px;
   height: 100%;
   opacity: 1;
   top: 139px;
@@ -26,6 +27,8 @@
   opacity: 1;
   gap: 24px;
   margin: 10px;
+  flex-direction: column;
+  background-color: #ffffff;
 }
 /* Frame 2609479 */
 .headerTop {
@@ -35,6 +38,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 /* frame 2609451 */
@@ -51,6 +55,8 @@
   opacity: 1;
   width: auto;
   height: auto;
+  white-space: nowrap;
+  /* 중요! 글자가 절대 줄바꿈되지 않게 함 */
 }
 
 /* frame 2609451 */
@@ -58,8 +64,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1168px;
   height: 48px;
+  flex: 1;
 }
 
 /* Frame 2609450 */
@@ -120,7 +126,7 @@
   background-color: rgba(0, 0, 0, 0.03);
   border-radius: 12px;
   background-color: #ffffff;
-  margin: 20px 0px;
+  margin-bottom: 50px;
 }
 
 .timeLabel {
@@ -158,7 +164,7 @@
 
 /* 습관카드 frame 2609478 */
 .habitListCard {
-  width: 1168px;
+  width: 100%;
   padding: 40px 24px;
   border: 1px solid #dddddd;
   border-radius: 20px;
@@ -172,10 +178,10 @@
 .listHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
   justify-content: center;
   position: relative;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .listHeader h2 {
@@ -186,7 +192,6 @@
   letter-spacing: 0%;
   vertical-align: center;
   margin: 0;
-  width: 120px;
 }
 
 .editLink {
@@ -197,9 +202,9 @@
   letter-spacing: 0%;
   color: #818181;
   background-color: transparent;
-  position: absolute;
   right: 0;
   border: none;
+  position: absolute;
 }
 
 /* 습관 리스트 frame 2609498 */
@@ -224,13 +229,18 @@
   text-align: center;
   font-size: 15px;
   color: #818181;
-
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
-.completed {
-  background-color: #99c08e;
-  color: #ffffff;
+.habitItem.completed {
+  background-color: #99c08e !important;
+  color: #ffffff !important;
+  border-color: #99c08e !important;
 }
 
 /* 모달스타일 */
@@ -249,20 +259,21 @@
 
 .modalContent {
   width: 648px;
-  height: 920px;
-  max-height: 80vh;
+
+  min-height: 200px;
+  max-height: 85vh;
   opacity: 1;
-  top: 99px;
-  left: 636px;
   border-radius: 20px;
   gap: 10px;
   border-width: 1px;
-  padding-top: 40px;
-  padding-right: 24px;
-  padding-bottom: 40px;
-  padding-left: 24px;
+  padding: 40px 24px;
   background-color: white;
   overflow-y: auto;
+  & section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 .modalHeader {
@@ -299,9 +310,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  gap: 20px;
   width: 100%;
-  gap: 12px;
   color: #818181;
   font-weight: 700;
   font-style: Bold;
@@ -314,18 +324,20 @@
   text-decoration-style: solid;
 }
 
-.editCaseWrapper {
+.editCaseWrapper,
+.inputWrapper {
+  width: 100%;
+  max-width: 456px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: 100%;
-  max-width: 510px;
-  padding-left: 5px;
-  margin-bottom: 12px;
+  justify-content: space-between;
+  gap: 8px;
   background-color: #ffffff;
 }
 
+.inputWrapper {
+  margin: 0 auto;
+}
 .editCase {
   flex: 1;
   display: flex;
@@ -334,8 +346,6 @@
   background-color: #eeeeee;
   border-radius: 20px;
   height: 54px;
-  width: 400px;
-  margin-left: 50px;
 }
 
 .emptyMessage {
@@ -356,9 +366,11 @@
 
 .modalFooter {
   display: flex;
-
+  align-items: center;
+  justify-self: center;
+  height: 58px;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 24px;
 }
 .deleteBtn {
   background: none;
@@ -375,65 +387,53 @@
 }
 
 .addInput {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 16px;
-  color: #818181;
-  background-color: #eeeeee;
-
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 400px;
+  width: 100%;
   height: 54px;
-
-  gap: 12px;
-  color: #818181;
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: underline;
-  text-decoration-style: solid;
-
-  opacity: 1;
+  background-color: #eeeeee;
+  border: none;
   border-radius: 20px;
-  padding: 12px;
-  cursor: pointer;
-  max-width: 400px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-  margin: 20px auto 0;
+  /* 텍스트 스타일 */
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #818181;
+  outline: none;
+
+  box-sizing: border-box;
+  cursor: text;
 }
 
-.addHabitSection {
-  margin: 20px auto 0;
-  margin-top: 20px;
-  border: 1px solid #000000;
-  border-radius: 20px;
-  height: 54px;
-  width: 400px;
-  max-width: 400px;
+.underlineIcon {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.addInputContainer {
+  width: 100%;
+  position: relative;
+}
+.deleteAllBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-color: #fde0e9;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
+  flex-shrink: 0;
 }
 
 .addBtn {
   background: none;
+  width: 400px;
   border: none;
   font-size: 28px;
   color: #414141;
@@ -441,6 +441,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  height: 54px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin: 0 70px;
 }
 
 /* 푸터 버튼 가로 정렬 */
@@ -461,17 +471,18 @@
   font-family: EF_jejudoldam;
   font-weight: 400;
   font-style: Regular;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 100%;
   letter-spacing: 0%;
   text-align: center;
   vertical-align: middle;
   width: 288px;
-  height: 58px;
+  height: 100%;
   opacity: 1;
   border-radius: 16px;
   padding: 10px;
   gap: 10px;
+  text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
 }
 .submitBtn {
   background-color: #99c08e;
@@ -482,36 +493,114 @@
   font-family: EF_jejudoldam;
   font-weight: 400;
   font-style: Regular;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 100%;
   letter-spacing: 0%;
   text-align: center;
   vertical-align: middle;
   width: 288px;
-  height: 58px;
+  height: 100%;
   opacity: 1;
   border-radius: 16px;
   padding: 10px;
   gap: 10px;
+  text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
 }
 
 /* 태블릿 (iPad mini 등) */
-@media (max-width: 768px) {
+@media (max-width: 744px) {
+  .mainWrapper {
+    width: 100%;
+    height: auto;
+  }
+  .headerTopRow {
+    width: 100%;
+  }
+  .habitList {
+    width: 100%;
+  }
   .habitListCard {
-    padding: 30px;
+    width: 100%;
+  }
+  .modalContent {
+    width: 100%;
   }
 }
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .habitHeaderContainer h1 {
+  .headerTopRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    height: auto;
+  }
+  .headerTopRow h1 {
     font-size: 20px;
+    vertical-align: middle;
   }
-  .habitListCard {
-    padding: 20px;
+  .nickName {
+    font-size: inherit;
   }
-  .habitItem {
-    padding: 12px;
+
+  .mainWrapper {
+    width: 100%;
+    height: auto;
+    line-height: 0;
+  }
+  .btnGroup {
+    width: 70%;
+    height: 70%;
+  }
+
+  .habitTopSection {
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding-top: 50px;
+    padding-left: 0px;
+  }
+
+  .headerTopBtnToday {
+    width: auto;
+    min-width: 110px;
+    height: 36px;
+    padding: 0 12px;
     font-size: 13px;
+    gap: 6px;
+  }
+  .headerTopBtnHome {
+    width: auto;
+    min-width: 60px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .timeDisplay {
+    width: auto;
+    min-width: 200px;
+    height: 35px;
+    margin-top: 8px;
+    display: flex;
+  }
+
+  .habitItem {
+    width: 100%;
+  }
+
+  .modalFooter {
+    height: auto;
+  }
+  .addBtn {
+    width: 100%;
+    margin: auto 0;
+  }
+  .closeBtn,
+  .submitBtn {
+    width: 140px;
+    height: 48px;
+    font-size: 100%;
   }
 }

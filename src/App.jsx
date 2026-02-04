@@ -15,7 +15,7 @@ function App() {
         <Route path="/study/create" element={<StudyCreate />} />
         <Route path="/study/edit/:studyId" element={<StudyCreate />} />
         <Route path="/study/about/:studyId" element={<StudyAbout />} />
-        <Route path="/study/habit" element={<Habit />} />
+        <Route path="/study/:studyId/habit" element={<Habit />} />
         <Route path="/study/focus" element={<Focus />} />
       </Routes>
     </Layout>

@@ -86,6 +86,7 @@ const StudyCreate = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    console.log('handle change is nickName?', name);
     setFormData((prev) => ({
       ...prev,
       [name]: value,
