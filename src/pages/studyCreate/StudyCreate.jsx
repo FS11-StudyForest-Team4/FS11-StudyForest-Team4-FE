@@ -88,14 +88,29 @@ const StudyCreate = () => {
     }
 
     try {
+<<<<<<< Updated upstream
       const res = await StudiesService.createStudy(submitData);
       const { id } = res.data;
+=======
+      // API 호출 삼항연산자로 api 호출
+      const result = isEdit
+        ? await studyService.updateStudy(id, submitData)
+        : await studyService.createStudy(submitData);
+
+>>>>>>> Stashed changes
 
       if (res.status === 201) {
         util.successAlert('스터디 등록이 성공하셨습니다!').then(() => {
           navigate(`/study/about/${id}`);
         });
-      }
+      }  
+      console.log(isEdit ? '스터디 수정 성공:' : '스터디 등록 성공:', result);
+      navigate(`/study/About/${result.id}`);
+
+      const res = await studyService.createStudy(submitData);
+      const { id } = res.data;
+
+      
     } catch (error) {
       console.error('스터디 등록 실패:', error);
       util.errorAlert('스터디 등록 실패');
