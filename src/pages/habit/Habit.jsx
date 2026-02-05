@@ -1,32 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
-import arrow_Vector from '../../assets/images/habit_img/arrow_Vector.png';
-import delete_Icon from '../../assets/images//habit_img/delete_Icon.png';
-import underline_Vector from '../../assets/images/habit_img/underline_Vector.png';
+import { deletePng, underlinePng } from '@/assets/images/habit';
 import { habitService } from '@/api';
-
-import { useParams } from 'react-router'; // 페이지이동
 import clsx from 'clsx';
+import { Spinner } from '@/components';
+import { util } from '@/utils';
 
-const ONE_MINUTE_MS = 60 * 1000;
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-function Habit() {
-  const { studyId } = useParams();
-
+function Habit({ studyId }) {
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [habits, setHabits] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!studyId) return;
+
     async function getHabits() {
-      if (!studyId) return;
-      setIsLoading(true);
       const habits = await habitService.getHabitList(studyId);
       setHabits(habits);
-      setIsLoading(false);
     }
     getHabits();
   }, [studyId]);
@@ -38,21 +28,29 @@ function Habit() {
         habitService.updateHabit(habit.id, { name: habit.name }),
       );
       await Promise.all(updatePromises);
-      alert('습관이 수정되었습니다!');
-      setIsEditModalOpen(false);
+      util.successAlert('습관이 수정되었습니다!').then(() => {
+        setIsEditModalOpen(false);
+      });
     } catch (error) {
       console.error('수정 중 오류 발생:', error);
     }
   };
 
-  // 생성 로직(하림님 createHabit 활용)
   const [newHabitName, setNewHabitName] = useState('');
-  const handleCreate = async () => {
+  const handleNewHabit = (e) => {
+    if (e.key !== 'Enter' && e.type !== 'click') return;
+
+    e.preventDefault();
+
     if (!newHabitName.trim()) {
-      alert('습관 이름을 입력해주세요!');
+      util.errorAlert('습관 이름을 입력해주세요!');
       return;
     }
 
+    handleCreate();
+  };
+
+  const handleCreate = async () => {
     try {
       // 하림님의 API 호출
       const response = await habitService.createHabit(studyId, {
@@ -69,15 +67,20 @@ function Habit() {
     }
   };
 
-  // 삭제 로직 (하림님의 deleteHabit 활용)
-  const handleDelete = async (habitId) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      try {
-        await habitService.deleteHabit(habitId); // 서버 삭제
-        setHabits(habits.filter((h) => h.id !== habitId)); // UI 반영
-      } catch (error) {
-        console.error('삭제 중 오류 발생:', error);
+  const handleDelete = (habitId) => {
+    util.questionAlert('정말 삭제하시겠습니까?').then((result) => {
+      if (result.isConfirmed) {
+        fetchDeleteHabit(habitId);
       }
+    });
+  };
+
+  const fetchDeleteHabit = async (habitId) => {
+    try {
+      await habitService.deleteHabit(habitId);
+      setHabits(habits.filter((h) => h.id !== habitId));
+    } catch (error) {
+      console.error('삭제 중 오류 발생:', error);
     }
   };
 
@@ -85,17 +88,17 @@ function Habit() {
   const handleToggleHabit = async (habit) => {
     // 1. habit 객체 전체를 인자로 받습니다.
     try {
-      // 2. 서버가 요구하는 대로 name과 바뀔 completed 상태를 함께 보냅니다.
+      // 2. 서버가 요구하는 대로 name과 바뀔 isCompleted 상태를 함께 보냅니다.
       const updatedHabit = await habitService.updateHabit(habit.id, {
         name: habit.name, // 기존 이름 그대로 전달
-        completed: !habit.completed, // 상태 반전
+        isCompleted: !habit.isCompleted, // 상태 반전
       });
 
       if (updatedHabit) {
         // 서버 저장 성공 후 화면 UI 업데이트
         setHabits(
           habits.map((h) =>
-            h.id === habit.id ? { ...h, completed: !habit.completed } : h,
+            h.id === habit.id ? { ...h, isCompleted: !habit.isCompleted } : h,
           ),
         );
       }
@@ -105,76 +108,75 @@ function Habit() {
   };
 
   // 습관 목록 전체 삭제 기능 추가
-  const handleDeleteAll = async () => {
+  const handleDeleteAll = () => {
     if (habits.length === 0) {
-      alert('삭제할 습관이 없습니다.');
+      util.errorAlert('삭제할 습관이 없습니다.');
       return;
     }
 
-    if (window.confirm('모든 습관 목록을 삭제하시겠습니까?')) {
-      try {
-        setIsLoading(true);
-
-        await Promise.all(
-          habits.map((habit) => habitService.deleteHabit(habit.id)),
-        );
-
-        setHabits([]);
-        alert('모든 습관이 삭제되었습니다.');
-      } catch (error) {
-        console.error('전체 삭제 중 오류 발생:', error);
-        alert('일부 습관을 삭제하지 못했습니다. 다시 시도해주세요.');
-      } finally {
-        setIsLoading(false);
+    util.questionAlert('모든 습관 목록을 삭제하시겠습니까?').then((result) => {
+      if (result.isConfirmed) {
+        fetchDeleteAll();
       }
+    });
+  };
+
+  const fetchDeleteAll = async () => {
+    try {
+      await Promise.all(
+        habits.map((habit) => habitService.deleteHabit(habit.id)),
+      );
+
+      setHabits([]);
+      setIsEditModalOpen(false);
+      util.errorAlert('모든 습관이 삭제되었습니다.');
+    } catch (error) {
+      console.error('전체 삭제 중 오류 발생:', error);
+      util.errorAlert('일부 습관을 삭제하지 못했습니다. 다시 시도해주세요.');
     }
   };
 
-  return (
-    <div className={styles.habitPage}>
-      <div className={styles.mainWrapper}>
-        <main className={styles.habitListCard}>
-          <div className={styles.listHeader}>
-            <h2>오늘의 습관</h2>
-            {/* 클릭하면 모달을 여는 이벤트 추가 */}
-            <button
-              className={styles.editLink}
-              onClick={() => setIsEditModalOpen(true)}
-            >
-              목록 수정
-            </button>
-          </div>
+  if (!studyId) {
+    <Spinner />;
+    return;
+  }
 
-          {isLoading && <div>로딩중...</div>}
-          {/* 습관 목록이 있을때 */}
-          {!isLoading && (
-            <>
-              {habits.length > 0 ? (
-                <ul className={styles.habitList}>
-                  {habits.map((habit) => (
-                    <li
-                      key={habit.id}
-                      className={clsx(styles.habitItem, {
-                        [styles.completed]: habit.completed,
-                      })}
-                      // 2. 클릭 시 상태를 반전시키는 함수 연결
-                      onClick={() => handleToggleHabit(habit)}
-                    >
-                      {habit.name}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                /* 습관 목록이 없을 때 (추가된 부분) */
-                <div className={styles.emptyMessage}>
-                  <p>아직 습관이 없어요</p>
-                  <p>목록 수정을 눌러 습관을 생성해보세요</p>
-                </div>
-              )}
-            </>
-          )}
-        </main>
-      </div>
+  return (
+    <>
+      <section className={styles.habitListCard}>
+        <div className={styles.listHeader}>
+          <h2>오늘의 습관</h2>
+          <button
+            className={styles.editLink}
+            onClick={() => setIsEditModalOpen(true)}
+          >
+            목록 수정
+          </button>
+        </div>
+
+        {habits.length > 0 ? (
+          <ul className={styles.habitList}>
+            {habits.map((habit) => (
+              <li
+                key={habit.id}
+                className={clsx(styles.habitItem, {
+                  [styles.isCompleted]: habit.isCompleted,
+                })}
+                // 2. 클릭 시 상태를 반전시키는 함수 연결
+                onClick={() => handleToggleHabit(habit)}
+              >
+                {habit.name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          /* 습관 목록이 없을 때 (추가된 부분) */
+          <div className={styles.emptyMessage}>
+            <p>아직 습관이 없어요</p>
+            <p>목록 수정을 눌러 습관을 생성해보세요</p>
+          </div>
+        )}
+      </section>
       {/* 모달 레이아웃 추가 */}
       {isEditModalOpen && (
         <div className={styles.modalOverlay}>
@@ -194,7 +196,7 @@ function Habit() {
                       onClick={() => handleDelete(habit.id)}
                     >
                       <img
-                        src={delete_Icon}
+                        src={deletePng}
                         alt="delete"
                         className={styles.deleteIcon}
                       />
@@ -211,10 +213,10 @@ function Habit() {
                     className={styles.addInput}
                     value={newHabitName}
                     onChange={(e) => setNewHabitName(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+                    onKeyDown={handleNewHabit}
                   />
                   <img
-                    src={underline_Vector}
+                    src={underlinePng}
                     alt="underline"
                     className={styles.underlineIcon}
                   />
@@ -226,13 +228,13 @@ function Habit() {
                   title="전체 삭제"
                 >
                   <img
-                    src={delete_Icon}
+                    src={deletePng}
                     alt="delete all"
                     className={styles.deleteIcon}
                   />
                 </button>
               </div>
-              <button className={styles.addBtn} onClick={handleCreate}>
+              <button className={styles.addBtn} onClick={handleNewHabit}>
                 +
               </button>
             </section>
@@ -250,7 +252,7 @@ function Habit() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

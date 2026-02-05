@@ -1,7 +1,20 @@
 .studyAboutWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 40px 100px 40px;
+}
+
+.content {
+  width: 100%;
+  max-width: 1120px;
   background: #fff;
   padding: 40px;
   border-radius: 20px;
-  margin: 40px auto 70px auto;
-  max-width: 1120px;
+}
+
+@media screen and (max-width: 800px) {
+  .studyAboutWrap {
+    padding: 14px 24px 80px 24px;
+  }
 }

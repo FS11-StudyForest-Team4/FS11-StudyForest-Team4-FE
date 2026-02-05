@@ -17,6 +17,16 @@ const util = {
       confirmButtonText: confirmBtn,
     });
   },
+
+  questionAlert: (text, confirmBtn = '확인', cancelBtn = '취소') => {
+    return Swal.fire({
+      text,
+      icon: 'question',
+      confirmButtonText: confirmBtn,
+      showCancelButton: true,
+      cancelButtonText: cancelBtn,
+    });
+  },
 };
 
 export default util;
