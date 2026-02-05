@@ -5,11 +5,8 @@ import delete_Icon from '../../assets/images//habit_img/delete_Icon.png';
 import underline_Vector from '../../assets/images/habit_img/underline_Vector.png';
 import { habitService } from '@/api';
 
-import { useNavigate, useParams } from 'react-router'; // 페이지이동
+import { useParams } from 'react-router'; // 페이지이동
 import clsx from 'clsx';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-dayjs.locale('ko');
 
 const ONE_MINUTE_MS = 60 * 1000;
 
@@ -17,21 +14,11 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Habit() {
   const { studyId } = useParams();
-  const navigate = useNavigate();
-  //현재 시간을 저장하는 state
 
   //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const handleGoToFocus = () => {
-    // 오늘의 집중으로 이동
-    navigate('/study/focus');
-  };
-  // 홈으로 이동
-  const handleGoToHome = () => {
-    navigate('/');
-  };
 
   useEffect(() => {
     async function getHabits() {
@@ -146,54 +133,7 @@ function Habit() {
   return (
     <div className={styles.habitPage}>
       <div className={styles.mainWrapper}>
-        {/* frame 26094508 */}
-        <header className={styles.habitTopSection}>
-          <div className={styles.headerTop}>
-            {/* frame 2609451 */}
-            <div className={styles.headerTopRow}>
-              <h1>
-                <span className={styles.nickName}>연우</span>의 개발공장
-              </h1>
-
-              {/* Frame 2609450 */}
-              <div className={styles.btnGroup}>
-                {/* Frame 2609447 */}
-                <button
-                  className={styles.headerTopBtnToday}
-                  onClick={handleGoToFocus}
-                >
-                  오늘의 집중
-                  <img
-                    src={arrow_Vector}
-                    alt="arrow"
-                    className={styles.iconArrow}
-                  />
-                </button>
-                {/* Frame 2609447 */}
-                <button
-                  className={styles.headerTopBtnHome}
-                  onClick={handleGoToHome}
-                >
-                  홈{' '}
-                  <img
-                    src={arrow_Vector}
-                    alt="arrow"
-                    className={styles.iconArrow}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className={styles.timeBox}>
-            <p className={styles.timeLabel}>현재 시간</p>
-            <div className={styles.timeDisplay}>{timeString}</div>
-          </div>
-          {/* frame 2609455 */}
-        </header>
-
-        {/* frame 2609478 */}
         <main className={styles.habitListCard}>
-          {/* group33608 */}
           <div className={styles.listHeader}>
             <h2>오늘의 습관</h2>
             {/* 클릭하면 모달을 여는 이벤트 추가 */}
@@ -205,7 +145,6 @@ function Habit() {
             </button>
           </div>
 
-          {/* frame 2609498 */}
           {isLoading && <div>로딩중...</div>}
           {/* 습관 목록이 있을때 */}
           {!isLoading && (
@@ -263,25 +202,7 @@ function Habit() {
                   </li>
                 ))}
               </ul>
-              {/* 아진짜 왜 안되냐 */}
-              {/* 습관 추가 섹션구현(+)  */}{' '}
-              {/* <div className={styles.inputWrapper}>
-              <input
-                type="text"
-                placeholder=""
-                className={styles.addInput}
-                value={newHabitName}
-                onChange={(e) => setNewHabitName(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-              />
-              <img
-                src={underline_Vector}
-                alt="underline"
-                className={styles.underlineIcon}
-              />
-            </div> */}
               <div className={styles.inputWrapper}>
-                {' '}
                 {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
                 <div className={styles.addInputContainer}>
                   <input
