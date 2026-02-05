@@ -8,16 +8,18 @@ import reset_ic from '#assets/images/focus_img/reset_ic.png';
 import stop_ic from '#assets/images/focus_img/stop_ic.png';
 import timer_ic from '#assets/images/focus_img/timer_ic.png';
 import { focusService } from '@/api';
-import { useLocation } from 'react-router';
 
 const DEFAULT_TIME = 0;
+const TO_SECONDS = 60;
+const EVERY_TEN_MINUTES = 10;
+const DEFAULT_POINT = 3;
 
 function setTimeFormat(seconds) {
   const sign = seconds < 0 ? '-' : '';
   const abs = Math.abs(seconds);
 
-  const mm = String(Math.floor(abs / 60)).padStart(2, '0');
-  const ss = String(abs % 60).padStart(2, '0');
+  const mm = String(Math.floor(abs / TO_SECONDS)).padStart(2, '0');
+  const ss = String(abs % TO_SECONDS).padStart(2, '0');
 
   return `${sign}${mm}:${ss}`;
 }
@@ -48,13 +50,13 @@ const Focus = ({ studyId }) => {
   // 포인트 계산 함수
   const calcPoint = (time) => {
     // 실제, 10분마다 +1
-    const minutes = Math.floor(time / 60);
-    const bonus = Math.floor(minutes / 10);
+    const minutes = Math.floor(time / TO_SECONDS);
+    const bonus = Math.floor(minutes / EVERY_TEN_MINUTES);
 
     // 테스트용, 10초마다 +1
     //const bonus = Math.floor(time / 10);
 
-    return bonus + 3;
+    return bonus + DEFAULT_POINT;
   };
 
   // 시간 끝나고 세션 완료하면 complete 호출
@@ -90,7 +92,7 @@ const Focus = ({ studyId }) => {
   const handleSeconds = (option) => {
     const minute = Number(option.target.value);
     setMinutes(minute);
-    const second = minute * 60;
+    const second = minute * TO_SECONDS;
     setSeconds(second);
     setTimeLeft(second);
     setIsTimePickerOpen(false);
@@ -98,7 +100,7 @@ const Focus = ({ studyId }) => {
 
   // start 버튼
   const handleStart = async () => {
-    if (seconds <= 0) return;
+    if (seconds <= DEFAULT_TIME) return;
     try {
       const data = await focusService.createFocus(studyId);
       setFocusId(data.id);
