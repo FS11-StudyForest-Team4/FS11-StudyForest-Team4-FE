@@ -19,6 +19,7 @@
   font-weight: 800;
   line-weight: normal;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .timerTitle {

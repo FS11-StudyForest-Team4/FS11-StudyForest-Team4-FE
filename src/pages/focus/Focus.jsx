@@ -10,7 +10,7 @@ import timer_ic from '#assets/images/focus_img/timer_ic.png';
 import { focusService } from '@/api';
 import { useLocation } from 'react-router';
 
-const START_TIME = 25 * 60; // 테스트를 위하여 20초로 설정했습니다. 이후 25*60으로 바꾸면 25분으로 설정됩니다.
+const DEFAULT_TIME = 0;
 
 function setTimeFormat(seconds) {
   const sign = seconds < 0 ? '-' : '';
@@ -23,13 +23,16 @@ function setTimeFormat(seconds) {
 }
 
 const Focus = ({ studyId }) => {
-  //const location = useLocation();
-  //const studyId = location.state?.studyId || '01KGE2ENDJMTK213JW7C0TRDVN'; // 테스트용
-  const [timeLeft, setTimeLeft] = useState(START_TIME); // 초 단위 (0 밑으로도 내려감)
+  const [timeLeft, setTimeLeft] = useState(DEFAULT_TIME); // 초 단위 (0 밑으로도 내려감)
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [focusId, setFocusId] = useState(null);
-  const isOver = timeLeft <= 0;
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+  const [minutes, setMinutes] = useState(DEFAULT_TIME);
+  const [seconds, setSeconds] = useState(DEFAULT_TIME);
+  const isOver = timeLeft < 0;
+
+  const minuteOptions = [1, 5, 10, 15, 20, 30, 40, 50, 60];
 
   useEffect(() => {
     if (!isRunning) return; // 작동 x -> 종료
@@ -61,7 +64,7 @@ const Focus = ({ studyId }) => {
 
     const fetchData = async () => {
       try {
-        const earnedPoint = calcPoint(START_TIME);
+        const earnedPoint = calcPoint(seconds);
         await focusService.completeFocus(focusId, earnedPoint);
         console.log('세션이 완료되었습니다!');
         toast(`🎉 ${earnedPoint}포인트를 획득했습니다!`, {
@@ -72,7 +75,7 @@ const Focus = ({ studyId }) => {
       }
     };
     fetchData();
-  }, [isOver, focusId]);
+  }, [isOver, focusId, seconds]);
 
   // 일시정지 버튼
   useEffect(() => {
@@ -83,11 +86,23 @@ const Focus = ({ studyId }) => {
     }
   }, [isPaused]);
 
+  // 시간 선택 함수
+  const handleSeconds = (option) => {
+    const minute = Number(option.target.value);
+    setMinutes(minute);
+    const second = minute * 60;
+    setSeconds(second);
+    setTimeLeft(second);
+    setIsTimePickerOpen(false);
+  };
+
   // start 버튼
   const handleStart = async () => {
+    if (seconds <= 0) return;
     try {
       const data = await focusService.createFocus(studyId);
       setFocusId(data.id);
+      setTimeLeft(seconds);
       setIsRunning(true);
       setIsPaused(false);
     } catch (error) {
@@ -99,7 +114,7 @@ const Focus = ({ studyId }) => {
     // stop 버튼
     setIsRunning(false);
     setIsPaused(false);
-    setTimeLeft(START_TIME);
+    setTimeLeft(DEFAULT_TIME);
   };
 
   const handlePause = () => {
@@ -112,36 +127,45 @@ const Focus = ({ studyId }) => {
     // reset 버튼
     setIsRunning(false);
     setIsPaused(false);
-    setTimeLeft(START_TIME);
+    setTimeLeft(DEFAULT_TIME);
   };
 
   return (
     <div className={styles.timerWrapper}>
       <p className={styles.timerTitle}>오늘의 집중</p>
-      {isRunning || isOver ? (
-        <div className={styles.startTimeTagWrapper}>
-          <div className={styles.startTimeTag}>
-            <img
-              className={styles.timerIcon}
-              src={timer_ic}
-              alt="timer_icon.png"
-            />
-            <div className={styles.startTimeTagTime}>
-              {setTimeFormat(START_TIME)}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className={styles.startTimeTagWrapperPlaceholder}>
-          <div className={styles.startTimeTagPlaceholder}>
-            <div className={styles.startTimeTagTime}>
-              {setTimeFormat(START_TIME)}
-            </div>
-          </div>
-        </div>
-      )}
       <div
-        className={`${styles.timer} ${timeLeft < 0 ? styles.timeOver : timeLeft <= 10 ? styles.timeWarning : ''}`}
+        className={styles.startTimeTagWrapper}
+        onClick={() => {
+          if (isRunning) return;
+          setIsTimePickerOpen((prev) => !prev);
+        }}
+      >
+        <div className={styles.startTimeTag}>
+          <img
+            className={styles.timerIcon}
+            src={timer_ic}
+            alt="timer_icon.png"
+          />
+          <div className={styles.startTimeTagTime}>
+            {setTimeFormat(seconds)}
+          </div>
+        </div>
+        {isTimePickerOpen && !isRunning && (
+          <div onClick={(e) => e.stopPropagation()}>
+            <select value={minutes} onChange={handleSeconds}>
+              <option value={0}>분 선택</option>
+              {minuteOptions.map((m) => (
+                <option key={m} value={m}>
+                  {m}분
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
+
+      <div
+        className={`${styles.timer} ${timeLeft < 0 ? styles.timeOver : timeLeft <= 10 && timeLeft > 0 ? styles.timeWarning : ''}`}
       >
         {setTimeFormat(timeLeft)}
       </div>
@@ -160,7 +184,7 @@ const Focus = ({ studyId }) => {
         <button
           type="button"
           className={styles.timerStartButton}
-          disabled={isRunning && !isOver}
+          disabled={(isRunning && !isOver) || seconds <= 0}
           onClick={isOver ? handleStop : handleStart}
         >
           {isOver ? (
