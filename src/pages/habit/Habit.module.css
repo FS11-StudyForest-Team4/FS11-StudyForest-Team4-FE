@@ -1,103 +1,155 @@
+<<<<<<< Updated upstream
+=======
 /* 전체 배경 설정 */
-.habit-page {
-  background-color: #f6f4ef;
+.habitPage {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/*  GNB */
-.gnb {
-  width: 100%;
-  height: 64px;
   background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #eeeeee;
-}
-.gnb-inner {
-  width: 1248px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 /* main wrapper */
 /* frame 2609450 */
-.main-wrapper {
-  width: 1248px;
+.mainWrapper {
+  width: 100%;
+  max-width: 1248px;
+  height: 100%;
+  opacity: 1;
+  top: 139px;
+  left: 360px;
+  border-radius: 20px;
+  padding: 40px;
+  gap: 10px;
+  background-color: #ffffff;
+}
+
+/* frame 2609508 */
+>>>>>>>Stashed changes .habitTopSection {
+  opacity: 1;
+  gap: 24px;
+  margin: 10px;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+.headerTop {
+  height: 48px;
+  opacity: 1;
+  gap: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.headerTopRow h1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-style: ExtraBold;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  opacity: 1;
+  width: auto;
+  height: auto;
+  white-space: nowrap;
+  /* 중요! 글자가 절대 줄바꿈되지 않게 함 */
+}
+
+.headerTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  flex: 1;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerTopBtnToday {
+  width: 144px;
+  height: 48px;
+  opacity: 1;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #818181;
   background-color: #ffffff;
   border-radius: 20px;
-  margin-top: 40px;
-  padding: 40px;
-  box-sizing: border-box;
+  border: 1px solid #dddddd;
+  gap: 14px;
 }
 
-/* frame 2609481 */
-.habit-header-container {
+.headerTopBtnHome {
+  width: 82px;
+  height: 48px;
+  opacity: 1;
+  background-color: #ffffff;
+  color: #818181;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  text-align: center;
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-bottom: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: 1px solid #dddddd;
+  gap: 14px;
+}
+.iconArrow {
+  width: 5px;
+  height: 11px;
 }
 
-/* frame 2609451 */
-.header-top-row h1 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #414141;
-}
-
-/* 시간박스 frame 2609455 */
-.time-box {
+.timeBox {
   width: 184px;
   height: 64px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px 16px;
   background-color: rgba(0, 0, 0, 0.03);
   border-radius: 12px;
+  background-color: #ffffff;
+  margin-bottom: 50px;
 }
 
-.time-label {
-  font-size: 12px;
+.timeLabel {
   color: #888888;
-  margin: 0;
-}
-
-.time-display {
-  font-size: 16px;
-  font-weight: 700;
-  color: #414141;
-}
-
-/* gnb적용하면 정리할것
-.logo .gnbRight */
-.logo {
-  font-weight: bold;
-  color: #414141;
-}
-
-.gnb-right {
-  display: flex;
-  gap: 10px;
-}
-
-.gnb-btn {
-  font-family: Pretendard;
-  font-weight: 500;
-  font-style: Medium;
-  font-size: 16px;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 18px;
   line-height: 100%;
   letter-spacing: 0%;
-  text-align: center;
   vertical-align: middle;
 }
 
-.nickname {
-  font-family: Pretendard;
+.timeDisplay {
+  font-size: 16px;
+  font-weight: 500;
+  color: #414141;
+  width: 200px;
+  border-radius: 20px;
+  border: 1px solid #dddddd;
+  margin-top: 20px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nickName {
   font-weight: 800;
   font-style: ExtraBold;
   font-size: 32px;
@@ -106,77 +158,403 @@
   vertical-align: middle;
 }
 
-.edit-link {
+.habitListCard {
+  width: 100%;
+  min-height: 551px;
+  margin: 40px 0 0 0;
+  padding: 40px 24px;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.listHeader h2 {
+  color: var(--black-black_414141, #414141);
+  text-align: right;
   font-family: Pretendard;
-  font-weight: 500;
-  font-style: Medium;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.editLink {
+  color: var(--gray-gray_818181, #818181);
+  text-align: center;
+  font-family: Pretendard;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  background: none;
+  position: absolute;
+  right: 0;
+}
+
+.habitList {
+  width: 100%;
+  max-width: 400px;
+  gap: 20px;
+  display: flex;
+  margin: 24px 0 0 0;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* 개별 습관 버튼 chip */
+.habitItem {
+  width: 100%;
+  height: 54px;
+  padding: 0 20px;
+  border-radius: 20px;
+  border: 1px solid #ffffff;
+  background-color: #eeeeee;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #818181;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  &.isCompleted {
+    background-color: #99c08e;
+    color: #ffffff;
+    border-color: #99c08e;
+  }
+}
+
+/* 모달스타일 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  width: calc(100% - 40px);
+  max-width: 648px;
+
+  min-height: 200px;
+  max-height: 85vh;
+  opacity: 1;
+  border-radius: 20px;
+  gap: 10px;
+  border-width: 1px;
+  padding: 40px 24px;
+  background-color: white;
+  overflow-y: auto;
+  & section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 35px;
+}
+.modalHeader h3 {
+  font-weight: 800;
+  font-style: ExtraBold;
+  font-size: 24px;
   line-height: 100%;
   letter-spacing: 0%;
   text-align: center;
   vertical-align: middle;
 }
-/* 습관카드 frame 2609478 */
-.habit-list-card {
-  width: 1168px;
-  padding: 40px 24px;
-  border: 1px solid #eeeeee;
+
+.deleteIcon {
+  width: 45px;
+  height: 50px;
+  opacity: 1;
+  top: 3px;
+  left: 508px;
   border-radius: 20px;
+  padding: 12px;
+  gap: 10px;
+  cursor: pointer;
 }
-
-/* 습관 리스트 헤더 group 33609 */
-.list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-/* 습관 리스트 frame 2609498 */
-.habit-list {
+.editList {
+  max-height: 300px;
+  overflow: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: 400px;
-  height: 498px;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  color: #818181;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: underline;
+  text-decoration-style: solid;
 }
 
-/* 개별 습관 버튼 chip */
-.habit-item {
-  width: 400px;
-  height: 54px;
-  padding: 0 20px;
-  border-radius: 20px;
-  border: 1px solid #dddddd;
-  background-color: #eeeeee;
-  text-align: center;
-  font-size: 15px;
+.editCaseWrapper,
+.inputWrapper {
+  width: 100%;
+  max-width: 456px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: #ffffff;
+}
 
+.inputWrapper {
+  margin: 0 auto;
+}
+.editCase {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eeeeee;
+  border-radius: 20px;
+  height: 54px;
+}
+
+.emptyMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #818181;
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.emptyMessage p {
+  margin: 0;
+}
+
+.modalFooter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  height: 58px;
+  gap: 10px;
+  margin-top: 24px;
+}
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #ff8080;
+  cursor: pointer;
+  background-color: #fde0e9;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addInput {
+  width: 100%;
+  height: 54px;
+  background-color: #eeeeee;
+  border: none;
+  border-radius: 20px;
+
+  /* 텍스트 스타일 */
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #818181;
+  outline: none;
+
+  box-sizing: border-box;
+  cursor: text;
+}
+
+.underlineIcon {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.addInputContainer {
+  width: 100%;
+  position: relative;
+}
+.deleteAllBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-color: #fde0e9;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.addBtn {
+  width: 100%;
+  max-width: 400px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #414141;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  height: 54px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.closeBtn,
+.submitBtn {
+  width: 100%;
+  height: inherit;
+  color: #fff;
+  border: none;
+  font-family: EF_jejudoldam;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 1;
+  border-radius: 16px;
+  padding: 10px;
+  text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
   cursor: pointer;
 }
 
-.habit-item.completed {
+.closeBtn {
+  background-color: #dddddd;
+}
+.submitBtn {
   background-color: #99c08e;
-  color: #818181;
 }
 
-/* 태블릿 (iPad mini 등) */
-@media (max-width: 768px) {
-  .habit-list-card {
-    padding: 30px;
+@media screen and (max-width: 600px) {
+  .studyContent {
+    & .studyTop {
+      & h1 {
+        font-size: 24px;
+      }
+    }
+  }
+  .listHeader {
+    & h2 {
+      font-size: 18px;
+    }
+  }
+  .emptyMessage {
+    font-size: 16px;
   }
 }
 
 /* 모바일 */
 @media (max-width: 480px) {
-  .habit-header-container h1 {
+  .headerTopRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    height: auto;
+  }
+  .headerTopRow h1 {
     font-size: 20px;
+    vertical-align: middle;
   }
-  .habit-list-card {
-    padding: 20px;
+  .nickName {
+    font-size: inherit;
   }
-  .habit-item {
-    padding: 12px;
+
+  .btnGroup {
+    width: 70%;
+    height: 70%;
+  }
+
+  .habitTopSection {
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding-top: 50px;
+    padding-left: 0px;
+  }
+
+  .headerTopBtnToday {
+    width: auto;
+    min-width: 110px;
+    height: 36px;
+    padding: 0 12px;
     font-size: 13px;
+    gap: 6px;
+  }
+  <<<<<<< Updated upstream ======= .headerTopRow {
+    margin-bottom: 30px;
+  }
+  .headerTopBtnToday,
+  >>>>>>>Stashed changes .headerTopBtnHome {
+    width: auto;
+    min-width: 60px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .timeDisplay {
+    width: auto;
+    min-width: 200px;
+    height: 35px;
+    margin-top: 8px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .studyAboutWrap {
+    margin: 20px 16px;
   }
 }

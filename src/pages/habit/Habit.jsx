@@ -1,100 +1,254 @@
 import React, { useEffect, useState } from 'react';
-import styles from './habit.module.css';
+import styles from './Habit.module.css';
+import { deletePng, underlinePng } from '@/assets/images/habit';
+import { habitlogService, habitService } from '@/api';
 import clsx from 'clsx';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-dayjs.locale('ko');
+import { Spinner } from '@/components';
+import { util } from '@/utils';
 
-const ONE_MINUTE_MS = 60 * 1000;
+function Habit({ studyId }) {
+  //목록 수정 버튼 누를 때, 모달 상태 추가(기본값은 false로 닫혀있음)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [habits, setHabits] = useState([]);
 
-function Habit() {
-  //현재 시간을 저장하는 state
-  const [now, setNow] = useState(new Date());
-
-  //시계
   useEffect(() => {
-    const clock = setInterval(() => {
-      setNow(new Date());
-    }, ONE_MINUTE_MS); //1000(1초)에서 60000(1분)으로 변경, 매직넘버 대신 상수 사용
+    if (!studyId) return;
 
-    return () => clearInterval(clock);
-  }, []);
+    async function getHabits() {
+      const habits = await habitService.getHabitList(studyId);
+      setHabits(habits);
+    }
+    getHabits();
+  }, [studyId]);
 
-  //시계모양
-  const timeString = dayjs(now).format('YYYY-MM-DD A hh:mm'); //dayjs 사용
+  // 수정 완료 로직(하림님 updateHabit 활용)
+  const handleSubmit = async () => {
+    try {
+      const updatePromises = habits.map((habit) =>
+        habitService.updateHabit(habit.id, { name: habit.name }),
+      );
+      await Promise.all(updatePromises);
+      util.successAlert('습관이 수정되었습니다!').then(() => {
+        setIsEditModalOpen(false);
+      });
+    } catch (error) {
+      console.error('수정 중 오류 발생:', error);
+    }
+  };
 
-  // 나중에 습관 목록을 새로 만들기
-  const [habits, setHabits] = useState([
-    { id: 1, name: '미라클모닝 6시 기상', completed: true },
-    { id: 2, name: '아침 챙겨 먹기', completed: true },
-    { id: 3, name: 'React 스터디 책 1챕터 읽기', completed: false },
-    { id: 4, name: '스트레칭', completed: false },
-    { id: 5, name: '영양제 챙겨 먹기', completed: false },
-    { id: 6, name: '사이드 프로젝트', completed: false },
-    { id: 7, name: '물 2L 먹기', completed: false },
-  ]);
+  const [newHabitName, setNewHabitName] = useState('');
+  const handleNewHabit = (e) => {
+    e.preventDefault();
+
+    if (!newHabitName.trim()) {
+      util.errorAlert('습관 이름을 입력해주세요!');
+      return;
+    }
+    handleCreate();
+  };
+
+  const handleCreate = async () => {
+    try {
+      // 하림님의 API 호출
+      const response = await habitService.createHabit(studyId, {
+        name: newHabitName,
+      });
+
+      if (response) {
+        // 서버 저장 성공 후 화면(UI)에 바로 반영
+        setHabits([...habits, response]);
+        setNewHabitName(''); // 입력창 초기화
+      }
+    } catch (error) {
+      console.error('습관 생성 오류:', error);
+    }
+  };
+
+  const handleDelete = (habitId) => {
+    util.questionAlert('정말 삭제하시겠습니까?').then((result) => {
+      if (result.isConfirmed) {
+        fetchDeleteHabit(habitId);
+      }
+    });
+  };
+
+  const fetchDeleteHabit = async (habitId) => {
+    try {
+      await habitService.deleteHabit(habitId);
+      setHabits(habits.filter((h) => h.id !== habitId));
+    } catch (error) {
+      console.error('삭제 중 오류 발생:', error);
+    }
+  };
+
+  //습관 완료 상태를 토글
+  const handleToggleHabit = async (habit) => {
+    try {
+      // 백엔드 habitlog POST 호출
+      const isCompleted = await habitlogService.createHabitlog(habit.id);
+
+      // 서버에서 반환한 완료 상태로 UI 업데이트
+      setHabits((prevHabits) =>
+        prevHabits.map((h) => (h.id === habit.id ? { ...h, isCompleted } : h)),
+      );
+    } catch (error) {
+      console.error('습관 완료 토글 중 오류 발생:', error);
+    }
+  };
+
+  // 습관 목록 전체 삭제 기능 추가
+  const handleDeleteAll = () => {
+    if (habits.length === 0) {
+      util.errorAlert('삭제할 습관이 없습니다.');
+      return;
+    }
+
+    util.questionAlert('모든 습관 목록을 삭제하시겠습니까?').then((result) => {
+      if (result.isConfirmed) {
+        fetchDeleteAll();
+      }
+    });
+  };
+
+  const fetchDeleteAll = async () => {
+    try {
+      await Promise.all(
+        habits.map((habit) => habitService.deleteHabit(habit.id)),
+      );
+
+      setHabits([]);
+      setIsEditModalOpen(false);
+      util.errorAlert('모든 습관이 삭제되었습니다.');
+    } catch (error) {
+      console.error('전체 삭제 중 오류 발생:', error);
+      util.errorAlert('일부 습관을 삭제하지 못했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  if (!studyId) {
+    <Spinner />;
+    return;
+  }
 
   return (
-    <div className={styles['habit-page']}>
-      {' '}
-      {/* css modules 사용*/}
-      {/* 글로벌배너영역 */}
-      {/* 레이어 GNB */}
-      <nav className={styles.gnb}>
-        <div className={styles['gnb-inner']}>
-          <div className={styles.logo}>공부의 숲</div>
-          <div className={styles['gnb-right']}>
-            <button className={styles['gnb-btn']}>오늘의 집중</button>
-            <button className={styles['gnb-btn']}>홈</button>
+    <>
+      <section className={styles.habitListCard}>
+        <div className={styles.listHeader}>
+          <h2>오늘의 습관</h2>
+          <button
+            className={styles.editLink}
+            onClick={() => setIsEditModalOpen(true)}
+          >
+            목록 수정
+          </button>
+        </div>
+
+        {habits.length > 0 ? (
+          <ul className={styles.habitList}>
+            {habits.map((habit) => (
+              <li
+                key={habit.id}
+                className={clsx(styles.habitItem, {
+                  [styles.isCompleted]: habit.isCompleted,
+                })}
+                // 2. 클릭 시 상태를 반전시키는 함수 연결
+                onClick={() => handleToggleHabit(habit)}
+              >
+                {habit.name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          /* 습관 목록이 없을 때 (추가된 부분) */
+          <div className={styles.emptyMessage}>
+            <p>아직 습관이 없어요</p>
+            <p>목록 수정을 눌러 습관을 생성해보세요</p>
+          </div>
+        )}
+      </section>
+      {/* 모달 레이아웃 추가 */}
+      {isEditModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h3>습관 목록</h3>
+            </div>
+            <section>
+              <ul className={styles.editList}>
+                {habits.map((habit) => (
+                  <li key={habit.id} className={styles.editCaseWrapper}>
+                    <div className={styles.editCase}>{habit.name}</div>
+                    <button
+                      className={styles.deleteBtn}
+                      onClick={() => handleDelete(habit.id)}
+                    >
+                      <img
+                        src={deletePng}
+                        alt="delete"
+                        className={styles.deleteIcon}
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.inputWrapper}>
+                {/* 1. 인풋과 휴지통을 가로로 묶는 상자 */}
+                <div className={styles.addInputContainer}>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className={styles.addInput}
+                    value={newHabitName}
+                    onChange={(e) => setNewHabitName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.nativeEvent.isComposing) return;
+                      if (e.key !== 'Enter') return;
+
+                      handleNewHabit(e);
+                    }}
+                  />
+                  <img
+                    src={underlinePng}
+                    alt="underline"
+                    className={styles.underlineIcon}
+                  />
+                </div>
+                {/* 2. 인풋탭 오른쪽의 전체 삭제 버튼 */}
+                <button
+                  className={styles.deleteAllBtn}
+                  onClick={handleDeleteAll}
+                  title="전체 삭제"
+                >
+                  <img
+                    src={deletePng}
+                    alt="delete all"
+                    className={styles.deleteIcon}
+                  />
+                </button>
+              </div>
+              <div className={styles.inputWrapper}>
+                <div className={styles.addInputContainer}>
+                  <button className={styles.addBtn} onClick={handleNewHabit}>
+                    +
+                  </button>
+                </div>
+              </div>
+            </section>
+            <div className={styles.modalFooter}>
+              <button
+                className={styles.closeBtn}
+                onClick={() => setIsEditModalOpen(false)}
+              >
+                취소
+              </button>
+              <button className={styles.submitBtn} onClick={handleSubmit}>
+                수정 완료
+              </button>
+            </div>
           </div>
         </div>
-      </nav>
-      {/* 메인 컨텐츠 박스 */}
-      {/* frame 2609450 */}
-      <div className={styles['main-wrapper']}>
-        {/* frame 2609481 */}
-        <header className={styles['habit-header-container']}>
-          {/* frame 2609451 */}
-          <div className={styles['header-top-row']}>
-            <h1>
-              <span className={styles.nickname}>연우</span>의 개발공장
-            </h1>
-          </div>
-
-          {/* frame 2609455 */}
-          <div className={styles['time-box']}>
-            <p className={styles['time-label']}>현재 시간</p>
-            <div className={styles['time-display']}>{timeString}</div>
-          </div>
-        </header>
-
-        {/* frame 2609478 */}
-        <main className={styles['habit-list-card']}>
-          {/* group33608 */}
-          <div className={styles['list-header']}>
-            <h2>오늘의 습관</h2>
-            <button className={styles['edit-link']}>목록 수정</button>
-          </div>
-
-          {/* frame 2609498 */}
-          <div className={styles['habit-list']}>
-            {habits.map((habit) => (
-              <button
-                key={habit.id}
-                className={clsx(
-                  styles['habit-item'],
-                  habit.completed && styles.completed,
-                )}
-              >
-                {' '}
-                {/* 레이어: chip */}
-                {habit.name}
-              </button>
-            ))}
-          </div>
-        </main>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

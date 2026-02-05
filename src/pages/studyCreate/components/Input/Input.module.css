@@ -1,0 +1,70 @@
+label {
+  color: var(--black-black_414141, #414141);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  height: 48px;
+  color: var(--gray-gray_818181, #818181);
+  font-size: 16px;
+  font-weight: 400;
+  padding: 15px 20px 14px 20px;
+  border-radius: 15px;
+  border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+  background: #fff;
+}
+
+input::placeholder {
+  color: var(--gray-gray_818181, #818181);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.inputwrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.formInput {
+  position: relative;
+  & input {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: 1px solid var(--gray-gray_DDDDDD, #ddd);
+    background: #fff;
+    color: var(--gray-gray_818181, #818181);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  & .passwordBtn {
+    width: 24px;
+    height: 24px;
+    color: var(--gray-gray_818181, #818181);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    background: none;
+    border: none;
+    transform: translateY(-50%);
+    & img {
+      width: inherit;
+      height: inherit;
+    }
+  }
+}
+
+.error {
+  border: 2px solid #c41013;
+}
