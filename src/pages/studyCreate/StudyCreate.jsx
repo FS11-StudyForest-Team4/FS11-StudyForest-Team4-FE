@@ -14,7 +14,7 @@ import { useNavigate, useLocation } from 'react-router';
 const StudyCreate = () => {
   const location = useLocation();
   const id = location.pathname.split('/').filter(Boolean).pop();
-  const isEdit = Boolean(id);
+  const isEdit = id !== 'create' ? true : false;
 
   //입력값 관리
   const [formData, setFormData] = useState({
@@ -28,11 +28,11 @@ const StudyCreate = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // 수정시 input 채워넣기
+  // 수정시 데이터 불러오기
   useEffect(() => {
     if (!isEdit) return;
 
-    const fetchStudy = async () => {
+    const fetchStudy = async (id) => {
       try {
         const data = await studyService.getStudyId(id);
         setFormData({
@@ -50,8 +50,8 @@ const StudyCreate = () => {
         });
       }
     };
-    fetchStudy();
-  }, [isEdit]);
+    fetchStudy(id);
+  }, [isEdit, id, navigate]);
 
   // 검증 목록
   const validators = {
@@ -61,6 +61,7 @@ const StudyCreate = () => {
     passwordCheck: (value, formData) =>
       value === formData.password ? '' : '*비밀번호가 일치하지 않습니다',
   };
+
   // 개별 필드 검증
   const validateField = (name, value) => {
     const validator = validators[name];
