@@ -5,7 +5,14 @@ import Button from '@/components/button/button';
 import { authService } from '@/api/';
 import { session } from '@/utils';
 
-const PasswordModal = ({ modalType, studyInfo, modalClose, BTN_ACTIONS }) => { // onSuccess: focus 랜더링하기 위해 추가했습니다.
+const PasswordModal = ({
+  modalType,
+  studyInfo,
+  modalClose,
+  BTN_ACTIONS,
+  userIdUpdate,
+}) => {
+  // onSuccess: focus 랜더링하기 위해 추가했습니다.
   const { id, title } = studyInfo;
   const [showPassword, setShowPassword] = useState(false);
   const [passwordVal, setPasswordVal] = useState('');
@@ -26,6 +33,7 @@ const PasswordModal = ({ modalType, studyInfo, modalClose, BTN_ACTIONS }) => { /
       password: passwordVal,
     });
     session.set('userId', res.data?.id);
+    userIdUpdate(res.data?.id);
     modalClose();
     BTN_ACTIONS[modalType]?.();
   };
