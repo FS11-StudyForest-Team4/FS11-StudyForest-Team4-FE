@@ -65,7 +65,7 @@ const Home = () => {
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
     const updated = [study, ...saved.filter((s) => s.id !== study.id)].slice(
       0,
-      3,
+      10,
     );
     localStorage.setItem('recentStudies', JSON.stringify(updated));
     setRecentStudies(updated);
