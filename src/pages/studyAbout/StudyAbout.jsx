@@ -21,7 +21,7 @@ const StudyAbout = () => {
   const [studyInfo, setStudyInfo] = useState([]);
   const [studyTab, setStypeTab] = useState('habitLog');
   const [modalType, setModalType] = useState(null);
-  const userId = session.get('userId');
+  const [userId, setUserId] = useState(session.get('userId'));
   const studyCheck = studyId === userId ? true : false;
   const passwordCheck = (!studyCheck && modalType) || modalType === 'delete';
 
@@ -111,6 +111,7 @@ const StudyAbout = () => {
             studyInfo={studyInfo}
             modalClose={() => setModalType(null)}
             BTN_ACTIONS={BTN_ACTIONS}
+            userIdUpdate={setUserId}
           />
         )}
       </div>

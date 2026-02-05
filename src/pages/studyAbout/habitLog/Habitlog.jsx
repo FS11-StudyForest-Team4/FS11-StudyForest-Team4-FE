@@ -22,8 +22,9 @@ import {
   sticker16,
   sticker17,
   sticker18,
-} from '@/assets/icons/stickers/index';
+} from '@/assets/icons/stickers';
 import { getStartOfWeek } from '@/utils/getStartOfweek';
+import { Spinner } from '@/components';
 
 function Habitlog(props) {
   const { studyId } = props;
@@ -71,19 +72,26 @@ function Habitlog(props) {
     sticker18,
   ];
 
-  const habitlogsWithWeek = habitlogs.reduce((acc, cur) => {
-    const dayIndex = new Date(cur.createdAt).getDay(); // 요일 구하기
-    const day = days[(dayIndex + 6) % 7]; // 월요일 시작
-    const habitId = cur.habitId;
+  const habitlogsWithWeek =
+    habitlogs &&
+    habitlogs.reduce((acc, cur) => {
+      const dayIndex = new Date(cur.createdAt).getDay(); // 요일 구하기
+      const day = days[(dayIndex + 6) % 7]; // 월요일 시작
+      const habitId = cur.habitId;
 
-    // habitId가 acc에 없으면 생성
-    if (!acc[habitId]) {
-      acc[habitId] = {};
-    }
+      // habitId가 acc에 없으면 생성
+      if (!acc[habitId]) {
+        acc[habitId] = {};
+      }
 
-    acc[habitId][day] = true;
-    return acc;
-  }, {});
+      acc[habitId][day] = true;
+      return acc;
+    }, {});
+
+  if (!studyId && !startOfWeek) {
+    <Spinner />;
+    return;
+  }
 
   return (
     <section className={styles.habitList}>

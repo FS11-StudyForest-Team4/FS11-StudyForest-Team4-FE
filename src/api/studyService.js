@@ -35,7 +35,9 @@ export const createStudy = async (data) => {
 // PATCH 스터디 수정하기
 export const updateStudy = async (studyId, data) => {
   try {
-    const res = await client.patch(`/studies/${studyId}`, data);
+    const res = await client.patch(`/studies/${studyId}`, data, {
+      withCredentials: true,
+    });
     return res.data;
   } catch (error) {
     console.log('updateStudy Error:', error.response?.data || error.message);
@@ -46,7 +48,9 @@ export const updateStudy = async (studyId, data) => {
 // DELETE 스터디 삭제하기
 export const deleteStudy = async (id) => {
   try {
-    const response = await client.delete(`/studies/${id}`);
+    const response = await client.delete(`/studies/${id}`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error('deleteStudy Error:', error.response?.data || error.message);
