@@ -38,15 +38,12 @@ function Habit({ studyId }) {
 
   const [newHabitName, setNewHabitName] = useState('');
   const handleNewHabit = (e) => {
-    if (e.key !== 'Enter' && e.type !== 'click') return;
-
     e.preventDefault();
 
     if (!newHabitName.trim()) {
       util.errorAlert('습관 이름을 입력해주세요!');
       return;
     }
-
     handleCreate();
   };
 
@@ -203,7 +200,12 @@ function Habit({ studyId }) {
                     className={styles.addInput}
                     value={newHabitName}
                     onChange={(e) => setNewHabitName(e.target.value)}
-                    onKeyDown={handleNewHabit}
+                    onKeyDown={(e) => {
+                      if (e.nativeEvent.isComposing) return;
+                      if (e.key !== 'Enter') return;
+
+                      handleNewHabit(e);
+                    }}
                   />
                   <img
                     src={underlinePng}
