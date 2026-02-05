@@ -77,27 +77,31 @@ const Home = () => {
           return;
         }
 
-        const result = await Promise.all(
-          ids.map(async (id) => {
-            try {
-              const res = await getStudyId(id);
-              return res;
-            } catch (error) {
-              console.error('recent study/mapping error: ', error);
-              return null;
-            }
-          }),
-        );
+        const picked = [];
 
-        setRecentStudies(result.filter(Boolean));
+        const fetchNext = async (index) => {
+          if (picked.length === 3 || index >= ids.length) return;
+
+          try {
+            const res = await getStudyId(ids[index]);
+            picked.push(res);
+          } catch (e) {
+            console.error(e);
+          }
+
+          return fetchNext(index + 1);
+        };
+
+        await fetchNext(0);
+        setRecentStudies(picked);
       } catch (error) {
-        console.error('recent study error: ', error);
+        console.error('recent study error:', error);
         setRecentStudies([]);
       }
     };
+
     fetchRecentStudies();
     window.addEventListener('focus', fetchRecentStudies);
-
     return () => window.removeEventListener('focus', fetchRecentStudies);
   }, []);
 
