@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Habit.module.css';
 import { deletePng, underlinePng } from '@/assets/images/habit';
-import { habitService } from '@/api';
+import { habitlogService, habitService } from '@/api';
 import clsx from 'clsx';
 import { Spinner } from '@/components';
 import { util } from '@/utils';
@@ -84,29 +84,23 @@ function Habit({ studyId }) {
     }
   };
 
-  // 습관 완료 상태를 토글(반전)하는 함수
-  const handleToggleHabit = async (habit) => {
-    // 1. habit 객체 전체를 인자로 받습니다.
+   //습관 완료 상태를 토글
+   const handleToggleHabit = async (habit) => {
     try {
-      // 2. 서버가 요구하는 대로 name과 바뀔 isCompleted 상태를 함께 보냅니다.
-      const updatedHabit = await habitService.updateHabit(habit.id, {
-        name: habit.name, // 기존 이름 그대로 전달
-        isCompleted: !habit.isCompleted, // 상태 반전
-      });
+      // 백엔드 habitlog POST 호출
+      const isCompleted = await habitlogService.createHabitlog(habit.id);
 
-      if (updatedHabit) {
-        // 서버 저장 성공 후 화면 UI 업데이트
-        setHabits(
-          habits.map((h) =>
-            h.id === habit.id ? { ...h, isCompleted: !habit.isCompleted } : h,
-          ),
-        );
-      }
+      // 서버에서 반환한 완료 상태로 UI 업데이트
+      setHabits((prevHabits) => 
+        prevHabits.map((h) =>
+          h.id === habit.id ? { ...h, isCompleted  } : h
+        )
+      );
     } catch (error) {
-      console.error('상태 변경 중 오류 발생:', error);
+      console.error('습관 완료 토글 중 오류 발생:', error);
     }
   };
-
+  
   // 습관 목록 전체 삭제 기능 추가
   const handleDeleteAll = () => {
     if (habits.length === 0) {
