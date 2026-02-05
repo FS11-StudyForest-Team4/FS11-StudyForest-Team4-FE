@@ -89,30 +89,31 @@ const StudyAbout = () => {
     setModalType(null);
   };
 
+  if (!studyInfo) {
+    <Spinner />;
+    return;
+  }
+
   return (
     <div className={styles.studyAboutWrap}>
-      {studyInfo ? (
-        <>
-          <StudyInfo
+      <div className={styles.content}>
+        <StudyInfo
+          studyInfo={studyInfo}
+          onModalType={handleModalType}
+          studyTab={studyTab}
+        />
+
+        {StudyComponent && <StudyComponent studyId={studyId} />}
+
+        {passwordCheck && (
+          <PasswordModal
+            modalType={modalType}
             studyInfo={studyInfo}
-            onModalType={handleModalType}
-            studyTab={studyTab}
+            modalClose={() => setModalType(null)}
+            BTN_ACTIONS={BTN_ACTIONS}
           />
-
-          {StudyComponent && <StudyComponent studyId={studyId} />}
-
-          {passwordCheck && (
-            <PasswordModal
-              modalType={modalType}
-              studyInfo={studyInfo}
-              modalClose={() => setModalType(null)}
-              BTN_ACTIONS={BTN_ACTIONS}
-            />
-          )}
-        </>
-      ) : (
-        <Spinner />
-      )}
+        )}
+      </div>
     </div>
   );
 };

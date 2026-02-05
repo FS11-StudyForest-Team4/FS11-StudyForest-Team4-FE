@@ -2,6 +2,9 @@
   display: flex;
   align-items: center;
   position: relative;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 0;
   & aside {
     height: 450px;
     width: 350px;
@@ -9,13 +12,12 @@
     position: absolute;
     left: 250px;
     top: 45px;
-    z-index: 5;
+    z-index: 7;
   }
 }
 
 & .emojiList {
   display: flex;
-  padding: 6px 8px;
   align-items: center;
   gap: 5px;
   & li {
@@ -55,15 +57,16 @@
   padding: 12px;
   display: inline-flex;
   flex-wrap: wrap;
+  z-index: 8;
 }
 
 & .moreEmojiBtn {
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
-  padding: 6px 8px;
   align-items: center;
   gap: 5px;
+  padding: 6px 8px;
   border: none;
   color: #fff;
   font-family: Pretendard;
@@ -71,7 +74,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin: 0 8px 0 0;
+  margin: 0;
   & i {
     width: 16px;
     height: 16px;
@@ -99,5 +102,13 @@
     height: 18px;
     background: url(@/assets/images/ic_smile.svg) no-repeat;
     background-size: 100% auto;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .emojiBox {
+    & aside {
+      left: 0 !important;
+    }
   }
 }
