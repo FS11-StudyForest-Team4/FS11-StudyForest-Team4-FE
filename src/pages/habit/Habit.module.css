@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 /* 전체 배경 설정 */
 .habitPage {
   min-height: 100vh;
@@ -24,8 +22,7 @@
   background-color: #ffffff;
 }
 
-/* frame 2609508 */
->>>>>>>Stashed changes .habitTopSection {
+.habitTopSection {
   opacity: 1;
   gap: 24px;
   margin: 10px;
@@ -531,11 +528,12 @@
     font-size: 13px;
     gap: 6px;
   }
-  <<<<<<< Updated upstream ======= .headerTopRow {
+
+ .headerTopRow {
     margin-bottom: 30px;
   }
   .headerTopBtnToday,
-  >>>>>>>Stashed changes .headerTopBtnHome {
+  .headerTopBtnHome {
     width: auto;
     min-width: 60px;
     height: 36px;
