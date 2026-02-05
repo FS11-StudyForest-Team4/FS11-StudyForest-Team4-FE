@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getStudyList } from '../../api/studyService';
+import { getStudyId } from '../../api/studyService';
 import StudyCard from './StudyCard';
 import styles from './Home.module.css';
 
@@ -56,21 +57,49 @@ const Home = () => {
     fetchStudies(false);
   }, [selectedSort, searchTerm]);
 
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-    setRecentStudies(saved.slice(0, 3));
-  }, []);
-
   const handleStudyClick = (study) => {
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-    const updated = [study, ...saved.filter((s) => s.id !== study.id)].slice(
+    const updated = [study.id, ...saved.filter((id) => id !== study.id)].slice(
       0,
       10,
     );
     localStorage.setItem('recentStudies', JSON.stringify(updated));
-    setRecentStudies(updated);
     navigate(`/study/about/${study.id}`);
   };
+
+  useEffect(() => {
+    const fetchRecentStudies = async () => {
+      try {
+        const ids = JSON.parse(localStorage.getItem('recentStudies') || '[]');
+
+        if (ids.length === 0) {
+          setRecentStudies([]);
+          return;
+        }
+
+        const result = await Promise.all(
+          ids.map(async (id) => {
+            try {
+              const res = await getStudyId(id);
+              return res;
+            } catch (error) {
+              console.error('recent study/mapping error: ', error);
+              return null;
+            }
+          }),
+        );
+
+        setRecentStudies(result.filter(Boolean));
+      } catch (error) {
+        console.error('recent study error: ', error);
+        setRecentStudies([]);
+      }
+    };
+    fetchRecentStudies();
+    window.addEventListener('focus', fetchRecentStudies);
+
+    return () => window.removeEventListener('focus', fetchRecentStudies);
+  }, []);
 
   return (
     <div className={styles.homeContainer}>
