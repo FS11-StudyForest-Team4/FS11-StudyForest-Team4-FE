@@ -68,8 +68,9 @@ const StudyAbout = () => {
   };
 
   // 스터디 삭제 시 localStorage에 있는 recentStudies도 정리
+  // null 방지, localStorage 비어있을 때
   const removeStudyFromRecent = (studyId) => {
-    const recents = JSON.parse(localStorage.getItem('recentStudies'));
+    const recents = JSON.parse(localStorage.getItem('recentStudies') || '[]');
     const filtered = recents.filter((elem) => elem.id !== studyId);
     localStorage.setItem('recentStudies', JSON.stringify(filtered));
   };
