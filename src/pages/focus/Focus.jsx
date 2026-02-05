@@ -7,10 +7,10 @@ import play_ic from '#assets/images/focus_img/play_ic.png';
 import reset_ic from '#assets/images/focus_img/reset_ic.png';
 import stop_ic from '#assets/images/focus_img/stop_ic.png';
 import timer_ic from '#assets/images/focus_img/timer_ic.png';
-import { focusService } from '@/api'
+import { focusService } from '@/api';
 import { useLocation } from 'react-router';
 
-const START_TIME = 20; // 테스트를 위하여 20초로 설정했습니다. 이후 25*60으로 바꾸면 25분으로 설정됩니다.
+const START_TIME = 25 * 60; // 테스트를 위하여 20초로 설정했습니다. 이후 25*60으로 바꾸면 25분으로 설정됩니다.
 
 function setTimeFormat(seconds) {
   const sign = seconds < 0 ? '-' : '';
@@ -42,6 +42,18 @@ const Focus = ({ studyId }) => {
     return () => clearInterval(time);
   }, [isRunning, isPaused]); // isRunning, isPaused 상태 바뀔때 동작
 
+  // 포인트 계산 함수
+  const calcPoint = (time) => {
+    // 실제, 10분마다 +1
+    const minutes = Math.floor(time / 60);
+    const bonus = Math.floor(minutes / 10);
+
+    // 테스트용, 10초마다 +1
+    //const bonus = Math.floor(time / 10);
+
+    return bonus + 3;
+  };
+
   // 시간 끝나고 세션 완료하면 complete 호출
   useEffect(() => {
     if (!isOver) return;
@@ -49,9 +61,10 @@ const Focus = ({ studyId }) => {
 
     const fetchData = async () => {
       try {
-        await focusService.completeFocus(focusId);
+        const earnedPoint = calcPoint(START_TIME);
+        await focusService.completeFocus(focusId, earnedPoint);
         console.log('세션이 완료되었습니다!');
-        toast('🎉 50포인트를 획득했습니다!', {
+        toast(`🎉 ${earnedPoint}포인트를 획득했습니다!`, {
           className: styles['toastCompleted'],
         });
       } catch (error) {
@@ -90,8 +103,8 @@ const Focus = ({ studyId }) => {
   };
 
   const handlePause = () => {
-    // pause 버튼입니다. 
-    setIsPaused((prev) => !prev); //누르면 일시정지 <-> 재개 
+    // pause 버튼입니다.
+    setIsPaused((prev) => !prev); //누르면 일시정지 <-> 재개
     // setIsPaused(true);
   };
 
