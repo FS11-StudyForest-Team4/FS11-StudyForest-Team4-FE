@@ -1,3 +1,31 @@
+<<<<<<< Updated upstream
+=======
+/* 전체 배경 설정 */
+.habitPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+/* main wrapper */
+/* frame 2609450 */
+.mainWrapper {
+  width: 100%;
+  max-width: 1248px;
+  height: 100%;
+  opacity: 1;
+  top: 139px;
+  left: 360px;
+  border-radius: 20px;
+  padding: 40px;
+  gap: 10px;
+  background-color: #ffffff;
+}
+
+/* frame 2609508 */
+>>>>>>> Stashed changes
 .habitTopSection {
   opacity: 1;
   gap: 24px;
@@ -544,6 +572,13 @@
     font-size: 13px;
     gap: 6px;
   }
+<<<<<<< Updated upstream
+=======
+  .headerTopRow {
+    margin-bottom: 30px;
+  }
+  .headerTopBtnToday,
+>>>>>>> Stashed changes
   .headerTopBtnHome {
     width: auto;
     min-width: 60px;
