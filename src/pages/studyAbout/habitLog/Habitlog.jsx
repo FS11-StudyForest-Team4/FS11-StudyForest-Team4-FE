@@ -104,7 +104,7 @@ function Habitlog(props) {
         </p>
       ) : (
         <div className={styles.habitlogGrid}>
-          <div></div>
+          <div className={styles.dayNoTab}></div>
           {days.map((day) => (
             <div key={day} className={styles.dayHeader}>
               {day}
