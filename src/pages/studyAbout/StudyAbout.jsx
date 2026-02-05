@@ -67,6 +67,13 @@ const StudyAbout = () => {
     if (studyCheck && type !== 'delete') BTN_ACTIONS[type]?.();
   };
 
+  // 스터디 삭제 시 localStorage에 있는 recentStudies도 정리
+  const removeStudyFromRecent = (studyId) => {
+    const recents = JSON.parse(localStorage.getItem('recentStudies'));
+    const filtered = recents.filter((elem) => elem.id !== studyId);
+    localStorage.setItem('recentStudies', JSON.stringify(filtered));
+  };
+
   const deleteStudyHandle = async (id) => {
     try {
       const res = await studyService.deleteStudy(id);
@@ -74,6 +81,7 @@ const StudyAbout = () => {
         if (studyCheck) session.remove(userId);
         navigate(`/`);
       });
+      removeStudyFromRecent(id);
     } catch (error) {
       console.log('delteStudy Error:', error);
     }
