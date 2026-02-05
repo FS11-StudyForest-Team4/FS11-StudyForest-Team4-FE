@@ -84,23 +84,21 @@ function Habit({ studyId }) {
     }
   };
 
-   //습관 완료 상태를 토글
-   const handleToggleHabit = async (habit) => {
+  //습관 완료 상태를 토글
+  const handleToggleHabit = async (habit) => {
     try {
       // 백엔드 habitlog POST 호출
       const isCompleted = await habitlogService.createHabitlog(habit.id);
 
       // 서버에서 반환한 완료 상태로 UI 업데이트
-      setHabits((prevHabits) => 
-        prevHabits.map((h) =>
-          h.id === habit.id ? { ...h, isCompleted  } : h
-        )
+      setHabits((prevHabits) =>
+        prevHabits.map((h) => (h.id === habit.id ? { ...h, isCompleted } : h)),
       );
     } catch (error) {
       console.error('습관 완료 토글 중 오류 발생:', error);
     }
   };
-  
+
   // 습관 목록 전체 삭제 기능 추가
   const handleDeleteAll = () => {
     if (habits.length === 0) {
@@ -182,9 +180,7 @@ function Habit({ studyId }) {
               <ul className={styles.editList}>
                 {habits.map((habit) => (
                   <li key={habit.id} className={styles.editCaseWrapper}>
-                    <div className={styles.editCase}>
-                      <span>{habit.name}</span>
-                    </div>
+                    <div className={styles.editCase}>{habit.name}</div>
                     <button
                       className={styles.deleteBtn}
                       onClick={() => handleDelete(habit.id)}
@@ -228,9 +224,13 @@ function Habit({ studyId }) {
                   />
                 </button>
               </div>
-              <button className={styles.addBtn} onClick={handleNewHabit}>
-                +
-              </button>
+              <div className={styles.inputWrapper}>
+                <div className={styles.addInputContainer}>
+                  <button className={styles.addBtn} onClick={handleNewHabit}>
+                    +
+                  </button>
+                </div>
+              </div>
             </section>
             <div className={styles.modalFooter}>
               <button

@@ -25,8 +25,7 @@
 }
 
 /* frame 2609508 */
->>>>>>> Stashed changes
-.habitTopSection {
+>>>>>>>Stashed changes .habitTopSection {
   opacity: 1;
   gap: 24px;
   margin: 10px;
@@ -255,7 +254,8 @@
 }
 
 .modalContent {
-  width: 648px;
+  width: calc(100% - 40px);
+  max-width: 648px;
 
   min-height: 200px;
   max-height: 85vh;
@@ -362,11 +362,12 @@
 }
 
 .modalFooter {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-self: center;
   height: 58px;
-  gap: 12px;
+  gap: 10px;
   margin-top: 24px;
 }
 .deleteBtn {
@@ -429,8 +430,9 @@
 }
 
 .addBtn {
+  width: 100%;
+  max-width: 400px;
   background: none;
-  width: 400px;
   border: none;
   font-size: 28px;
   color: #414141;
@@ -450,71 +452,29 @@
   margin: 0 70px;
 }
 
-/* 푸터 버튼 가로 정렬 */
-.modalFooter {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 30px;
+.closeBtn,
+.submitBtn {
+  width: 100%;
+  height: inherit;
+  color: #fff;
+  border: none;
+  font-family: EF_jejudoldam;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 1;
+  border-radius: 16px;
+  padding: 10px;
+  text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
+  cursor: pointer;
 }
 
 .closeBtn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #ffffff;
   background-color: #dddddd;
-  font-family: EF_jejudoldam;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 22px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-  width: 288px;
-  height: 100%;
-  opacity: 1;
-  border-radius: 16px;
-  padding: 10px;
-  gap: 10px;
-  text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
 }
 .submitBtn {
   background-color: #99c08e;
-  color: #ffffff;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: EF_jejudoldam;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 22px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-  width: 288px;
-  height: 100%;
-  opacity: 1;
-  border-radius: 16px;
-  padding: 10px;
-  gap: 10px;
-  text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
-}
-
-/* 태블릿 (iPad mini 등) */
-@media (max-width: 744px) {
-  .headerTopRow {
-    width: 100%;
-  }
-  .habitList {
-    width: 100%;
-  }
-  .modalContent {
-    width: 100%;
-  }
 }
 
 @media screen and (max-width: 600px) {
@@ -572,14 +532,11 @@
     font-size: 13px;
     gap: 6px;
   }
-<<<<<<< Updated upstream
-=======
-  .headerTopRow {
+  <<<<<<< Updated upstream ======= .headerTopRow {
     margin-bottom: 30px;
   }
   .headerTopBtnToday,
->>>>>>> Stashed changes
-  .headerTopBtnHome {
+  >>>>>>>Stashed changes .headerTopBtnHome {
     width: auto;
     min-width: 60px;
     height: 36px;
@@ -594,20 +551,6 @@
     height: 35px;
     margin-top: 8px;
     display: flex;
-  }
-
-  .modalFooter {
-    height: auto;
-  }
-  .addBtn {
-    width: 100%;
-    margin: auto 0;
-  }
-  .closeBtn,
-  .submitBtn {
-    width: 140px;
-    height: 48px;
-    font-size: 100%;
   }
 }
 
