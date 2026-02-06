@@ -14,7 +14,7 @@ export const getStudyList = async (params) => {
 // GET 스터디상세 조회하기
 export const getStudyId = async (id) => {
   try {
-    const response = await client.get(`/studies ${id}`);
+    const response = await client.get(`/studies/ ${id}`);
     return response.data;
   } catch (error) {
     console.error('getStudy Error:', error.response?.data || error.message);
