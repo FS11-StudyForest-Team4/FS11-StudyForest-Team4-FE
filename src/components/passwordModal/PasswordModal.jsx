@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './PasswordModal.module.css';
 import { visible, invisible } from '@/assets/images/icons';
-import Button from '@/components/button/button';
+import Button from '@/components/button/Button';
 import { authService } from '@/api/';
 import { session } from '@/utils';
 
