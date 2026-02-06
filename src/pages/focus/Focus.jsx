@@ -24,7 +24,7 @@ function setTimeFormat(seconds) {
   return `${sign}${mm}:${ss}`;
 }
 
-const Focus = ({ studyId }) => {
+const Focus = ({ studyId, onCompleted }) => {
   const [timeLeft, setTimeLeft] = useState(DEFAULT_TIME); // 초 단위 (0 밑으로도 내려감)
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -72,12 +72,16 @@ const Focus = ({ studyId }) => {
         toast(`🎉 ${earnedPoint}포인트를 획득했습니다!`, {
           className: styles['toastCompleted'],
         });
+
+        if (onCompleted) {
+          await onCompleted();
+        }
       } catch (error) {
         console.error('error: ', error);
       }
     };
     fetchData();
-  }, [isOver, focusId, seconds]);
+  }, [isOver, focusId, seconds, onCompleted]);
 
   // 일시정지 버튼
   useEffect(() => {

@@ -1,7 +1,7 @@
 /*
  * 스터디 상세 (/studyAbout)
  */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './StudyAbout.module.css';
 import StudyInfo from './studyInfo/StudyInfo';
 import Habitlog from './habitLog/Habitlog';
@@ -18,33 +18,32 @@ const StudyAbout = () => {
   const navigate = useNavigate();
   const id = location.pathname.split('/').filter(Boolean).pop();
   const studyId = location.search.slice(1) || id;
-  const [studyInfo, setStudyInfo] = useState([]);
+  const [studyInfo, setStudyInfo] = useState(null);
   const [studyTab, setStypeTab] = useState('habitLog');
   const [modalType, setModalType] = useState(null);
   const [userId, setUserId] = useState(session.get('userId'));
   const studyCheck = studyId === userId ? true : false;
   const passwordCheck = (!studyCheck && modalType) || modalType === 'delete';
 
+  const refreshStudyInfo = useCallback(async () => {
+    try {
+      const res = await studyService.getStudyId(studyId);
+      setStudyInfo(res);
+    } catch (err) {
+      console.log('getStudyId err:', err);
+    }
+  }, [studyId]); 
+
   useEffect(() => {
     if (!studyId) {
       util.errorAlert('스터디 정보가 확인되지 않습니다.').then((result) => {
-        if (result.isConfirmed) {
-          navigate('/');
-        }
+        if (result.isConfirmed) navigate('/');
       });
+      return;
     }
 
-    const getStudyId = async (studyId) => {
-      try {
-        const res = await studyService.getStudyId(studyId);
-        setStudyInfo(res);
-      } catch (err) {
-        console.log('getStudyId err:', err);
-      }
-    };
-
-    getStudyId(studyId);
-  }, [studyId, navigate]);
+    refreshStudyInfo();
+  }, [studyId, navigate, refreshStudyInfo]);
 
   const STUDY_TAB_COMPONENTS = {
     habitLog: Habitlog,
@@ -90,8 +89,7 @@ const StudyAbout = () => {
   };
 
   if (!studyInfo) {
-    <Spinner />;
-    return;
+    return <Spinner />;
   }
 
   return (
@@ -103,8 +101,11 @@ const StudyAbout = () => {
           studyTab={studyTab}
         />
 
-        {StudyComponent && <StudyComponent studyId={studyId} />}
-
+        {studyTab === 'focus' ? (
+          <Focus studyId={studyId} onCompleted={refreshStudyInfo} />
+        ) : (
+          StudyComponent && <StudyComponent studyId={studyId} />
+        )}
         {passwordCheck && (
           <PasswordModal
             modalType={modalType}
