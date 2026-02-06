@@ -7,8 +7,6 @@
   background-color: #ffffff;
 }
 
-/* main wrapper */
-/* frame 2609450 */
 .mainWrapper {
   width: 100%;
   max-width: 1248px;
@@ -528,8 +526,7 @@
     font-size: 13px;
     gap: 6px;
   }
-
- .headerTopRow {
+  .headerTopRow {
     margin-bottom: 30px;
   }
   .headerTopBtnToday,
