@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getStudyList } from '../../api/studyService';
 import { getStudyId } from '../../api/studyService';
-import StudyCard from '@/pages/home/StudyCard';
+import StudyCard from '../../pages/home/StudyCard';
 import styles from './home.module.css';
 
 const SORT_OPTIONS = [
