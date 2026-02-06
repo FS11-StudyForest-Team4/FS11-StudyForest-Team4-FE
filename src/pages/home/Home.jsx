@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { getStudyList, getStudyId } from '../../api/studyService';
 import StudyCard from './StudyCard';
@@ -12,63 +12,88 @@ const SORT_OPTIONS = [
 ];
 
 const Home = () => {
-  const [allStudies, setAllStudies] = useState([]);
-  const [displayStudies, setDisplayStudies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS[0]);
+  const [displayStudies, setDisplayStudies] = useState([]); // 목록 데이터
+  const [searchTerm, setSearchTerm] = useState(''); // 검색어
+  const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS[0]); // 정렬
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [recentStudies, setRecentStudies] = useState([]);
+  const [recentStudies, setRecentStudies] = useState([]); // 최근 조회 스터디
   const [isLoading, setIsLoading] = useState(false);
+
+  // 💡 가연님 기존 로직 그대로 유지
+  const [nextCursor, setNextCursor] = useState(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
+
+  // 💡 [추가] 프론트에서 6개씩 끊어 보여주기 위한 상태
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const navigate = useNavigate();
 
-  const fetchInitialStudies = async () => {
-    setIsLoading(true);
-    try {
-      const result = await getStudyList();
-      const data = Array.isArray(result) ? result : result?.data || [];
-      setAllStudies(data);
-      setDisplayStudies(data);
-    } catch (error) {
-      console.error('데이터 로드 실패:', error);
-    } finally {
-      setIsLoading(false);
-    }
+  // 1. 🚀 데이터 호출 함수 (기존 구조 100% 유지)
+  const fetchStudies = useCallback(
+    async (isLoadMore = false) => {
+      if (isLoading) return;
+      setIsLoading(true);
+
+      try {
+        const params = {
+          q: searchTerm,
+          orderBy: selectedSort.value,
+          cursor: isLoadMore ? nextCursor : null,
+          limit: 100, // 백엔드가 검색을 안해주니 일단 많이 가져옴
+        };
+
+        const result = await getStudyList(params);
+        let data = result?.data || (Array.isArray(result) ? result : []);
+
+        // 🔍 [검색 필터링] 서버가 못한 걸 프론트에서 수행
+        if (searchTerm.trim()) {
+          const keyword = searchTerm.toLowerCase();
+          data = data.filter(
+            (s) =>
+              (s.title || '').toLowerCase().includes(keyword) ||
+              (s.nickName || '').toLowerCase().includes(keyword),
+          );
+        }
+
+        // 💡 [핵심] 가연님이 원하시는 '6개씩' 보여주기 로직
+        const currentCount = isLoadMore ? visibleCount + 6 : 6;
+        const slicedData = data.slice(0, currentCount);
+
+        setDisplayStudies(slicedData);
+        setVisibleCount(currentCount);
+
+        // 💡 더 보여줄 데이터가 남았을 때만 버튼 노출
+        setHasNextPage(data.length > slicedData.length);
+        setNextCursor(result?.nextCursor);
+      } catch (error) {
+        console.error('데이터 로드 실패:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [searchTerm, selectedSort, nextCursor, isLoading, visibleCount],
+  );
+
+  // 2. 🔍 검색어 혹은 정렬이 바뀔 때 실행 (기존 코드)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVisibleCount(6); // 검색 시 다시 6개부터
+      fetchStudies(false);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, selectedSort]);
+
+  // 3. ➕ 더보기 버튼 클릭 (기존 코드)
+  const handleLoadMore = () => {
+    fetchStudies(true);
   };
 
-  useEffect(() => {
-    fetchInitialStudies();
-  }, []);
-
-  useEffect(() => {
-    let filtered = [...allStudies];
-
-    if (searchTerm.trim()) {
-      const keyword = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (study) =>
-          study.title?.toLowerCase().includes(keyword) ||
-          study.nickName?.toLowerCase().includes(keyword),
-      );
-    }
-
-    if (selectedSort.value === 'LATEST') {
-      filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    } else if (selectedSort.value === 'OLDEST') {
-      filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    } else if (selectedSort.value === 'MOST_POINTS') {
-      filtered.sort((a, b) => (b.point || 0) - (a.point || 0));
-    } else if (selectedSort.value === 'LEAST_POINTS') {
-      filtered.sort((a, b) => (a.point || 0) - (b.point || 0));
-    }
-
-    setDisplayStudies(filtered);
-  }, [searchTerm, selectedSort, allStudies]);
-
+  // 4. 🖱️ 카드 클릭 시 이동 (기존 코드)
   const handleStudyClick = (study) => {
     const studyId = study.id;
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-    if (typeof studyId === 'string' && studyId !== '[object Object]') {
+    if (studyId) {
       const updated = [studyId, ...saved.filter((id) => id !== studyId)].slice(
         0,
         10,
@@ -78,17 +103,16 @@ const Home = () => {
     navigate(`/study/about/${studyId}`);
   };
 
+  // 5. 🕒 최근 조회한 스터디 (기존 코드)
   useEffect(() => {
     const fetchRecent = async () => {
       const ids = JSON.parse(localStorage.getItem('recentStudies') || '[]');
       const picked = [];
       for (const id of ids.slice(0, 3)) {
-        if (id && typeof id === 'string' && id !== '[object Object]') {
-          try {
-            const res = await getStudyId(id);
-            if (res) picked.push(res);
-          } catch (e) {}
-        }
+        try {
+          const res = await getStudyId(id);
+          if (res) picked.push(res);
+        } catch (e) {}
       }
       setRecentStudies(picked);
     };
@@ -98,7 +122,7 @@ const Home = () => {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContent}>
-        {/* 최근 조회한 스터디 섹션 */}
+        {/* 최근 조회 섹션 */}
         <section className={styles.studySection}>
           <div className={`${styles.emptyStatusBox} ${styles.recentViewBox}`}>
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
@@ -109,7 +133,7 @@ const Home = () => {
                     key={`recent-${s.id}`}
                     study={s}
                     background={s.background}
-                    onClick={() => navigate(`/study/about/${s.id}`)}
+                    onClick={() => handleStudyClick(s)}
                   />
                 ))}
               </div>
@@ -166,20 +190,35 @@ const Home = () => {
             </div>
 
             {displayStudies.length > 0 ? (
-              <div className={styles.studyGrid}>
-                {displayStudies.map((study) => (
-                  <StudyCard
-                    key={study.id}
-                    study={study}
-                    background={study.background}
-                    onClick={() => handleStudyClick(study)}
-                  />
-                ))}
-              </div>
+              <>
+                <div className={styles.studyGrid}>
+                  {displayStudies.map((study) => (
+                    <StudyCard
+                      key={study.id}
+                      study={study}
+                      background={study.background}
+                      onClick={() => handleStudyClick(study)}
+                    />
+                  ))}
+                </div>
+
+                {/* 💡 검색 결과가 현재 보이는 것보다 많을 때만 버튼이 나옵니다! */}
+                {hasNextPage && (
+                  <div className={styles.moreButtonContainer}>
+                    <button
+                      className={styles.moreButton}
+                      onClick={handleLoadMore}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? '로딩 중...' : '더보기'}
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className={styles.emptyDisplay}>
                 <p className={styles.emptyMessage}>
-                  {isLoading ? '로딩 중...' : '아직 둘러 볼 스터디가 없어요'}
+                  {isLoading ? '로딩 중...' : '검색 결과가 없어요'}
                 </p>
               </div>
             )}
