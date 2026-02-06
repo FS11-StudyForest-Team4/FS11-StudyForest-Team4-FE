@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './StudyCard.module.css';
 import GroupIcon from '@/assets/images/Group.svg';
 import {
