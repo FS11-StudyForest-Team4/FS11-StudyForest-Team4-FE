@@ -124,9 +124,11 @@ const Focus = ({ studyId, onCompleted }) => {
   };
 
   const handlePause = () => {
-    // pause 버튼입니다.
-    setIsPaused((prev) => !prev); //누르면 일시정지 <-> 재개
+    // pause 버튼
+    setIsPaused((prev) => !prev);
+    // 누르면 일시정지 <-> 재개
     // setIsPaused(true);
+    toast('🚨 집중이 중단되었습니다.', { className: styles['toast-paused'] });
   };
 
   const handleReset = () => {
