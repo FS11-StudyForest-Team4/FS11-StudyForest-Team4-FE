@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { getStudyList } from '../../api/studyService';
-import { getStudyId } from '../../api/studyService';
+import { getStudyList, getStudyId } from '../../api/studyService';
 import StudyCard from './StudyCard';
 import styles from './home.module.css';
 
@@ -13,119 +12,112 @@ const SORT_OPTIONS = [
 ];
 
 const Home = () => {
-  const [studies, setStudies] = useState([]);
+  const [allStudies, setAllStudies] = useState([]);
+  const [displayStudies, setDisplayStudies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [recentStudies, setRecentStudies] = useState([]);
-
-  const [nextCursor, setNextCursor] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const fetchStudies = async (isLoadMore = false) => {
-    if (isLoading) return;
+  const fetchInitialStudies = async () => {
     setIsLoading(true);
-
     try {
-      const result = await getStudyList({
-        q: searchTerm || undefined,
-        orderBy: selectedSort.value,
-        limit: 6,
-        cursor: isLoadMore ? nextCursor : undefined,
-      });
-
-      const newData = result?.data || [];
-      const cursor = result?.nextCursor || null;
-
-      if (isLoadMore) {
-        setStudies((prev) => [...prev, ...newData]);
-      } else {
-        setStudies(newData);
-      }
-      setNextCursor(cursor);
+      const result = await getStudyList();
+      const data = Array.isArray(result) ? result : result?.data || [];
+      setAllStudies(data);
+      setDisplayStudies(data);
     } catch (error) {
-      console.error('error:', error);
-      setStudies([]);
+      console.error('데이터 로드 실패:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchStudies(false);
-  }, [selectedSort, searchTerm]);
+    fetchInitialStudies();
+  }, []);
+
+  useEffect(() => {
+    let filtered = [...allStudies];
+
+    if (searchTerm.trim()) {
+      const keyword = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (study) =>
+          study.title?.toLowerCase().includes(keyword) ||
+          study.nickName?.toLowerCase().includes(keyword),
+      );
+    }
+
+    if (selectedSort.value === 'LATEST') {
+      filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (selectedSort.value === 'OLDEST') {
+      filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else if (selectedSort.value === 'MOST_POINTS') {
+      filtered.sort((a, b) => (b.point || 0) - (a.point || 0));
+    } else if (selectedSort.value === 'LEAST_POINTS') {
+      filtered.sort((a, b) => (a.point || 0) - (b.point || 0));
+    }
+
+    setDisplayStudies(filtered);
+  }, [searchTerm, selectedSort, allStudies]);
 
   const handleStudyClick = (study) => {
+    const studyId = study.id;
     const saved = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-    const updated = [study.id, ...saved.filter((id) => id !== study.id)].slice(
-      0,
-      10,
-    );
-    localStorage.setItem('recentStudies', JSON.stringify(updated));
-    navigate(`/study/about/${study.id}`);
+    if (typeof studyId === 'string' && studyId !== '[object Object]') {
+      const updated = [studyId, ...saved.filter((id) => id !== studyId)].slice(
+        0,
+        10,
+      );
+      localStorage.setItem('recentStudies', JSON.stringify(updated));
+    }
+    navigate(`/study/about/${studyId}`);
   };
 
   useEffect(() => {
-    const fetchRecentStudies = async () => {
-      try {
-        const ids = JSON.parse(localStorage.getItem('recentStudies') || '[]');
-
-        if (ids.length === 0) {
-          setRecentStudies([]);
-          return;
-        }
-
-        const picked = [];
-
-        const fetchNext = async (index) => {
-          if (picked.length === 3 || index >= ids.length) return;
-
+    const fetchRecent = async () => {
+      const ids = JSON.parse(localStorage.getItem('recentStudies') || '[]');
+      const picked = [];
+      for (const id of ids.slice(0, 3)) {
+        if (id && typeof id === 'string' && id !== '[object Object]') {
           try {
-            const res = await getStudyId(ids[index]);
-            picked.push(res);
-          } catch (e) {
-            console.error(e);
-          }
-
-          return fetchNext(index + 1);
-        };
-
-        await fetchNext(0);
-        setRecentStudies(picked);
-      } catch (error) {
-        console.error('recent study error:', error);
-        setRecentStudies([]);
+            const res = await getStudyId(id);
+            if (res) picked.push(res);
+          } catch (e) {}
+        }
       }
+      setRecentStudies(picked);
     };
-
-    fetchRecentStudies();
-    window.addEventListener('focus', fetchRecentStudies);
-    return () => window.removeEventListener('focus', fetchRecentStudies);
+    fetchRecent();
   }, []);
 
   return (
     <div className={styles.homeContainer}>
       <div className={styles.mainContent}>
-        {/* 최근 조회 섹션 */}
+        {/* 최근 조회한 스터디 섹션 */}
         <section className={styles.studySection}>
           <div className={`${styles.emptyStatusBox} ${styles.recentViewBox}`}>
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
             {recentStudies.length > 0 ? (
               <div className={styles.studyGrid}>
-                {recentStudies.slice(0, 3).map((study) => (
+                {recentStudies.map((s) => (
                   <StudyCard
-                    key={`recent-${study.id}`}
-                    study={study}
-                    background={study.background}
-                    onClick={() => navigate(`/study/about/${study.id}`)}
+                    key={`recent-${s.id}`}
+                    study={s}
+                    background={s.background}
+                    onClick={() => navigate(`/study/about/${s.id}`)}
                   />
                 ))}
               </div>
             ) : (
               <div className={styles.emptyDisplay}>
-                <p className={styles.emptyMessage}>조회 기록이 없어요</p>
+                <p className={styles.emptyMessage}>
+                  아직 조회한 스터디가 없어요
+                </p>
               </div>
             )}
           </div>
@@ -155,16 +147,16 @@ const Home = () => {
                   </div>
                   {isDropdownOpen && (
                     <ul className={styles.dropdownMenu}>
-                      {SORT_OPTIONS.map((option) => (
+                      {SORT_OPTIONS.map((opt) => (
                         <li
-                          key={option.value}
-                          className={`${styles.dropdownItem} ${selectedSort.value === option.value ? styles.selectedItem : ''}`}
+                          key={opt.value}
+                          className={styles.dropdownItem}
                           onClick={() => {
-                            setSelectedSort(option);
+                            setSelectedSort(opt);
                             setIsDropdownOpen(false);
                           }}
                         >
-                          {option.label}
+                          {opt.label}
                         </li>
                       ))}
                     </ul>
@@ -173,9 +165,9 @@ const Home = () => {
               </div>
             </div>
 
-            {studies.length > 0 ? (
+            {displayStudies.length > 0 ? (
               <div className={styles.studyGrid}>
-                {studies.map((study) => (
+                {displayStudies.map((study) => (
                   <StudyCard
                     key={study.id}
                     study={study}
@@ -187,20 +179,8 @@ const Home = () => {
             ) : (
               <div className={styles.emptyDisplay}>
                 <p className={styles.emptyMessage}>
-                  {isLoading ? '로딩 중...' : '스터디가 없어요'}
+                  {isLoading ? '로딩 중...' : '아직 둘러 볼 스터디가 없어요'}
                 </p>
-              </div>
-            )}
-
-            {nextCursor && (
-              <div className={styles.moreButtonContainer}>
-                <button
-                  className={styles.moreButton}
-                  onClick={() => fetchStudies(true)}
-                  disabled={isLoading}
-                >
-                  {isLoading ? '로딩 중...' : '더보기'}
-                </button>
               </div>
             )}
           </div>
