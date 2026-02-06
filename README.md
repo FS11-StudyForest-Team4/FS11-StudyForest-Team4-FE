@@ -2,6 +2,7 @@
 - 공부의 숲🌲
 - 개인 공부 관리 및 커뮤니티 서비스
 - 프로젝트 기간: 2026.01.20 ~ 2026.02.06
+- 배포 사이트 🚀 : http://study-forest.iptime.org:5001/
 
 ## 팀원 소개
 - **박영서 -** https://github.com/YoungSeo1104
@@ -15,6 +16,5 @@
 - 🔧 프레임워크 / 언어 (Framework / Language) - **React + JavaScript**
 -  🎨 스타일 (Style) - **CSS / CSS Module (또는 Styled-components)**
 -  🌐 API -  **REST API (axios)**
-- 🚀 배포 플랫폼 (Deployment) - **Netlify**
 
 
