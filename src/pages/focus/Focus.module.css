@@ -17,7 +17,6 @@
   font-family: Pretendard;
   font-style: normal;
   font-weight: 800;
-  line-weight: normal;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -26,7 +25,6 @@
   margin: 0 auto;
   text-align: right;
   font-size: 24px;
-  line-weight: normal;
 }
 
 .startTimeTagWrapper,

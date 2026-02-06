@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getStudyList } from '../../api/studyService';
 import { getStudyId } from '../../api/studyService';
-import StudyCard from './StudyCard';
+// import StudyCard from './StudyCard';
 import styles from './home.module.css';
 
 const SORT_OPTIONS = [
@@ -114,14 +114,14 @@ const Home = () => {
             <h3 className={styles.sectionTitle}>최근 조회한 스터디</h3>
             {recentStudies.length > 0 ? (
               <div className={styles.studyGrid}>
-                {recentStudies.slice(0, 3).map((study) => (
+                {/* {recentStudies.slice(0, 3).map((study) => (
                   <StudyCard
                     key={`recent-${study.id}`}
                     study={study}
                     background={study.background}
                     onClick={() => navigate(`/study/about/${study.id}`)}
                   />
-                ))}
+                ))} */}
               </div>
             ) : (
               <div className={styles.emptyDisplay}>
@@ -175,14 +175,14 @@ const Home = () => {
 
             {studies.length > 0 ? (
               <div className={styles.studyGrid}>
-                {studies.map((study) => (
+                {/* {studies.map((study) => (
                   <StudyCard
                     key={study.id}
                     study={study}
                     background={study.background}
                     onClick={() => handleStudyClick(study)}
                   />
-                ))}
+                ))} */}
               </div>
             ) : (
               <div className={styles.emptyDisplay}>
