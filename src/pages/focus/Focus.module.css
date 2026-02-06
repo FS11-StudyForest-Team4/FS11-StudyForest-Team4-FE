@@ -31,6 +31,7 @@
 
 .startTimeTagWrapper,
 .startTimeTagWrapperPlaceholder {
+  position: relative;
   display: flex;
   padding: 6px 8px;
   flex-direction: column;
@@ -46,6 +47,13 @@
   display: flex;
   gap: 4px;
   justify-content: center;
+}
+
+.selectTag {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .timerIcon {

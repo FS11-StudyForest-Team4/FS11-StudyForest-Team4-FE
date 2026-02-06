@@ -128,7 +128,6 @@ const Focus = ({ studyId, onCompleted }) => {
     setIsPaused((prev) => !prev);
     // 누르면 일시정지 <-> 재개
     // setIsPaused(true);
-    toast('🚨 집중이 중단되었습니다.', { className: styles['toast-paused'] });
   };
 
   const handleReset = () => {
@@ -159,7 +158,10 @@ const Focus = ({ studyId, onCompleted }) => {
           </div>
         </div>
         {isTimePickerOpen && !isRunning && (
-          <div onClick={(e) => e.stopPropagation()}>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={styles.selectTag}
+          >
             <select value={minutes} onChange={handleSeconds}>
               <option value={0}>분 선택</option>
               {minuteOptions.map((m) => (
